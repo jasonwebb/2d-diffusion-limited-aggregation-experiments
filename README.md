@@ -4,15 +4,20 @@ I am particularly interested in the application of such techniques in the contex
 
 ## About diffusion-limited aggregation
 
-_Diffusion-limited aggregation (DLA)_  is a process in which randomly-moving particles clump together (_aggregate_) over time to form long, fractal, branch-like chains. It closely models the behavior of molecules that have an affinity for bonding to one another as they move (_diffuse_) through some medium (air, water, etc). 
+_Diffusion-limited aggregation (DLA)_ is a process in which randomly-moving particles _diffuse_ through a medium and clump together (_aggregate_) over time to form long, fractal, branch-like chains (sometimes called [Brownian trees](https://en.wikipedia.org/wiki/Brownian_tree)). It closely models various interesting phenomena seen in nature at different scales and in different mediums.
+
+A classic example is that of the formation of [copper sulfate crystals](https://upload.wikimedia.org/wikipedia/commons/b/b8/DLA_Cluster.JPG) in the presence of an electrodeposition cell. When electricity is applied, individual copper atoms are stripped from the system's anode and randomly float (_diffuse_) through the liquid medium until they come in contact with other copper atoms that have accumulated on the system's cathode where they form a strong bond and aggregate over time.
+
+Another example can be seen in the rather more violent phenomena of [Lichtenberg figures](https://en.wikipedia.org/wiki/Lichtenberg_figure), wherein an electrical discharge of very high voltage travels through an insulator like wood, burning a curious fractal branching structure in it's wake. In this example, it would seem that the electrical discharge itself _diffuses_ through the wood, _limited_ by the randomly-varying insulating properties of the media, and perhaps forms an _"aggregate"_ of burnt wood as it progresses. 
 
 ## References
 
 * [DLA - Diffusion Limited Aggregation](http://paulbourke.net/fractals/dla/) by Paul Bourke
 * [Diffusion-limited aggregation](https://en.wikipedia.org/wiki/Diffusion-limited_aggregation) on Wikipedia
-* [Coding Challenge #34: Diffusion-Limited Aggregation](https://www.youtube.com/watch?v=Cl_Gjj80gPE) by Dan Shiffman
+* [Coding Challenge #34: Diffusion-Limited Aggregation](https://www.youtube.com/watch?v=Cl_Gjj80gPE) by Dan Shiffman ([Github repo](https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_034_DLA/P5))
 * [simutils-0001: Diffusion limited aggregation](http://toxiclibs.org/2010/02/new-package-simutils/) by Karsten Schmidt (toxiclibs)
 * [Diffusion Limited Aggregation](https://www.astro.rug.nl/~offringa/Diffusion%20Limited%20Aggregation.pdf) (PDF) by André Offringa
 * [Simulate: Diffusion-Limited Aggregation](http://formandcode.com/code-examples/simulate-dla) from FORM+CODE book examples
 * [Diffusion-Limited Aggregation](https://softologyblog.wordpress.com/tag/diffusion-limited-aggregation/) by Softology
 * [Diffusion-limited aggregation: A kinetic critical phenomenon?](http://www.thp.uni-koeln.de/krug/teaching-Dateien/SS2012/Sander2000.pdf) (PDF) by Leonard M. Sander
+* [Dendron](http://www.flong.com/projects/dendron/) Processing sketch by Golan Levin
