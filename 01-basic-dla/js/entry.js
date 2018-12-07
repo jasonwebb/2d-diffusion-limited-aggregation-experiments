@@ -1,9 +1,7 @@
 import Settings from './Settings';
-import Particle from '../../core/Particle';
 import World from '../../core/World';
 
-let world,
-    maxNodes = 5000;
+let world;
  
 
 /*
@@ -23,9 +21,14 @@ const sketch = function (p5) {
     world = new World(p5, Settings);
 
     // Put a single Particle in the screen center to seed growth
-    world.cluster = [
-      new Particle(p5, window.innerWidth/2, window.innerHeight/2, 10)
-    ];
+    world.createClusterFromCoords(
+      [
+        { 
+          x: window.innerWidth/2, 
+          y: window.innerHeight/2
+        }
+      ]
+    );
   }
 
   // Draw ---------------------------------------------------------------
@@ -34,33 +37,34 @@ const sketch = function (p5) {
     world.draw();
 
     // Keep replenishing the walkers
-    if(world.walkers.length < maxNodes) {
+    if(!world.paused) {
       let edge = Math.round(p5.random(1,4)),
-          particle = new Particle(p5, 0, 0, 10);
+          x = 0,
+          y = 0;
 
       switch(edge) {
         case 1:   // top
-          particle.x = p5.random(window.innerWidth);
-          particle.y = 0;
+          x = p5.random(window.innerWidth);
+          y = 500;
           break;
 
         case 2:   // right
-          particle.x = window.innerWidth;
-          particle.y = p5.random(window.innerHeight);
+          x = window.innerWidth - 500;
+          y = p5.random(window.innerHeight);
           break;
 
         case 3:   // bottom
-          particle.x = p5.random(window.innerWidth);
-          particle.y = window.innerHeight;
+          x = p5.random(window.innerWidth);
+          y = window.innerHeight - 500;
           break;
 
         case 4:   // left
-          particle.x = 0;
-          particle.y = p5.random(window.innerHeight);
+          x = 500;
+          y = p5.random(window.innerHeight);
           break;
       }
 
-      world.addWalker(particle);
+      world.createWalker(x, y);
     }
   }
 
@@ -72,6 +76,13 @@ const sketch = function (p5) {
   */
   p5.keyReleased = function() {
     switch (p5.key) {
+      case ' ':
+        world.togglePause();
+        break;
+
+      case 'w':
+        world.toggleShowWalkers();
+        break;
     }
   }
 }
