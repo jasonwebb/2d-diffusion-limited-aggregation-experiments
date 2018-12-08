@@ -2,7 +2,7 @@ import Settings from './Settings';
 import World from '../../core/World';
 
 let world;
- 
+
 
 /*
 =============================================================================
@@ -20,52 +20,61 @@ const sketch = function (p5) {
     // Set up the simulation environment
     world = new World(p5, Settings);
 
-    // Put a single Particle in the screen center to seed growth
-    world.createClusterFromCoords(
-      [
-        { 
-          x: window.innerWidth/2, 
-          y: window.innerHeight/2
-        }
-      ]
-    );
+    // Set up initial (seed) particles for clusters
+    createInitialCluster();
   }
 
   // Draw ---------------------------------------------------------------
   p5.draw = function () {
     world.iterate();
     world.draw();
+  }
 
-    // Keep replenishing the walkers
-    if(!world.paused) {
-      let edge = Math.round(p5.random(1,4)),
-          x = 0,
-          y = 0;
+  function resetWorld() {
+    world.removeAll();
+    createInitialCluster();
+    // TODO: create all walkers?
+  }
 
-      switch(edge) {
-        case 1:   // top
-          x = p5.random(window.innerWidth);
-          y = 500;
-          break;
+  function createInitialCluster() {
+    let particleCoords = [];
 
-        case 2:   // right
-          x = window.innerWidth - 500;
-          y = p5.random(window.innerHeight);
-          break;
+    switch (Settings.InitialClusterType) {
+      // Single particle in center of screen
+      case 'Point':
+        particleCoords.push({
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2
+        });
 
-        case 3:   // bottom
-          x = p5.random(window.innerWidth);
-          y = window.innerHeight - 500;
-          break;
+        break;
 
-        case 4:   // left
-          x = 500;
-          y = p5.random(window.innerHeight);
-          break;
-      }
+      // Series of particles evenly spaced in a circle around center of screen
+      case 'Ring':
+        let radius = 100,
+          numParticles = 20;
 
-      world.createWalker(x, y);
+        for (let i = 0; i < numParticles; i++) {
+          particleCoords.push({
+            x: window.innerWidth/2 + radius * Math.cos( (360/numParticles) * i * Math.PI/180 ),
+            y: window.innerHeight/2 + radius * Math.sin( (360/numParticles) * i * Math.PI/180 )
+          });
+        }
+
+        break;
+
+      case 'Random':
+        for(let i = 0; i < 50; i++) {
+          particleCoords.push({
+            x: p5.random(window.innerWidth),
+            y: p5.random(window.innerHeight)
+          });
+        }
+
+        break;
     }
+
+    world.createClusterFromCoords(particleCoords);
   }
 
 
@@ -74,7 +83,7 @@ const sketch = function (p5) {
     Key handler
   =============================================================================
   */
-  p5.keyReleased = function() {
+  p5.keyReleased = function () {
     switch (p5.key) {
       case ' ':
         world.togglePause();
@@ -82,6 +91,14 @@ const sketch = function (p5) {
 
       case 'w':
         world.toggleShowWalkers();
+        break;
+
+      case 'c':
+        world.toggleShowClusters();
+        break;
+
+      case 'r':
+        resetWorld();
         break;
     }
   }

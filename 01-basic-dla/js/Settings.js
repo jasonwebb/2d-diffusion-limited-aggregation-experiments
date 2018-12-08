@@ -1,3 +1,4 @@
 export default {
-  CircleDiameter: 10
+  CircleDiameter: 5,
+  InitialClusterType: 'Random'
 };
