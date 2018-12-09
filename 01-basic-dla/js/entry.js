@@ -3,15 +3,8 @@ import World from '../../core/World';
 
 let world;
 
-
-/*
-=============================================================================
-  Main sketch
-=============================================================================
-*/
-
 const sketch = function (p5) {
-  // Setup -------------------------------------------------------------
+  // Setup ---------------------------------------------------------------
   p5.setup = function () {
     p5.createCanvas(window.innerWidth, window.innerHeight);
     p5.colorMode(p5.HSB, 255);
@@ -21,10 +14,10 @@ const sketch = function (p5) {
     world = new World(p5, Settings);
 
     // Set up initial (seed) particles for clusters
-    createInitialCluster();
+    createInitialClusters();
   }
 
-  // Draw ---------------------------------------------------------------
+  // Draw ----------------------------------------------------------------
   p5.draw = function () {
     world.iterate();
     world.draw();
@@ -32,11 +25,11 @@ const sketch = function (p5) {
 
   function resetWorld() {
     world.removeAll();
-    createInitialCluster();
-    // TODO: create all walkers?
+    world.createInitialWalkers();
+    createInitialClusters();
   }
 
-  function createInitialCluster() {
+  function createInitialClusters() {
     let particleCoords = [];
 
     switch (Settings.InitialClusterType) {
@@ -63,6 +56,7 @@ const sketch = function (p5) {
 
         break;
 
+      // Individual particles randomly distributed across entire screen
       case 'Random':
         for(let i = 0; i < 50; i++) {
           particleCoords.push({
@@ -77,12 +71,7 @@ const sketch = function (p5) {
     world.createClusterFromCoords(particleCoords);
   }
 
-
-  /*
-  =============================================================================
-    Key handler
-  =============================================================================
-  */
+  // Key handler ---------------------------------------------------------
   p5.keyReleased = function () {
     switch (p5.key) {
       case ' ':
