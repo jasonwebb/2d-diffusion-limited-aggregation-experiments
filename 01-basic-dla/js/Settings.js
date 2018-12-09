@@ -1,4 +1,5 @@
 export default {
   CircleDiameter: 5,
-  InitialClusterType: 'Random'
+  InitialClusterType: 'Random',
+  UseFrame: true
 };

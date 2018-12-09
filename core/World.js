@@ -17,7 +17,23 @@ class World {
     this.showWalkers = this.settings.ShowWalkers;
     this.showClusters = this.settings.ShowClusters;
 
+    // Number of active walkers
     this.numWalkers = 0;
+
+    // Outer edges of active sketch area (screen or confined "frame")
+    this.edges = {}
+
+    if (this.settings.UseFrame) {
+      this.edges.left = window.innerWidth / 2 - 900 / 2;
+      this.edges.right = window.innerWidth / 2 + 900 / 2;
+      this.edges.top = window.innerHeight / 2 - 900 / 2;
+      this.edges.bottom = window.innerHeight / 2 + 900 / 2;
+    } else {
+      this.edges.left = 0;
+      this.edges.right = window.innerWidth;
+      this.edges.top = 0;
+      this.edges.bottom = window.innerHeight;
+    }
 
     // Collision system
     this.system = new Collisions();
@@ -53,14 +69,15 @@ class World {
   }
 
 
-  //====================================
-  //  Render all walkers and clusters
-  //====================================
+  //======================
+  //  Drawing methods
+  //======================
   // TODO: implement "show clusters"
   draw() {
     this.p5.background(255);
     this.p5.noStroke();
 
+    // Draw all particles (both walkers and clustered particles)
     for (let body of this.bodies) {
       if (body.stuck) {
         this.p5.fill(0, 0, 120);
@@ -72,12 +89,23 @@ class World {
         this.p5.ellipse(body.x, body.y, this.settings.CircleDiameter);
       }
     }
+
+    // Draw a square around the active area, if set
+    if (this.settings.UseFrame) {
+      this.drawFrame();
+    }
+  }
+
+  drawFrame() {
+    this.p5.noFill();
+    this.p5.stroke(0);
+    this.p5.rect(window.innerWidth / 2 - 900 / 2, window.innerHeight / 2 - 900 / 2, 900, 900);
   }
 
 
-  //==============================
+  //======================
   //  Move all walkers
-  //==============================
+  //======================
   moveWalkers() {
     if (this.bodies.length > 0) {
       for (let body of this.bodies) {
@@ -85,55 +113,44 @@ class World {
         // TODO: prune walkers (remove walkers that have gotten too 'old')
 
         if (!body.stuck) {
-          // Move all walkers randomly (Brownian motion)
+          // Start with a randomized movement (Brownian motion)
           let deltaX = this.p5.random(-2, 2),
             deltaY = this.p5.random(-2, 2);
 
-          if (body.x + deltaX > 0 && body.x + deltaX < window.innerWidth) {
-            body.x += deltaX;
-          }
-
-          if (body.y + deltaY > 0 && body.y + deltaY < window.innerHeight) {
-            body.y += deltaY;
-          }
-
-          // Move all walkers in a specific direction, if set
+          // Add in a bias towards a specific direction, if set
           switch (this.settings.BiasTowards) {
-            case 'Up':
-              if (body.y - this.settings.BiasForce > 0) {
-                body.y -= this.settings.BiasForce;
-              }
-
+            case 'Top':
+              deltaY -= this.settings.BiasForce;
               break;
 
-            case 'Down':
-              if (body.y + this.settings.BiasForce < window.innerWidth) {
-                body.y += this.settings.BiasForce;
-              }
-
+            case 'Bottom':
+              deltaY += this.settings.BiasForce;
               break;
 
             case 'Left':
-              if (body.x - this.settings.BiasForce > 0) {
-                body.x -= this.settings.BiasForce;
-              }
-
+              deltaX -= this.settings.BiasForce;
               break;
 
             case 'Right':
-              if (body.x + this.settings.BiasForce < window.innerHeight) {
-                body.x += this.settings.BiasForce;
-              }
-
+              deltaX += this.settings.BiasForce;
               break;
 
             case 'Center':
               // 1. Get angle between body and screen center
-              // 2. Move particle 
+              // 2. Move particle along this angle using BiasForce
               break;
           }
 
-          // Increment age of each walker
+          // Apply deltas unless doing so would move the walker outside the sketch bounds
+          if (body.x + deltaX > this.edges.left && body.x + deltaX < this.edges.right) {
+            body.x += deltaX;
+          }
+
+          if (body.y + deltaY > this.edges.top && body.y + deltaY < this.edges.bottom) {
+            body.y += deltaY;
+          }
+
+          // Increment age of the walker
           body.age++;
         }
       }
@@ -216,7 +233,7 @@ class World {
 
           break;
 
-        // Circle = spawn walkers in a circle around the center of the screen
+          // Circle = spawn walkers in a circle around the center of the screen
         case 'Circle':
           let radius = 50,
             angle = this.p5.random(360);
@@ -225,16 +242,22 @@ class World {
           y = window.innerHeight / 2 + radius * Math.sin(angle * Math.PI / 180);
           break;
 
-        // Random = spawn walkers randomly throughout the entire screen
+          // Random = spawn walkers randomly throughout the entire screen
         case 'Random':
-          x = this.p5.random(window.innerWidth);
-          y = this.p5.random(window.innerHeight);
+          if (this.settings.UseFrame) {
+            x = this.p5.random(window.innerWidth / 2 - 900 / 2, window.innerWidth / 2 + 900 / 2);
+            y = this.p5.random(window.innerHeight / 2 - 900 / 2, window.innerHeight / 2 + 900 / 2);
+          } else {
+            x = this.p5.random(window.innerWidth);
+            y = this.p5.random(window.innerHeight);
+          }
+
           break;
 
-        // Center = spawn all walkers at screen center
+          // Center = spawn all walkers at screen center
         case 'Center':
-          x = window.innerWidth/2;
-          y = window.innerHeight/2;
+          x = window.innerWidth / 2;
+          y = window.innerHeight / 2;
           break;
       }
 
