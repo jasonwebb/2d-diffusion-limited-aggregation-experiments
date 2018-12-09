@@ -15,7 +15,7 @@ class World {
     // State flags
     this.paused = false;
     this.showWalkers = this.settings.ShowWalkers;
-    this.showClusters = this.settings.showClusters;
+    this.showClusters = this.settings.ShowClusters;
 
     this.numWalkers = 0;
 
@@ -24,7 +24,7 @@ class World {
     this.bodies = [];
 
     // Spawn initial walkers
-    this.createWalkers(this.settings.MaxWalkers);
+    this.createInitialWalkers();
   }
 
 
@@ -42,31 +42,8 @@ class World {
       this.createWalkers(this.settings.MaxWalkers - this.numWalkers);
     }
 
-    if (this.bodies.length > 0) {
-      for (let body of this.bodies) {
-
-        // TODO: prune walkers (remove walkers that have gotten too 'old')
-
-        // Move all walkers randomly
-        if (!body.stuck) {
-          let deltaX = this.p5.random(-2, 2),
-            deltaY = this.p5.random(-2, 2);
-
-          if (body.x + deltaX > 0 && body.x + deltaX < window.innerWidth) {
-            body.x += deltaX;
-          }
-
-          if (body.y + deltaY > 0 && body.y + deltaY < window.innerHeight) {
-            body.y += deltaY;
-          }
-        }
-
-        // TODO: move all walkers in specific direction to increase probability of collisions
-
-        // Increment age of each particle
-        body.age++;
-      }
-    }
+    // Move all the walkers
+    this.moveWalkers();
 
     // Update the collision system
     this.system.update();
@@ -91,8 +68,74 @@ class World {
         this.p5.fill(0, 0, 230);
       }
 
-      if (this.showWalkers || body.stuck) {
+      if ((!body.stuck && this.showWalkers) || (body.stuck && this.showClusters)) {
         this.p5.ellipse(body.x, body.y, this.settings.CircleDiameter);
+      }
+    }
+  }
+
+
+  //==============================
+  //  Move all walkers
+  //==============================
+  moveWalkers() {
+    if (this.bodies.length > 0) {
+      for (let body of this.bodies) {
+
+        // TODO: prune walkers (remove walkers that have gotten too 'old')
+
+        if (!body.stuck) {
+          // Move all walkers randomly (Brownian motion)
+          let deltaX = this.p5.random(-2, 2),
+            deltaY = this.p5.random(-2, 2);
+
+          if (body.x + deltaX > 0 && body.x + deltaX < window.innerWidth) {
+            body.x += deltaX;
+          }
+
+          if (body.y + deltaY > 0 && body.y + deltaY < window.innerHeight) {
+            body.y += deltaY;
+          }
+
+          // Move all walkers in a specific direction, if set
+          switch (this.settings.BiasTowards) {
+            case 'Up':
+              if (body.y - this.settings.BiasForce > 0) {
+                body.y -= this.settings.BiasForce;
+              }
+
+              break;
+
+            case 'Down':
+              if (body.y + this.settings.BiasForce < window.innerWidth) {
+                body.y += this.settings.BiasForce;
+              }
+
+              break;
+
+            case 'Left':
+              if (body.x - this.settings.BiasForce > 0) {
+                body.x -= this.settings.BiasForce;
+              }
+
+              break;
+
+            case 'Right':
+              if (body.x + this.settings.BiasForce < window.innerHeight) {
+                body.x += this.settings.BiasForce;
+              }
+
+              break;
+
+            case 'Center':
+              // 1. Get angle between body and screen center
+              // 2. Move particle 
+              break;
+          }
+
+          // Increment age of each walker
+          body.age++;
+        }
       }
     }
   }
@@ -116,6 +159,8 @@ class World {
         if (secondBody.stuck && body.collides(secondBody)) {
           body.stuck = true;
           this.numWalkers--;
+
+          // TODO: create a line between the two bodies for line rendering mode
         }
       }
     }
@@ -169,29 +214,37 @@ class World {
               break;
           }
 
-          this.createWalker(x, y);
           break;
 
-          // Circle = spawn walkers in a circle around the center of the screen
+        // Circle = spawn walkers in a circle around the center of the screen
         case 'Circle':
           let radius = 50,
             angle = this.p5.random(360);
 
           x = window.innerWidth / 2 + radius * Math.cos(angle * Math.PI / 180);
           y = window.innerHeight / 2 + radius * Math.sin(angle * Math.PI / 180);
-
-          this.createWalker(x, y);
           break;
 
-          // Random = spawn walkers randomly throughout the entire screen
+        // Random = spawn walkers randomly throughout the entire screen
         case 'Random':
           x = this.p5.random(window.innerWidth);
           y = this.p5.random(window.innerHeight);
+          break;
 
-          this.createWalker(x, y);
+        // Center = spawn all walkers at screen center
+        case 'Center':
+          x = window.innerWidth/2;
+          y = window.innerHeight/2;
           break;
       }
+
+      // Create a walker with the coordinates
+      this.createWalker(x, y);
     }
+  }
+
+  createInitialWalkers() {
+    this.createWalkers(this.settings.MaxWalkers);
   }
 
   createClusterFromCoords(coordList) {
