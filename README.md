@@ -6,9 +6,37 @@ I am particularly interested in the application of such techniques in the contex
 
 _Diffusion-limited aggregation (DLA)_ is a process in which randomly-moving particles _diffuse_ through a medium and clump together (_aggregate_) over time to form long, fractal, branch-like chains (sometimes called [Brownian trees](https://en.wikipedia.org/wiki/Brownian_tree)). It closely models various interesting phenomena seen in nature at different scales and in different mediums.
 
-A classic example is that of the formation of [copper sulfate crystals](https://upload.wikimedia.org/wikipedia/commons/b/b8/DLA_Cluster.JPG) in the presence of an electrodeposition cell. When electricity is applied, individual copper atoms are stripped from the system's anode and randomly float (_diffuse_) through the liquid medium until they come in contact with other copper atoms that have accumulated on the system's cathode where they form a strong bond and aggregate over time.
+A classic example is that of the formation of [copper sulfate crystals](https://upload.wikimedia.org/wikipedia/commons/b/b8/DLA_Cluster.JPG) in the presence of an electrodeposition cell. When electricity is applied, individual copper atoms are stripped from the system's anode and randomly float (_diffuse_) through the liquid medium until they come in contact with other copper atoms that have accumulated on the system's cathode where they form a strong molecular bond and aggregate over time.
 
-Another example can be seen in the rather more violent phenomena of [Lichtenberg figures](https://en.wikipedia.org/wiki/Lichtenberg_figure), wherein an electrical discharge of very high voltage travels through an insulator like wood, burning a curious fractal branching structure in it's wake. In this example, it would seem that the electrical discharge itself _diffuses_ through the wood, _limited_ by the randomly-varying insulating properties of the media, and perhaps forms an _"aggregate"_ of burnt wood as it progresses. 
+Another example can be seen in the rather more violent phenomena of [Lichtenberg figures](https://en.wikipedia.org/wiki/Lichtenberg_figure), wherein an electrical discharge of very high voltage travels through an insulator like wood, burning a curious fractal branching structure in it's wake. In this example, it would seem that the electrical discharge itself _diffuses_ through the wood, _limited_ by the insulating nature of the wood, forming an _"aggregate"_ of burnt wood as it progresses. 
+
+### A note on lattices and parameterization
+In classical implementations this algorithm acts upon a regular 2D grid of pixels wherein each "particle" can have up to 8 neighbors. Though simplistic, this so-called "on-lattice" approach can run at blistering speeds because no expensive distance calculations, spatial indexing, or collision detection is required - just array lookups. 
+
+However, this approach results in an inherently low fidelity raster image that has a pretty characteristic aesthetic style and limited usefulness in modern digital fabrication workflows. In the world of digital fabrication vector-based graphics are preferred because they can be easily transformed into machine toolpaths and manipulated in interesting ways in CAD software.
+
+To achieve vector-based results from the DLA process one must move away from pixels and towards _particles_, which also affords one the ability for more parameterization that can be fun to explore creatively. For example, one could vary the size, shape, and movement behaviors of these particles to achieve interesting effects.
+
+## Keyboard commands
+
+| Key     | Result                        |
+|---      |---                            |
+| `w`     | Show/hide walkers             |
+| `c`     | Show/hide clustered particles |
+| `r`     | Restart simulation            |
+| `Space` | Pause/unpause simulation      |
+
+## Packages used
+* [p5.js](https://www.npmjs.com/package/p5) for canvas drawing and miscellaneous helper functions (like `lerp` and `map`).
+* [Webpack](https://webpack.js.org/) for modern JS (ES6) syntax, code modularization, and local bundling and serving.
+* [collisions](https://www.npmjs.com/package/collisions) for robust, lightweight collision detection without the use of a full physics package.
+
+## Running locally
+
+1. Run `npm install` in both the `./build` and `./core` folders.
+2. Run `npm run serve` in the `./build` folder to start a local development server and launch it in a browser.
+
+To statically _build_ the code in this repo, run `npm run build` in the `./build` folder.
 
 ## References
 
