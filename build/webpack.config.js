@@ -4,6 +4,7 @@ module.exports = {
   mode: 'production',
   entry: {
     basicDLA: path.resolve('../01-basic-dla/js/entry.js'),
+    directionalBias: path.resolve('../02-directional-bias/js/entry.js')
   },
   devtool: 'inline-source-map',
   devServer: {
