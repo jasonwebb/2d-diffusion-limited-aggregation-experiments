@@ -21,19 +21,11 @@ class World {
     this.numWalkers = 0;
 
     // Outer edges of active sketch area (screen or confined "frame")
-    this.edges = {}
-
-    if (this.settings.UseFrame) {
-      this.edges.left = window.innerWidth / 2 - 900 / 2;
-      this.edges.right = window.innerWidth / 2 + 900 / 2;
-      this.edges.top = window.innerHeight / 2 - 900 / 2;
-      this.edges.bottom = window.innerHeight / 2 + 900 / 2;
-    } else {
-      this.edges.left = 0;
-      this.edges.right = window.innerWidth;
-      this.edges.top = 0;
-      this.edges.bottom = window.innerHeight;
-    }
+    this.edges = {};
+    this.edges.left = this.settings.UseFrame ? window.innerWidth / 2 - 900 / 2 : 0;
+    this.edges.right = this.settings.UseFrame ? window.innerWidth / 2 + 900 / 2 : window.innerWidth;
+    this.edges.top = this.settings.UseFrame ? window.innerHeight / 2 - 900 / 2 : 0;
+    this.edges.bottom = this.settings.UseFrame ? window.innerHeight / 2 + 900 / 2 : window.innerHeight;
 
     // Collision system
     this.system = new Collisions();
@@ -99,7 +91,7 @@ class World {
   drawFrame() {
     this.p5.noFill();
     this.p5.stroke(0);
-    this.p5.rect(window.innerWidth / 2 - 900 / 2, window.innerHeight / 2 - 900 / 2, 900, 900);
+    this.p5.rect(window.innerWidth / 2 - 900 / 2 - 1, window.innerHeight / 2 - 900 / 2 - 1, 902, 902);
   }
 
 
@@ -233,7 +225,7 @@ class World {
 
           break;
 
-          // Circle = spawn walkers in a circle around the center of the screen
+        // Circle = spawn walkers in a circle around the center of the screen
         case 'Circle':
           let radius = 50,
             angle = this.p5.random(360);
@@ -242,19 +234,13 @@ class World {
           y = window.innerHeight / 2 + radius * Math.sin(angle * Math.PI / 180);
           break;
 
-          // Random = spawn walkers randomly throughout the entire screen
+        // Random = spawn walkers randomly throughout the entire screen
         case 'Random':
-          if (this.settings.UseFrame) {
-            x = this.p5.random(window.innerWidth / 2 - 900 / 2, window.innerWidth / 2 + 900 / 2);
-            y = this.p5.random(window.innerHeight / 2 - 900 / 2, window.innerHeight / 2 + 900 / 2);
-          } else {
-            x = this.p5.random(window.innerWidth);
-            y = this.p5.random(window.innerHeight);
-          }
-
+          x = this.p5.random(this.edges.left, this.edges.right);
+          y = this.p5.random(this.edges.top, this.edges.bottom);
           break;
 
-          // Center = spawn all walkers at screen center
+        // Center = spawn all walkers at screen center
         case 'Center':
           x = window.innerWidth / 2;
           y = window.innerHeight / 2;
@@ -290,6 +276,7 @@ class World {
     this.bodies = [];
     this.numWalkers = 0;
   }
+
 
   //=================
   //  Togglers
