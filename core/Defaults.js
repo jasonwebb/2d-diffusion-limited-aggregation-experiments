@@ -6,7 +6,7 @@ export default {
   ShowWalkers: true,
 
   // Maximum number of nodes - lower numbers mean better performance, but fewer hits
-  MaxWalkers: 15000,
+  MaxWalkers: 20000,
 
   // Where new walkers are spawned. Can be Edges, Circle, Center, or Random
   WalkerSource: 'Random',
@@ -17,9 +17,15 @@ export default {
   // Probability that a collision will make a walker stick to cluster
   Stickiness: .9,
 
-  // Direction to move all walkers each iteration. Can be Up, Down, Left, Right, Center, and Edges. All other values, including nothing, disable bias
+  // Direction to move all walkers each iteration. Can be Top, Bottom, Left, Right, Center, and Edges. All other values, including nothing, disable bias
   BiasTowards: '',
 
   // Magnitude of walker bias force. Higher values mean faster movement
-  BiasForce: 1
+  BiasForce: 1,
+
+  // Constrain sketch to a box centered on the screen
+  UseFrame: true,
+
+  // Size of frame. Can be a single number, or an array of two numbers for width and height
+  FrameSize: 900
 };

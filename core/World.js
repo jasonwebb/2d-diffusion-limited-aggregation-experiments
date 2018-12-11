@@ -22,10 +22,24 @@ class World {
 
     // Outer edges of active sketch area (screen or confined "frame")
     this.edges = {};
-    this.edges.left = this.settings.UseFrame ? window.innerWidth / 2 - 900 / 2 : 0;
-    this.edges.right = this.settings.UseFrame ? window.innerWidth / 2 + 900 / 2 : window.innerWidth;
-    this.edges.top = this.settings.UseFrame ? window.innerHeight / 2 - 900 / 2 : 0;
-    this.edges.bottom = this.settings.UseFrame ? window.innerHeight / 2 + 900 / 2 : window.innerHeight;
+    this.frame = {};
+
+    if (typeof this.settings.FrameSize == 'number') {
+      this.frame.left = window.innerWidth / 2 - this.settings.FrameSize / 2;
+      this.frame.right = window.innerWidth / 2 + this.settings.FrameSize / 2;
+      this.frame.top = window.innerHeight / 2 - this.settings.FrameSize / 2;
+      this.frame.bottom = window.innerHeight / 2 + this.settings.FrameSize / 2;
+    } else if (typeof this.settings.FrameSize == 'object') {
+      this.frame.left = window.innerWidth / 2 - this.settings.FrameSize[0] / 2;
+      this.frame.right = window.innerWidth / 2 + this.settings.FrameSize[0] / 2;
+      this.frame.top = window.innerHeight / 2 - this.settings.FrameSize[1] / 2;
+      this.frame.bottom = window.innerHeight / 2 + this.settings.FrameSize[1] / 2;
+    }
+
+    this.edges.left = this.settings.UseFrame ? this.frame.left : 0;
+    this.edges.right = this.settings.UseFrame ? this.frame.right : window.innerWidth;
+    this.edges.top = this.settings.UseFrame ? this.frame.top : 0;
+    this.edges.bottom = this.settings.UseFrame ? this.frame.bottom : window.innerHeight;
 
     // Collision system
     this.system = new Collisions();
@@ -64,21 +78,33 @@ class World {
   //======================
   //  Drawing methods
   //======================
-  // TODO: implement "show clusters"
   draw() {
     this.p5.background(255);
-    this.p5.noStroke();
+
+    // TODO: combine conditionals into one layer
 
     // Draw all particles (both walkers and clustered particles)
     for (let body of this.bodies) {
-      if (body.stuck) {
-        this.p5.fill(0, 0, 120);
-      } else {
-        this.p5.fill(0, 0, 230);
-      }
-
-      if ((!body.stuck && this.showWalkers) || (body.stuck && this.showClusters)) {
-        this.p5.ellipse(body.x, body.y, this.settings.CircleDiameter);
+      if (!body.stuck && this.showWalkers) {
+        if (body._point) {
+          this.p5.stroke(0);
+          this.p5.noFill();
+          this.p5.point(body.x, body.y);
+        } else if (body._circle) {
+          this.p5.noStroke();
+          this.p5.fill(230);
+          this.p5.ellipse(body.x, body.y, this.settings.CircleDiameter);
+        }
+      } else if (body.stuck && this.showClusters) {
+        if (body._point) {
+          this.p5.stroke(0);
+          this.p5.noFill();
+          this.p5.point(body.x, body.y);
+        } else if (body._circle) {
+          this.p5.noStroke();
+          this.p5.fill(150);
+          this.p5.ellipse(body.x, body.y, this.settings.CircleDiameter);
+        }
       }
     }
 
@@ -91,7 +117,22 @@ class World {
   drawFrame() {
     this.p5.noFill();
     this.p5.stroke(0);
-    this.p5.rect(window.innerWidth / 2 - 900 / 2 - 1, window.innerHeight / 2 - 900 / 2 - 1, 902, 902);
+
+    if (typeof this.settings.FrameSize == 'number') {
+      this.p5.rect(
+        window.innerWidth / 2 - this.settings.FrameSize / 2 - 1,
+        window.innerHeight / 2 - this.settings.FrameSize / 2 - 1,
+        this.settings.FrameSize + 2,
+        this.settings.FrameSize + 2
+      );
+    } else if (typeof this.settings.FrameSize == 'object') {
+      this.p5.rect(
+        window.innerWidth / 2 - this.settings.FrameSize[0] / 2 - 1,
+        window.innerHeight / 2 - this.settings.FrameSize[1] / 2 - 1,
+        this.settings.FrameSize[0] + 2,
+        this.settings.FrameSize[1] + 2
+      )
+    }
   }
 
 
@@ -106,8 +147,14 @@ class World {
 
         if (!body.stuck) {
           // Start with a randomized movement (Brownian motion)
-          let deltaX = this.p5.random(-2, 2),
-            deltaY = this.p5.random(-2, 2);
+          let deltaX = this.p5.random(-1, 1),
+            deltaY = this.p5.random(-1, 1);
+
+          // Ensure only whole numbers for single-pixel particles so they are always 'on lattice'
+          if(body._point) {
+            deltaX = Math.round(deltaX);
+            deltaY = Math.round(deltaY);
+          }
 
           // Add in a bias towards a specific direction, if set
           switch (this.settings.BiasTowards) {
@@ -153,6 +200,8 @@ class World {
   //=====================================================
   //  Look for collisions between walkers and clusters
   //=====================================================
+
+  // TODO: flip the logic so that we only check _clustered particles_ against potential collisions, not _all particles_ for potentials
   handleCollisions() {
     for (let body of this.bodies) {
       // Cut down on duplicate computations by only looking for collisions on walkers
@@ -164,12 +213,21 @@ class World {
       const potentials = body.potentials();
 
       for (let secondBody of potentials) {
-        // When a walker collides with a clustered particle, attach it to that cluster
-        if (secondBody.stuck && body.collides(secondBody)) {
-          body.stuck = true;
-          this.numWalkers--;
+        // Points should be checked for adjacency to a stuck particle 
+        if (body._point) {
+          if (secondBody.stuck) {
+            body.stuck = true;
+            this.walkers--;
+          }
 
-          // TODO: create a line between the two bodies for line rendering mode
+          // Circles and polygons should be checked for collision (overlap) with potentials
+        } else {
+          if (secondBody.stuck && body.collides(secondBody)) {
+            body.stuck = true;
+            this.numWalkers--;
+
+            // TODO: create a line between the two bodies for line rendering mode
+          }
         }
       }
     }
@@ -180,7 +238,16 @@ class World {
   //  Create methods
   //====================
   createParticle(x, y, stuck = false) {
-    let body = this.system.createCircle(x, y, this.settings.CircleDiameter / 2);
+    let body;
+
+    if (this.settings.CircleDiameter == 1) {
+      body = this.system.createPoint(x, y);
+      body._point = true;
+    } else {
+      body = this.system.createCircle(x, y, this.settings.CircleDiameter / 2);
+      body._circle = true;
+    }
+
     body.stuck = stuck;
     body.age = 0;
 
@@ -225,7 +292,7 @@ class World {
 
           break;
 
-        // Circle = spawn walkers in a circle around the center of the screen
+          // Circle = spawn walkers in a circle around the center of the screen
         case 'Circle':
           let radius = 50,
             angle = this.p5.random(360);
@@ -234,13 +301,13 @@ class World {
           y = window.innerHeight / 2 + radius * Math.sin(angle * Math.PI / 180);
           break;
 
-        // Random = spawn walkers randomly throughout the entire screen
+          // Random = spawn walkers randomly throughout the entire screen
         case 'Random':
           x = this.p5.random(this.edges.left, this.edges.right);
           y = this.p5.random(this.edges.top, this.edges.bottom);
           break;
 
-        // Center = spawn all walkers at screen center
+          // Center = spawn all walkers at screen center
         case 'Center':
           x = window.innerWidth / 2;
           y = window.innerHeight / 2;
@@ -248,7 +315,7 @@ class World {
       }
 
       // Create a walker with the coordinates
-      this.createWalker(x, y);
+      this.createWalker(Math.round(x), Math.round(y));
     }
   }
 
@@ -291,6 +358,18 @@ class World {
 
   toggleShowClusters() {
     this.showClusters = !this.showClusters;
+  }
+
+
+  //===================
+  //  Pause/unpause
+  //===================
+  pause() {
+    this.paused = true;
+  }
+
+  unpause() {
+    this.paused = false;
   }
 
 }
