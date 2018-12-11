@@ -102,6 +102,36 @@ const sketch = function (p5) {
       case 'r':
         resetWorld();
         break;
+
+      // Use numbers to change bias direction
+      case '1':
+        world.pause();
+        world.settings.BiasTowards = 'Bottom';
+        resetWorld();
+        world.unpause();
+        break;
+
+      case '2':
+        world.pause();
+        world.settings.BiasTowards = 'Top';
+        resetWorld();
+        world.unpause();
+        break;
+
+      case '3':
+        world.pause();
+        world.settings.BiasTowards = 'Left';
+        resetWorld();
+        world.unpause();
+        break;
+
+      case '4':
+        world.pause();
+        world.settings.BiasTowards = 'Right';
+        resetWorld();
+        world.unpause();
+        break;
+
     }
   }
 }
