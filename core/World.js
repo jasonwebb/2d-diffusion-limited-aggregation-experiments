@@ -175,8 +175,9 @@ class World {
               break;
 
             case 'Center':
-              // 1. Get angle between body and screen center
-              // 2. Move particle along this angle using BiasForce
+              let angle = Math.atan2(window.innerHeight / 2 - body.y, window.innerWidth / 2 - body.x);
+              deltaX += Math.cos(angle) * this.settings.BiasForce;
+              deltaY += Math.sin(angle) * this.settings.BiasForce;
               break;
           }
 
@@ -292,7 +293,7 @@ class World {
 
           break;
 
-          // Circle = spawn walkers in a circle around the center of the screen
+        // Circle = spawn walkers in a circle around the center of the screen
         case 'Circle':
           let radius = 50,
             angle = this.p5.random(360);
