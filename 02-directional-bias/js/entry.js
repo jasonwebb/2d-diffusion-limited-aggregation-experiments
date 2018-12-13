@@ -1,7 +1,8 @@
 import Settings from './Settings';
 import World from '../../core/World';
 
-let world;
+let world,
+    initialClusterType = 'Point';
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -12,6 +13,7 @@ const sketch = function (p5) {
 
     // Set up the simulation environment
     world = new World(p5, Settings);
+    world.settings.BiasTowards = 'Center';
 
     // Set up initial (seed) particles for clusters
     createInitialClusters();
@@ -32,7 +34,7 @@ const sketch = function (p5) {
   function createInitialClusters() {
     let particleCoords = [];
 
-    switch (Settings.InitialClusterType) {
+    switch (initialClusterType) {
       // Single particle in center of screen
       case 'Point':
         particleCoords.push({
@@ -58,7 +60,7 @@ const sketch = function (p5) {
 
       // Individual particles randomly distributed across entire screen
       case 'Random':
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 5; i++) {
           particleCoords.push({
             x: p5.random(world.edges.left, world.edges.right),
             y: p5.random(world.edges.top, world.edges.bottom)
@@ -69,19 +71,56 @@ const sketch = function (p5) {
 
       // Line of particles along an edge of the screen or frame
       case 'Wall':
-        let width = Settings.UseFrame ? 900 : window.innerWidth;
+        switch(world.settings.BiasTowards) {
+          case 'Top':
+            particleCoords = createHorizontalClusterWall(world.edges.top);
+            break;
 
-        for(let i = 0; i <= width/Settings.CircleDiameter; i++) {
-          particleCoords.push({
-            x: world.edges.left + i*Settings.CircleDiameter,
-            y: world.edges.bottom
-          });
+          case 'Bottom':
+            particleCoords = createHorizontalClusterWall(world.edges.bottom);
+            break;
+
+          case 'Left':
+            particleCoords = createVerticalClusterWall(world.edges.left);
+            break;
+
+          case 'Right':
+            particleCoords = createVerticalClusterWall(world.edges.right);
+            break;
         }
 
         break;
     }
 
     world.createClusterFromCoords(particleCoords);
+  }
+
+  function createHorizontalClusterWall(edge) {
+    let coords = [],
+        width = Settings.UseFrame ? 900 : window.innerWidth;
+
+    for(let i = 0; i <= width/Settings.CircleDiameter; i++) {
+      coords.push({
+        x: world.edges.left + i*Settings.CircleDiameter,
+        y: edge
+      });
+    }
+
+    return coords;
+  }
+
+  function createVerticalClusterWall(edge) {
+    let coords = [],
+        height = Settings.UseFrame ? 900 : window.innerHeight;
+
+    for(let i = 0; i <= height/Settings.CircleDiameter; i++) {
+      coords.push({
+        x: edge,
+        y: world.edges.top + i*Settings.CircleDiameter
+      });
+    }
+
+    return coords;
   }
 
   // Key handler ---------------------------------------------------------
@@ -106,27 +145,39 @@ const sketch = function (p5) {
       // Use numbers to change bias direction
       case '1':
         world.pause();
-        world.settings.BiasTowards = 'Bottom';
+        initialClusterType = 'Point';
+        world.settings.BiasTowards = 'Center';
         resetWorld();
         world.unpause();
         break;
 
       case '2':
         world.pause();
-        world.settings.BiasTowards = 'Top';
+        initialClusterType = 'Wall';
+        world.settings.BiasTowards = 'Bottom';
         resetWorld();
         world.unpause();
         break;
 
       case '3':
         world.pause();
-        world.settings.BiasTowards = 'Left';
+        initialClusterType = 'Wall';
+        world.settings.BiasTowards = 'Top';
         resetWorld();
         world.unpause();
         break;
 
       case '4':
         world.pause();
+        initialClusterType = 'Wall';
+        world.settings.BiasTowards = 'Left';
+        resetWorld();
+        world.unpause();
+        break;
+
+      case '5':
+        world.pause();
+        initialClusterType = 'Wall';
         world.settings.BiasTowards = 'Right';
         resetWorld();
         world.unpause();
