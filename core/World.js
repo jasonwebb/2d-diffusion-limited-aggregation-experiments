@@ -148,7 +148,8 @@ class World {
         if (!body.stuck) {
           // Start with a randomized movement (Brownian motion)
           let deltaX = this.p5.random(-1, 1),
-            deltaY = this.p5.random(-1, 1);
+            deltaY = this.p5.random(-1, 1),
+            angle;
 
           // Ensure only whole numbers for single-pixel particles so they are always 'on lattice'
           if(body._point) {
@@ -175,10 +176,17 @@ class World {
               break;
 
             case 'Center':
-              let angle = Math.atan2(window.innerHeight / 2 - body.y, window.innerWidth / 2 - body.x);
+              angle = Math.atan2(window.innerHeight / 2 - body.y, window.innerWidth / 2 - body.x);
               deltaX += Math.cos(angle) * this.settings.BiasForce;
               deltaY += Math.sin(angle) * this.settings.BiasForce;
               break;
+
+            case 'Edges':
+              angle = Math.atan2(window.innerHeight / 2 - body.y, window.innerWidth / 2 - body.x);
+              deltaX -= Math.cos(angle) * this.settings.BiasForce;
+              deltaY -= Math.sin(angle) * this.settings.BiasForce;
+              break;
+
           }
 
           // Apply deltas unless doing so would move the walker outside the sketch bounds

@@ -87,6 +87,14 @@ const sketch = function (p5) {
           case 'Right':
             particleCoords = createVerticalClusterWall(world.edges.right);
             break;
+
+          case 'Edges':
+            particleCoords = [];
+            particleCoords = particleCoords.concat(createHorizontalClusterWall(world.edges.top));
+            particleCoords = particleCoords.concat(createHorizontalClusterWall(world.edges.bottom));
+            particleCoords = particleCoords.concat(createVerticalClusterWall(world.edges.left));
+            particleCoords = particleCoords.concat(createVerticalClusterWall(world.edges.right));
+            break;
         }
 
         break;
@@ -179,6 +187,14 @@ const sketch = function (p5) {
         world.pause();
         initialClusterType = 'Wall';
         world.settings.BiasTowards = 'Right';
+        resetWorld();
+        world.unpause();
+        break;
+
+      case '6':
+        world.pause();
+        initialClusterType = 'Wall';
+        world.settings.BiasTowards = 'Edges';
         resetWorld();
         world.unpause();
         break;
