@@ -1,6 +1,9 @@
 export default {
   // Diameter of particles
-  CircleDiameter: 5,
+  CircleDiameter: 10,
+
+  // Add enough walkers to create lots of collisions, even without bias
+  MaxWalkers: 5000,
 
   // Method to use to set up initial cluster particles. Can be Point, Ring, or Random
   InitialClusterType: 'Random',

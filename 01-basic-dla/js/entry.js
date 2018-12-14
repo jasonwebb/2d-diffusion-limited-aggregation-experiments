@@ -30,25 +30,25 @@ const sketch = function (p5) {
   }
 
   function createInitialClusters() {
-    let particleCoords = [];
+    let params = [];
 
     switch (Settings.InitialClusterType) {
       // Single particle in center of screen
       case 'Point':
-        particleCoords.push({
+        params.push({
           x: window.innerWidth / 2,
           y: window.innerHeight / 2
         });
 
         break;
 
-        // Series of particles evenly spaced in a circle around center of screen
+      // Series of particles evenly spaced in a circle around center of screen
       case 'Ring':
         let radius = 100,
           numParticles = 20;
 
         for (let i = 0; i < numParticles; i++) {
-          particleCoords.push({
+          params.push({
             x: window.innerWidth / 2 + radius * Math.cos((360 / numParticles) * i * Math.PI / 180),
             y: window.innerHeight / 2 + radius * Math.sin((360 / numParticles) * i * Math.PI / 180)
           });
@@ -56,16 +56,16 @@ const sketch = function (p5) {
 
         break;
 
-        // Individual particles randomly distributed across entire screen
+      // Individual particles randomly distributed across entire screen
       case 'Random':
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 20; i++) {
           if (Settings.UseFrame) {
-            particleCoords.push({
+            params.push({
               x: p5.random(window.innerWidth/2 - 900/2, window.innerWidth/2 + 900/2),
               y: p5.random(window.innerHeight/2 - 900/2, window.innerHeight/2 + 900/2)
             });
           } else {
-            particleCoords.push({
+            params.push({
               x: p5.random(window.innerWidth),
               y: p5.random(window.innerHeight)
             });
@@ -75,7 +75,7 @@ const sketch = function (p5) {
         break;
     }
 
-    world.createClusterFromCoords(particleCoords);
+    world.createClusterFromParams(params);
   }
 
   // Key handler ---------------------------------------------------------
