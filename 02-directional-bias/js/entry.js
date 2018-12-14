@@ -2,7 +2,7 @@ import Settings from './Settings';
 import World from '../../core/World';
 
 let world,
-    initialClusterType = 'Point';
+    initialClusterType = 'Wall';
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -13,7 +13,7 @@ const sketch = function (p5) {
 
     // Set up the simulation environment
     world = new World(p5, Settings);
-    world.settings.BiasTowards = 'Center';
+    world.settings.BiasTowards = 'Bottom';
 
     // Set up initial (seed) particles for clusters
     createInitialClusters();
@@ -153,8 +153,8 @@ const sketch = function (p5) {
       // Use numbers to change bias direction
       case '1':
         world.pause();
-        initialClusterType = 'Point';
-        world.settings.BiasTowards = 'Center';
+        initialClusterType = 'Wall';
+        world.settings.BiasTowards = 'Bottom';
         resetWorld();
         world.unpause();
         break;
@@ -162,7 +162,7 @@ const sketch = function (p5) {
       case '2':
         world.pause();
         initialClusterType = 'Wall';
-        world.settings.BiasTowards = 'Bottom';
+        world.settings.BiasTowards = 'Top';
         resetWorld();
         world.unpause();
         break;
@@ -170,7 +170,7 @@ const sketch = function (p5) {
       case '3':
         world.pause();
         initialClusterType = 'Wall';
-        world.settings.BiasTowards = 'Top';
+        world.settings.BiasTowards = 'Left';
         resetWorld();
         world.unpause();
         break;
@@ -178,7 +178,7 @@ const sketch = function (p5) {
       case '4':
         world.pause();
         initialClusterType = 'Wall';
-        world.settings.BiasTowards = 'Left';
+        world.settings.BiasTowards = 'Right';
         resetWorld();
         world.unpause();
         break;
@@ -186,19 +186,18 @@ const sketch = function (p5) {
       case '5':
         world.pause();
         initialClusterType = 'Wall';
-        world.settings.BiasTowards = 'Right';
+        world.settings.BiasTowards = 'Edges';
         resetWorld();
         world.unpause();
         break;
 
       case '6':
         world.pause();
-        initialClusterType = 'Wall';
-        world.settings.BiasTowards = 'Edges';
+        initialClusterType = 'Point';
+        world.settings.BiasTowards = 'Center';
         resetWorld();
         world.unpause();
         break;
-
     }
   }
 }
