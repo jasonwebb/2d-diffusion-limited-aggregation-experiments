@@ -93,7 +93,7 @@ class World {
         } else if (body._circle) {
           this.p5.noStroke();
           this.p5.fill(230);
-          this.p5.ellipse(body.x, body.y, this.settings.CircleDiameter);
+          this.p5.ellipse(body.x, body.y, body.radius * 2);
         }
       } else if (body.stuck && this.showClusters) {
         if (body._point) {
@@ -102,8 +102,8 @@ class World {
           this.p5.point(body.x, body.y);
         } else if (body._circle) {
           this.p5.noStroke();
-          this.p5.fill(150);
-          this.p5.ellipse(body.x, body.y, this.settings.CircleDiameter);
+          this.p5.fill(120);
+          this.p5.ellipse(body.x, body.y, body.radius * 2);
         }
       }
     }
@@ -246,25 +246,37 @@ class World {
   //====================
   //  Create methods
   //====================
-  createParticle(x, y, stuck = false) {
-    let body;
+  createParticle(params) {
+    if(typeof params == 'undefined' || typeof params != 'object') {
+      return;
+    }
 
-    if (this.settings.CircleDiameter == 1) {
-      body = this.system.createPoint(x, y);
+    let body, circleDiameter;
+
+    if(params.hasOwnProperty('diameter') && typeof params.diameter != 'undefined') {
+      circleDiameter = params.diameter;
+    } else if(typeof this.settings.CircleDiameter != 'undefined') {
+      circleDiameter = this.settings.CircleDiameter;
+    } else if(typeof this.settings.CircleDiameterRange != 'undefined') {
+      circleDiameter = this.p5.random(this.settings.CircleDiameterRange[0], this.settings.CircleDiameterRange[1]);
+    }
+
+    if (circleDiameter == 1) {
+      body = this.system.createPoint(params.x, params.y);
       body._point = true;
-    } else {
-      body = this.system.createCircle(x, y, this.settings.CircleDiameter / 2);
+    } else {  
+      body = this.system.createCircle(params.x, params.y, circleDiameter / 2);
       body._circle = true;
     }
 
-    body.stuck = stuck;
+    body.stuck = params.hasOwnProperty('stuck') ? params.stuck : false;
     body.age = 0;
 
     this.bodies.push(body);
   }
 
-  createWalker(x, y) {
-    this.createParticle(x, y);
+  createWalker(params) {
+    this.createParticle(params);
     this.numWalkers++;
   }
 
@@ -275,27 +287,27 @@ class World {
       switch (this.settings.WalkerSource) {
         // Edges = spawn walkers at screen edges
         case 'Edges':
-          let edge = Math.round(p5.random(1, 4));
+          let edge = Math.round(this.p5.random(1, 4));
 
           switch (edge) {
             case 1: // top
-              x = p5.random(window.innerWidth);
-              y = 0;
+              x = this.p5.random(this.edges.left, this.edges.right);
+              y = this.edges.top;
               break;
 
             case 2: // right
-              x = window.innerWidth;
-              y = p5.random(window.innerHeight);
+              x = this.edges.right;
+              y = this.p5.random(this.edges.top, this.edges.bottom);
               break;
 
             case 3: // bottom
-              x = p5.random(window.innerWidth);
-              y = window.innerHeight;
+              x = this.p5.random(this.edges.left, this.edges.right);
+              y = this.edges.bottom;
               break;
 
             case 4: // left
-              x = 0;
-              y = p5.random(window.innerHeight);
+              x = this.edges.left;
+              y = this.p5.random(this.edges.top, this.edges.bottom);
               break;
           }
 
@@ -310,13 +322,21 @@ class World {
           y = window.innerHeight / 2 + radius * Math.sin(angle * Math.PI / 180);
           break;
 
-          // Random = spawn walkers randomly throughout the entire screen
+        // Random = spawn walkers randomly throughout the entire screen
         case 'Random':
           x = this.p5.random(this.edges.left, this.edges.right);
           y = this.p5.random(this.edges.top, this.edges.bottom);
           break;
 
-          // Center = spawn all walkers at screen center
+        case 'Random-Circle':
+          let a = this.p5.random(360),
+              r = this.p5.random(5, 900/2 - 20);
+
+          x = window.innerWidth / 2 + r * Math.cos(a * Math.PI / 180);
+          y = window.innerHeight / 2 + r * Math.sin(a * Math.PI / 180);
+          break;
+
+        // Center = spawn all walkers at screen center
         case 'Center':
           x = window.innerWidth / 2;
           y = window.innerHeight / 2;
@@ -324,7 +344,10 @@ class World {
       }
 
       // Create a walker with the coordinates
-      this.createWalker(Math.round(x), Math.round(y));
+      this.createWalker({
+        x: x, 
+        y: y
+      });
     }
   }
 
@@ -332,10 +355,14 @@ class World {
     this.createWalkers(this.settings.MaxWalkers);
   }
 
-  createClusterFromCoords(coordList) {
-    if (coordList.length > 0) {
-      for (let coords of coordList) {
-        this.createParticle(coords.x, coords.y, true);
+  createClusterFromParams(paramsList) {
+    if (paramsList.length > 0) {
+      for (let params of paramsList) {
+        this.createParticle({
+          x: params.x, 
+          y: params.y, 
+          stuck: true
+        });
       }
     }
   }
