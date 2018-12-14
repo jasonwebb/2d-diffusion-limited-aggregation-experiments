@@ -6,5 +6,5 @@ export default {
   UseFrame: true,
 
   // Hide walkers by default
-  ShowWalkers: false,
+  ShowWalkers: false
 };

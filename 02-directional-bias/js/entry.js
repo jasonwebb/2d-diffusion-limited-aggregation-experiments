@@ -32,12 +32,12 @@ const sketch = function (p5) {
   }
 
   function createInitialClusters() {
-    let particleCoords = [];
+    let params = [];
 
     switch (initialClusterType) {
       // Single particle in center of screen
       case 'Point':
-        particleCoords.push({
+        params.push({
           x: window.innerWidth / 2,
           y: window.innerHeight / 2
         });
@@ -50,7 +50,7 @@ const sketch = function (p5) {
           numParticles = 20;
 
         for (let i = 0; i < numParticles; i++) {
-          particleCoords.push({
+          params.push({
             x: window.innerWidth / 2 + radius * Math.cos((360 / numParticles) * i * Math.PI / 180),
             y: window.innerHeight / 2 + radius * Math.sin((360 / numParticles) * i * Math.PI / 180)
           });
@@ -61,7 +61,7 @@ const sketch = function (p5) {
       // Individual particles randomly distributed across entire screen
       case 'Random':
         for (let i = 0; i < 5; i++) {
-          particleCoords.push({
+          params.push({
             x: p5.random(world.edges.left, world.edges.right),
             y: p5.random(world.edges.top, world.edges.bottom)
           });
@@ -73,34 +73,33 @@ const sketch = function (p5) {
       case 'Wall':
         switch(world.settings.BiasTowards) {
           case 'Top':
-            particleCoords = createHorizontalClusterWall(world.edges.top);
+            params = createHorizontalClusterWall(world.edges.top);
             break;
 
           case 'Bottom':
-            particleCoords = createHorizontalClusterWall(world.edges.bottom);
+            params = createHorizontalClusterWall(world.edges.bottom);
             break;
 
           case 'Left':
-            particleCoords = createVerticalClusterWall(world.edges.left);
+            params = createVerticalClusterWall(world.edges.left);
             break;
 
           case 'Right':
-            particleCoords = createVerticalClusterWall(world.edges.right);
+            params = createVerticalClusterWall(world.edges.right);
             break;
 
           case 'Edges':
-            particleCoords = [];
-            particleCoords = particleCoords.concat(createHorizontalClusterWall(world.edges.top));
-            particleCoords = particleCoords.concat(createHorizontalClusterWall(world.edges.bottom));
-            particleCoords = particleCoords.concat(createVerticalClusterWall(world.edges.left));
-            particleCoords = particleCoords.concat(createVerticalClusterWall(world.edges.right));
+            params = params.concat(createHorizontalClusterWall(world.edges.top));
+            params = params.concat(createHorizontalClusterWall(world.edges.bottom));
+            params = params.concat(createVerticalClusterWall(world.edges.left));
+            params = params.concat(createVerticalClusterWall(world.edges.right));
             break;
         }
 
         break;
     }
 
-    world.createClusterFromCoords(particleCoords);
+    world.createClusterFromParams(params);
   }
 
   function createHorizontalClusterWall(edge) {
