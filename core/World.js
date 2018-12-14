@@ -41,6 +41,9 @@ class World {
     this.edges.top = this.settings.UseFrame ? this.frame.top : 0;
     this.edges.bottom = this.settings.UseFrame ? this.frame.bottom : window.innerHeight;
 
+    // Precalculate the largest possible distance of any particle to center for use in distance-based effects later
+    this.maxDistance = this.p5.dist(this.edges.left, this.edges.top, window.innerWidth / 2, window.innerHeight / 2);
+
     // Collision system
     this.system = new Collisions();
     this.bodies = [];
@@ -282,7 +285,7 @@ class World {
 
   createWalkers(count) {
     for (let i = 0; i < count; i++) {
-      let x, y;
+      let params = {};
 
       switch (this.settings.WalkerSource) {
         // Edges = spawn walkers at screen edges
@@ -291,23 +294,23 @@ class World {
 
           switch (edge) {
             case 1: // top
-              x = this.p5.random(this.edges.left, this.edges.right);
-              y = this.edges.top;
+              params.x = this.p5.random(this.edges.left, this.edges.right);
+              params.y = this.edges.top;
               break;
 
             case 2: // right
-              x = this.edges.right;
-              y = this.p5.random(this.edges.top, this.edges.bottom);
+              params.x = this.edges.right;
+              params.y = this.p5.random(this.edges.top, this.edges.bottom);
               break;
 
             case 3: // bottom
-              x = this.p5.random(this.edges.left, this.edges.right);
-              y = this.edges.bottom;
+              params.x = this.p5.random(this.edges.left, this.edges.right);
+              params.y = this.edges.bottom;
               break;
 
             case 4: // left
-              x = this.edges.left;
-              y = this.p5.random(this.edges.top, this.edges.bottom);
+              params.x = this.edges.left;
+              params.y = this.p5.random(this.edges.top, this.edges.bottom);
               break;
           }
 
@@ -318,36 +321,39 @@ class World {
           let radius = 50,
             angle = this.p5.random(360);
 
-          x = window.innerWidth / 2 + radius * Math.cos(angle * Math.PI / 180);
-          y = window.innerHeight / 2 + radius * Math.sin(angle * Math.PI / 180);
+          params.x = window.innerWidth / 2 + radius * Math.cos(angle * Math.PI / 180);
+          params.y = window.innerHeight / 2 + radius * Math.sin(angle * Math.PI / 180);
           break;
 
         // Random = spawn walkers randomly throughout the entire screen
         case 'Random':
-          x = this.p5.random(this.edges.left, this.edges.right);
-          y = this.p5.random(this.edges.top, this.edges.bottom);
+          params.x = this.p5.random(this.edges.left, this.edges.right);
+          params.y = this.p5.random(this.edges.top, this.edges.bottom);
           break;
 
         case 'Random-Circle':
           let a = this.p5.random(360),
               r = this.p5.random(5, 900/2 - 20);
 
-          x = window.innerWidth / 2 + r * Math.cos(a * Math.PI / 180);
-          y = window.innerHeight / 2 + r * Math.sin(a * Math.PI / 180);
+          params.x = window.innerWidth / 2 + r * Math.cos(a * Math.PI / 180);
+          params.y = window.innerHeight / 2 + r * Math.sin(a * Math.PI / 180);
           break;
 
         // Center = spawn all walkers at screen center
         case 'Center':
-          x = window.innerWidth / 2;
-          y = window.innerHeight / 2;
+          params.x = window.innerWidth / 2;
+          params.y = window.innerHeight / 2;
           break;
       }
 
+      // Vary diameter based on distance, if enabled
+      if(this.settings.VaryDiameterByDistance) {
+        let dist = this.p5.dist(params.x, params.y, window.innerWidth / 2, window.innerHeight / 2);
+        params.diameter = this.p5.map(dist, 0, this.maxDistance, this.settings.CircleDiameterRange[0], this.settings.CircleDiameterRange[1]);
+      }
+
       // Create a walker with the coordinates
-      this.createWalker({
-        x: x, 
-        y: y
-      });
+      this.createWalker(params);
     }
   }
 
