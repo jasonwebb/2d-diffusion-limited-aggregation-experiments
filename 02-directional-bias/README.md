@@ -1,6 +1,6 @@
 # 02 - directional bias
 
-## Keyboard commands
+# Keyboard commands
 
 | Key | Result                                                     |
 |---  |---                                                         |
@@ -10,3 +10,7 @@
 | `4` | Bias towards left edge with cluster wall on left edge.     |
 | `5` | Bias towards right edge with cluster wall on right edge.   |
 | `6` | Bias away from center with cluster walls on all edges.     |
+
+# Samples
+
+![Directional bias](images/social-media-preview.png)
