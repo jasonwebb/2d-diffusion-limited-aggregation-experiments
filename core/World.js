@@ -202,6 +202,24 @@ class World {
               deltaY -= Math.sin(angle) * this.settings.BiasForce;
               break;
 
+            case 'Equator':
+              if(body.y < window.innerHeight / 2) {
+                deltaY += this.settings.BiasForce;
+              } else {
+                deltaY -= this.settings.BiasForce;
+              }
+
+              break;
+
+            case 'Meridian':
+              if(body.x < window.innerWidth / 2) {
+                deltaX += this.settings.BiasForce;
+              } else {
+                deltaX -= this.settings.BiasForce;
+              }
+
+              break;
+              
           }
 
           // Apply deltas unless doing so would move the walker outside the sketch bounds

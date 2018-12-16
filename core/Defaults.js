@@ -20,7 +20,8 @@ export default {
   // Probability that a collision will make a walker stick to cluster
   Stickiness: .9,
 
-  // Direction to move all walkers each iteration. Can be Top, Bottom, Left, Right, Center, and Edges. All other values, including nothing, disable bias
+  // Direction to move all walkers each iteration. 
+  // Can be Top, Bottom, Left, Right, Center, Edges, Equator, or Meridian. All other values, including nothing, disable bias
   BiasTowards: 'Center',
 
   // Magnitude of walker bias force. Higher values mean faster movement
