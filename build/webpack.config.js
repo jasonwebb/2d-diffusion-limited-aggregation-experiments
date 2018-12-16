@@ -5,7 +5,8 @@ module.exports = {
   entry: {
     basicDLA: path.resolve('../01-basic-dla/js/entry.js'),
     directionalBias: path.resolve('../02-directional-bias/js/entry.js'),
-    differentSizes: path.resolve('../03-different-sizes/js/entry.js')
+    differentSizes: path.resolve('../03-different-sizes/js/entry.js'),
+    differentShapes: path.resolve('../04-different-shapes/js/entry.js')
   },
   devtool: 'inline-source-map',
   devServer: {
