@@ -14,6 +14,7 @@ const sketch = function (p5) {
     // Set up the simulation environment
     world = new World(p5, Settings);
     world.settings.BiasTowards = 'Bottom';
+    world.createInitialWalkers();
 
     // Set up initial (seed) particles for clusters
     createInitialClusters();
@@ -32,14 +33,15 @@ const sketch = function (p5) {
   }
 
   function createInitialClusters() {
-    let params = [];
+    let paramsList = [];
 
     switch (initialClusterType) {
       // Single particle in center of screen
       case 'Point':
-        params.push({
+        paramsList.push({
           x: window.innerWidth / 2,
-          y: window.innerHeight / 2
+          y: window.innerHeight / 2,
+          diameter: Settings.CircleDiameter
         });
 
         break;
@@ -50,9 +52,10 @@ const sketch = function (p5) {
           numParticles = 20;
 
         for (let i = 0; i < numParticles; i++) {
-          params.push({
+          paramsList.push({
             x: window.innerWidth / 2 + radius * Math.cos((360 / numParticles) * i * Math.PI / 180),
-            y: window.innerHeight / 2 + radius * Math.sin((360 / numParticles) * i * Math.PI / 180)
+            y: window.innerHeight / 2 + radius * Math.sin((360 / numParticles) * i * Math.PI / 180),
+            diameter: Settings.CircleDiameter
           });
         }
 
@@ -61,9 +64,10 @@ const sketch = function (p5) {
       // Individual particles randomly distributed across entire screen
       case 'Random':
         for (let i = 0; i < 5; i++) {
-          params.push({
+          paramsList.push({
             x: p5.random(world.edges.left, world.edges.right),
-            y: p5.random(world.edges.top, world.edges.bottom)
+            y: p5.random(world.edges.top, world.edges.bottom),
+            diameter: Settings.CircleDiameter
           });
         }
 
@@ -73,33 +77,33 @@ const sketch = function (p5) {
       case 'Wall':
         switch(world.settings.BiasTowards) {
           case 'Top':
-            params = createHorizontalClusterWall(world.edges.top);
+            paramsList = createHorizontalClusterWall(world.edges.top);
             break;
 
           case 'Bottom':
-            params = createHorizontalClusterWall(world.edges.bottom);
+            paramsList = createHorizontalClusterWall(world.edges.bottom);
             break;
 
           case 'Left':
-            params = createVerticalClusterWall(world.edges.left);
+            paramsList = createVerticalClusterWall(world.edges.left);
             break;
 
           case 'Right':
-            params = createVerticalClusterWall(world.edges.right);
+            paramsList = createVerticalClusterWall(world.edges.right);
             break;
 
           case 'Edges':
-            params = params.concat(createHorizontalClusterWall(world.edges.top));
-            params = params.concat(createHorizontalClusterWall(world.edges.bottom));
-            params = params.concat(createVerticalClusterWall(world.edges.left));
-            params = params.concat(createVerticalClusterWall(world.edges.right));
+            paramsList = paramsList.concat(createHorizontalClusterWall(world.edges.top));
+            paramsList = paramsList.concat(createHorizontalClusterWall(world.edges.bottom));
+            paramsList = paramsList.concat(createVerticalClusterWall(world.edges.left));
+            paramsList = paramsList.concat(createVerticalClusterWall(world.edges.right));
             break;
         }
 
         break;
     }
 
-    world.createClusterFromParams(params);
+    world.createClusterFromParams(paramsList);
   }
 
   function createHorizontalClusterWall(edge) {
@@ -109,7 +113,8 @@ const sketch = function (p5) {
     for(let i = 0; i <= width/Settings.CircleDiameter; i++) {
       coords.push({
         x: world.edges.left + i*Settings.CircleDiameter,
-        y: edge
+        y: edge,
+        diameter: Settings.CircleDiameter
       });
     }
 
@@ -123,7 +128,8 @@ const sketch = function (p5) {
     for(let i = 0; i <= height/Settings.CircleDiameter; i++) {
       coords.push({
         x: edge,
-        y: world.edges.top + i*Settings.CircleDiameter
+        y: world.edges.top + i*Settings.CircleDiameter,
+        diameter: Settings.CircleDiameter
       });
     }
 

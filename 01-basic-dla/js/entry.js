@@ -12,6 +12,7 @@ const sketch = function (p5) {
 
     // Set up the simulation environment
     world = new World(p5, Settings);
+    world.createInitialWalkers();
 
     // Set up initial (seed) particles for clusters
     createInitialClusters();
@@ -58,18 +59,11 @@ const sketch = function (p5) {
 
       // Individual particles randomly distributed across entire screen
       case 'Random':
-        for (let i = 0; i < 20; i++) {
-          if (Settings.UseFrame) {
-            params.push({
-              x: p5.random(window.innerWidth/2 - 900/2, window.innerWidth/2 + 900/2),
-              y: p5.random(window.innerHeight/2 - 900/2, window.innerHeight/2 + 900/2)
-            });
-          } else {
-            params.push({
-              x: p5.random(window.innerWidth),
-              y: p5.random(window.innerHeight)
-            });
-          }
+        for (let i = 0; i < 5; i++) {
+          params.push({
+            x: p5.random(world.edges.left, world.edges.right),
+            y: p5.random(world.edges.top, world.edges.bottom)
+          });
         }
 
         break;
