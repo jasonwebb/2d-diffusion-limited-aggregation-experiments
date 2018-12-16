@@ -98,6 +98,14 @@ const sketch = function (p5) {
             paramsList = paramsList.concat(createVerticalClusterWall(world.edges.left));
             paramsList = paramsList.concat(createVerticalClusterWall(world.edges.right));
             break;
+          
+          case 'Equator':
+            paramsList = paramsList.concat(createHorizontalClusterWall(window.innerHeight / 2));
+            break;
+
+          case 'Meridian':
+            paramsList = paramsList.concat(createVerticalClusterWall(window.innerWidth /2 ));
+            break;
         }
 
         break;
@@ -191,12 +199,28 @@ const sketch = function (p5) {
       case '5':
         world.pause();
         initialClusterType = 'Wall';
-        world.settings.BiasTowards = 'Edges';
+        world.settings.BiasTowards = 'Equator';
         resetWorld();
         world.unpause();
         break;
 
       case '6':
+        world.pause();
+        initialClusterType = 'Wall';
+        world.settings.BiasTowards = 'Meridian';
+        resetWorld();
+        world.unpause();
+        break;
+
+      case '7':
+        world.pause();
+        initialClusterType = 'Wall';
+        world.settings.BiasTowards = 'Edges';
+        resetWorld();
+        world.unpause();
+        break;
+
+      case '8':
         world.pause();
         initialClusterType = 'Point';
         world.settings.BiasTowards = 'Center';
