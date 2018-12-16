@@ -164,7 +164,7 @@ class World {
           // Start with a randomized movement (Brownian motion)
           let deltaX = this.p5.random(-1, 1),
             deltaY = this.p5.random(-1, 1),
-            angle;
+            deltas;
 
           // Ensure only whole numbers for single-pixel particles so they are always 'on lattice'
           if(body._point) {
@@ -191,15 +191,15 @@ class World {
               break;
 
             case 'Center':
-              angle = Math.atan2(window.innerHeight / 2 - body.y, window.innerWidth / 2 - body.x);
-              deltaX += Math.cos(angle) * this.settings.BiasForce;
-              deltaY += Math.sin(angle) * this.settings.BiasForce;
+              deltas = this.getDeltasTowards(body.x, body.y, window.innerWidth / 2, window.innerHeight / 2);
+              deltaX += deltas.x;
+              deltaY += deltas.y;
               break;
 
             case 'Edges':
-              angle = Math.atan2(window.innerHeight / 2 - body.y, window.innerWidth / 2 - body.x);
-              deltaX -= Math.cos(angle) * this.settings.BiasForce;
-              deltaY -= Math.sin(angle) * this.settings.BiasForce;
+              deltas = this.getDeltasTowards(body.x, body.y, window.innerWidth / 2, window.innerHeight / 2);
+              deltaX -= deltas.x;
+              deltaY -= deltas.y;
               break;
 
             case 'Equator':
@@ -235,6 +235,15 @@ class World {
           body.age++;
         }
       }
+    }
+  }
+
+  getDeltasTowards(bodyX, bodyY, targetX, targetY) {
+    let angle = Math.atan2(targetY - bodyY, targetX - bodyX);
+    
+    return {
+      x: Math.cos(angle) * this.settings.BiasForce,
+      y: Math.sin(angle) * this.settings.BiasForce
     }
   }
 
