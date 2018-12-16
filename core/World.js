@@ -105,9 +105,9 @@ class World {
       } else if(body._polygon) {
         this.p5.noStroke();
 
-        if(body.stuck && this.showWalkers) {
+        if(body.stuck && this.showClusters) {
           this.p5.fill(120);
-        } else if(!body.stuck && this.showClusters) {
+        } else if(!body.stuck && this.showWalkers) {
           this.p5.fill(230);
         } else {
           this.p5.noFill();
