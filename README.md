@@ -49,3 +49,10 @@ To statically _build_ the code in this repo, run `npm run build` in the `./build
 * [Diffusion-Limited Aggregation](https://softologyblog.wordpress.com/tag/diffusion-limited-aggregation/) by Softology
 * [Diffusion-limited aggregation: A kinetic critical phenomenon?](http://www.thp.uni-koeln.de/krug/teaching-Dateien/SS2012/Sander2000.pdf) (PDF) by Leonard M. Sander
 * [Dendron](http://www.flong.com/projects/dendron/) Processing sketch by Golan Levin
+
+## Samples
+
+![Basic DLA](01-basic-dla/images/social-media-preview.png)
+![Directional bias](02-directional-bias/images/social-media-preview.png)
+![Different sizes](03-different-sizes/images/social-media-preview.png)
+![Different shapes](04-different-shapes/images/social-media-preview.png)
