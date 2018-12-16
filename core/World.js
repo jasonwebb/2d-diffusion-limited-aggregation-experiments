@@ -47,9 +47,6 @@ class World {
     // Collision system
     this.system = new Collisions();
     this.bodies = [];
-
-    // Spawn initial walkers
-    this.createInitialWalkers();
   }
 
 
@@ -84,30 +81,45 @@ class World {
   draw() {
     this.p5.background(255);
 
-    // TODO: combine conditionals into one layer
-
-    // Draw all particles (both walkers and clustered particles)
     for (let body of this.bodies) {
-      if (!body.stuck && this.showWalkers) {
-        if (body._point) {
-          this.p5.stroke(0);
-          this.p5.noFill();
-          this.p5.point(body.x, body.y);
-        } else if (body._circle) {
-          this.p5.noStroke();
-          this.p5.fill(230);
-          this.p5.ellipse(body.x, body.y, body.radius * 2);
-        }
-      } else if (body.stuck && this.showClusters) {
-        if (body._point) {
-          this.p5.stroke(0);
-          this.p5.noFill();
-          this.p5.point(body.x, body.y);
-        } else if (body._circle) {
-          this.p5.noStroke();
+      // Points
+      if(body._point) {
+
+        // TODO: implement drawing of points
+
+      // Circles
+      } else if(body._circle) {
+        this.p5.noStroke();
+
+        if(body.stuck && this.showClusters) {
           this.p5.fill(120);
-          this.p5.ellipse(body.x, body.y, body.radius * 2);
+        } else if(!body.stuck && this.showWalkers) {
+          this.p5.fill(230);
+        } else {
+          this.p5.noFill();
         }
+
+        this.p5.ellipse(body.x, body.y, body.radius * 2);
+
+      // Polygons
+      } else if(body._polygon) {
+        this.p5.noStroke();
+
+        if(body.stuck && this.showWalkers) {
+          this.p5.fill(120);
+        } else if(!body.stuck && this.showClusters) {
+          this.p5.fill(230);
+        } else {
+          this.p5.noFill();
+        }
+
+        this.p5.beginShape();
+
+          for(let i = 0; i < body._coords.length - 1; i += 2) {
+            this.p5.vertex(body._coords[i], body._coords[i + 1]);
+          }
+
+        this.p5.endShape();
       }
     }
 
@@ -254,21 +266,29 @@ class World {
       return;
     }
 
-    let body, circleDiameter;
+    let body;
 
-    if(params.hasOwnProperty('diameter') && typeof params.diameter != 'undefined') {
-      circleDiameter = params.diameter;
-    } else if(typeof this.settings.CircleDiameter != 'undefined') {
-      circleDiameter = this.settings.CircleDiameter;
-    } else if(typeof this.settings.CircleDiameterRange != 'undefined') {
-      circleDiameter = this.p5.random(this.settings.CircleDiameterRange[0], this.settings.CircleDiameterRange[1]);
-    }
+    if(params.hasOwnProperty('type')) {
+      switch(params.type) {
+        case 'Point':
+          body = this.system.createPoint(params.x, params.y);
+          body._point = true;
+          break;
 
-    if (circleDiameter == 1) {
-      body = this.system.createPoint(params.x, params.y);
-      body._point = true;
-    } else {  
-      body = this.system.createCircle(params.x, params.y, circleDiameter / 2);
+        case 'Circle':
+          body = this.system.createCircle(params.x, params.y, params.diameter / 2);
+          body._circle = true;
+          break;
+
+        case 'Polygon':
+          body = this.system.createPolygon(params.x, params.y, params.polygon, params.hasOwnProperty('rotation') ? this.p5.radians(params.rotation) : 0);
+          body._polygon = true;
+          break;
+      }
+    } else {
+      const defaultDiameter = this.settings.hasOwnProperty('CircleDiameter') ? this.settings.CircleDiameter : this.settings.DefaultCircleDiameter;
+      const diameter = params.hasOwnProperty('diameter') ? params.diameter : defaultDiameter;
+      body = this.system.createCircle(params.x, params.y, diameter / 2);
       body._circle = true;
     }
 
@@ -364,11 +384,8 @@ class World {
   createClusterFromParams(paramsList) {
     if (paramsList.length > 0) {
       for (let params of paramsList) {
-        this.createParticle({
-          x: params.x, 
-          y: params.y, 
-          stuck: true
-        });
+        params.stuck = true;
+        this.createParticle(params);
       }
     }
   }
