@@ -14,7 +14,6 @@ const sketch = function (p5) {
     // Set up the simulation environment
     world = new World(p5, Settings);
     world.createInitialWalkers();
-    world.pause();
 
     // Set up initial (seed) particles for clusters
     createInitialClusters();

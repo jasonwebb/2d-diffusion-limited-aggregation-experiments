@@ -59,7 +59,7 @@ const sketch = function (p5) {
 
       // Individual particles randomly distributed across entire screen
       case 'Random':
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 20; i++) {
           params.push({
             x: p5.random(world.edges.left, world.edges.right),
             y: p5.random(world.edges.top, world.edges.bottom)

@@ -21,7 +21,7 @@ export default {
   Stickiness: .9,
 
   // Direction to move all walkers each iteration. Can be Top, Bottom, Left, Right, Center, and Edges. All other values, including nothing, disable bias
-  BiasTowards: '',
+  BiasTowards: 'Center',
 
   // Magnitude of walker bias force. Higher values mean faster movement
   BiasForce: 1,

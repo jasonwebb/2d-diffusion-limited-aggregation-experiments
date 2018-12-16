@@ -2,7 +2,7 @@ import Settings from './Settings';
 import World from '../../core/World';
 
 let world,
-    currentClusterType = 'Random',
+    currentClusterType = 'Point',
     currentWalkerShape = Settings.WalkerShape;
 
 const sketch = function (p5) {
@@ -14,7 +14,6 @@ const sketch = function (p5) {
 
     // Set up the simulation environment
     world = new World(p5, Settings);
-    world.pause();
 
     // Set up initial (seed) particles for clusters
     createInitialClusters();
@@ -43,9 +42,7 @@ const sketch = function (p5) {
       case 'Point':
         paramsList.push({
           x: window.innerWidth / 2,
-          y: window.innerHeight / 2,
-          type: 'Circle',
-          diameter: 5
+          y: window.innerHeight / 2
         });
 
         break;
@@ -55,9 +52,7 @@ const sketch = function (p5) {
         for (let i = 0; i < 50; i++) {
           paramsList.push({
             x: p5.random(world.edges.left, world.edges.right),
-            y: p5.random(world.edges.top, world.edges.bottom),
-            type: 'Circle',
-            diameter: 5
+            y: p5.random(world.edges.top, world.edges.bottom)
           });
         }
 
@@ -97,6 +92,15 @@ const sketch = function (p5) {
 
   // Create walkers ------------------------------------------------------
   function createInitialWalkers() {
+    switch(currentWalkerShape) {
+      case 'Triangle':
+        Settings.MaxWalkers = 2000;
+        break;
+      default:
+        Settings.MaxWalkers = 1000;
+        break;
+    }
+
     for(let i = 0; i < Settings.MaxWalkers; i++) {
       let params = {}, numPoints;
 

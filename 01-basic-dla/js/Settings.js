@@ -12,5 +12,5 @@ export default {
   UseFrame: true,
 
   // Disable bias effect
-  BiasTowards: ''
+  BiasTowards: 'None'
 };
