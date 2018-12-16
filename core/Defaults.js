@@ -1,4 +1,7 @@
 export default {
+  // Default size of walkers, if none is provided through local Settings
+  DefaultCircleDiameter: 10,
+
   // Visibility of clustered particles
   ShowClusters: true,
   
