@@ -12,10 +12,10 @@ const sketch = function (p5) {
 
     // Set up the simulation environment
     world = new World(p5, Settings);
-    world.createInitialWalkers();
 
-    // Set up initial (seed) particles for clusters
-    createInitialClusters();
+    // Use default walkers and clusters
+    world.createDefaultWalkers();
+    world.createDefaultClusters();
   }
 
   // Draw ----------------------------------------------------------------
@@ -26,50 +26,8 @@ const sketch = function (p5) {
 
   function resetWorld() {
     world.removeAll();
-    world.createInitialWalkers();
-    createInitialClusters();
-  }
-
-  function createInitialClusters() {
-    let params = [];
-
-    switch (Settings.InitialClusterType) {
-      // Single particle in center of screen
-      case 'Point':
-        params.push({
-          x: window.innerWidth / 2,
-          y: window.innerHeight / 2
-        });
-
-        break;
-
-      // Series of particles evenly spaced in a circle around center of screen
-      case 'Ring':
-        let radius = 100,
-          numParticles = 20;
-
-        for (let i = 0; i < numParticles; i++) {
-          params.push({
-            x: window.innerWidth / 2 + radius * Math.cos((360 / numParticles) * i * Math.PI / 180),
-            y: window.innerHeight / 2 + radius * Math.sin((360 / numParticles) * i * Math.PI / 180)
-          });
-        }
-
-        break;
-
-      // Individual particles randomly distributed across entire screen
-      case 'Random':
-        for (let i = 0; i < 20; i++) {
-          params.push({
-            x: p5.random(world.edges.left, world.edges.right),
-            y: p5.random(world.edges.top, world.edges.bottom)
-          });
-        }
-
-        break;
-    }
-
-    world.createClusterFromParams(params);
+    world.createDefaultWalkers();
+    world.createDefaultClusters();
   }
 
   // Key handler ---------------------------------------------------------

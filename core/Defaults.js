@@ -2,6 +2,9 @@ export default {
   // Default size of walkers, if none is provided through local Settings
   DefaultCircleDiameter: 10,
 
+  // Default cluster pattern, if none is provided through local Settings
+  DefaultInitialClusterType: 'Random',
+
   // Visibility of clustered particles
   ShowClusters: true,
   

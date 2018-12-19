@@ -2,7 +2,6 @@ import Settings from './Settings';
 import World from '../../core/World';
 
 let world,
-    currentClusterType = 'Point',
     currentWalkerShape = Settings.WalkerShape;
 
 const sketch = function (p5) {
@@ -14,12 +13,10 @@ const sketch = function (p5) {
 
     // Set up the simulation environment
     world = new World(p5, Settings);
+    world.createDefaultClusters('Point');
 
-    // Set up initial (seed) particles for clusters
-    createInitialClusters();
-
-    // Create initial walkers through custom function for more control over shape
-    createInitialWalkers();
+    // Use custom method to create particles with different shapes
+    createCustomWalkers();
   }
 
   // Draw ----------------------------------------------------------------
@@ -30,68 +27,12 @@ const sketch = function (p5) {
 
   function resetWorld() {
     world.removeAll();
-    createInitialWalkers();
-    createInitialClusters();
-  }
-
-  function createInitialClusters() {
-    let paramsList = [];
-
-    switch (currentClusterType) {
-      // Single particle in center of screen
-      case 'Point':
-        paramsList.push({
-          x: window.innerWidth / 2,
-          y: window.innerHeight / 2
-        });
-
-        break;
-
-      // Individual particles randomly distributed across entire screen
-      case 'Random':
-        for (let i = 0; i < 50; i++) {
-          paramsList.push({
-            x: p5.random(world.edges.left, world.edges.right),
-            y: p5.random(world.edges.top, world.edges.bottom)
-          });
-        }
-
-        break;
-    }
-
-    world.createClusterFromParams(paramsList);
-  }
-
-  function createHorizontalClusterWall(edge) {
-    let coords = [],
-        width = Settings.UseFrame ? 900 : window.innerWidth;
-
-    for(let i = 0; i <= width/5; i++) {
-      coords.push({
-        x: world.edges.left + i*5,
-        y: edge
-      });
-    }
-
-    return coords;
-  }
-
-  function createVerticalClusterWall(edge) {
-    let coords = [],
-        height = Settings.UseFrame ? 900 : window.innerHeight;
-
-    for(let i = 0; i <= height/5; i++) {
-      coords.push({
-        x: edge,
-        y: world.edges.top + i*5
-      });
-    }
-
-    return coords;
+    world.createDefaultClusters('Point');
+    createCustomWalkers();
   }
 
   // Create walkers ------------------------------------------------------
-  function createInitialWalkers() {
+  function createCustomWalkers() {
     switch(currentWalkerShape) {
       case 'Triangle':
         Settings.MaxWalkers = 2000;

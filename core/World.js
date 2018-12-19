@@ -7,7 +7,7 @@ import Collisions from 'collisions';
 =============================================================================
 */
 
-class World {
+export default class World {
   constructor(p5, settings) {
     this.p5 = p5;
     this.settings = Object.assign({}, Defaults, settings);
@@ -166,12 +166,6 @@ class World {
             deltaY = this.p5.random(-1, 1),
             deltas;
 
-          // Ensure only whole numbers for single-pixel particles so they are always 'on lattice'
-          if(body._point) {
-            deltaX = Math.round(deltaX);
-            deltaY = Math.round(deltaY);
-          }
-
           // Add in a bias towards a specific direction, if set
           switch (this.settings.BiasTowards) {
             case 'Top':
@@ -220,6 +214,12 @@ class World {
 
               break;
               
+          }
+
+          // Ensure only whole numbers for single-pixel particles so they are always "on lattice"
+          if(body._point) {
+            deltaX = Math.round(deltaX);
+            deltaY = Math.round(deltaY);
           }
 
           // Apply deltas unless doing so would move the walker outside the sketch bounds
@@ -330,7 +330,7 @@ class World {
     this.numWalkers++;
   }
 
-  createWalkers(count) {
+  createDefaultWalkers(count = this.settings.MaxWalkers) {
     for (let i = 0; i < count; i++) {
       let params = {};
 
@@ -404,9 +404,117 @@ class World {
     }
   }
 
-  createInitialWalkers() {
-    this.createWalkers(this.settings.MaxWalkers);
+  createDefaultClusters(clusterType = this.settings.DefaultInitialClusterType) {
+    let paramsList = [];
+
+    switch (clusterType) {
+      // Single particle in center of screen
+      case 'Point':
+        paramsList.push({
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2,
+          diameter: this.settings.DefaultCircleDiameter
+        });
+
+        break;
+
+      // Series of particles evenly spaced in a circle around center of screen
+      case 'Ring':
+        let radius = 100,
+          numParticles = 20;
+
+        for (let i = 0; i < numParticles; i++) {
+          paramsList.push({
+            x: window.innerWidth / 2 + radius * Math.cos((360 / numParticles) * i * Math.PI / 180),
+            y: window.innerHeight / 2 + radius * Math.sin((360 / numParticles) * i * Math.PI / 180),
+            diameter: this.settings.DefaultCircleDiameter
+          });
+        }
+
+        break;
+
+      // Individual particles randomly distributed across entire screen
+      case 'Random':
+        for (let i = 0; i < 5; i++) {
+          paramsList.push({
+            x: this.p5.random(this.edges.left, this.edges.right),
+            y: this.p5.random(this.edges.top, this.edges.bottom),
+            diameter: this.settings.DefaultCircleDiameter
+          });
+        }
+
+        break;
+
+      // Line of particles along an edge of the screen or frame
+      case 'Wall':
+        switch(this.settings.BiasTowards) {
+          case 'Top':
+            paramsList = this.createHorizontalClusterWall(this.edges.top);
+            break;
+
+          case 'Bottom':
+            paramsList = this.createHorizontalClusterWall(this.edges.bottom);
+            break;
+
+          case 'Left':
+            paramsList = this.createVerticalClusterWall(this.edges.left);
+            break;
+
+          case 'Right':
+            paramsList = this.createVerticalClusterWall(this.edges.right);
+            break;
+
+          case 'Edges':
+            paramsList = paramsList.concat(this.createHorizontalClusterWall(this.edges.top));
+            paramsList = paramsList.concat(this.createHorizontalClusterWall(this.edges.bottom));
+            paramsList = paramsList.concat(this.createVerticalClusterWall(this.edges.left));
+            paramsList = paramsList.concat(this.createVerticalClusterWall(this.edges.right));
+            break;
+          
+          case 'Equator':
+            paramsList = paramsList.concat(this.createHorizontalClusterWall(window.innerHeight / 2));
+            break;
+
+          case 'Meridian':
+            paramsList = paramsList.concat(this.createVerticalClusterWall(window.innerWidth /2 ));
+            break;
+        }
+
+        break;
+    }
+
+    this.createClusterFromParams(paramsList);
   }
+
+    createHorizontalClusterWall(edge) {
+      let coords = [],
+          width = this.settings.UseFrame ? 900 : window.innerWidth;
+
+      for(let i = 0; i <= width/this.settings.CircleDiameter; i++) {
+        coords.push({
+          x: this.edges.left + i*this.settings.CircleDiameter,
+          y: edge,
+          diameter: this.settings.CircleDiameter
+        });
+      }
+
+      return coords;
+    }
+
+    createVerticalClusterWall(edge) {
+      let coords = [],
+          height = this.settings.UseFrame ? 900 : window.innerHeight;
+
+      for(let i = 0; i <= height/this.settings.CircleDiameter; i++) {
+        coords.push({
+          x: edge,
+          y: this.edges.top + i*this.settings.CircleDiameter,
+          diameter: this.settings.CircleDiameter
+        });
+      }
+
+      return coords;
+    }
 
   createClusterFromParams(paramsList) {
     if (paramsList.length > 0) {
@@ -431,9 +539,9 @@ class World {
   }
 
 
-  //=================
+  //==============
   //  Togglers
-  //=================
+  //==============
   togglePause() {
     this.paused = !this.paused;
   }
@@ -459,5 +567,3 @@ class World {
   }
 
 }
-
-export default World;
