@@ -16,6 +16,7 @@ export default class World {
     this.paused = false;
     this.showWalkers = this.settings.ShowWalkers;
     this.showClusters = this.settings.ShowClusters;
+    this.useFrame = this.settings.UseFrame;
 
     // Number of active walkers
     this.numWalkers = 0;
@@ -36,10 +37,7 @@ export default class World {
       this.frame.bottom = window.innerHeight / 2 + this.settings.FrameSize[1] / 2;
     }
 
-    this.edges.left = this.settings.UseFrame ? this.frame.left : 0;
-    this.edges.right = this.settings.UseFrame ? this.frame.right : window.innerWidth;
-    this.edges.top = this.settings.UseFrame ? this.frame.top : 0;
-    this.edges.bottom = this.settings.UseFrame ? this.frame.bottom : window.innerHeight;
+    this.resetEdges();
 
     // Precalculate the largest possible distance of any particle to center for use in distance-based effects later
     this.maxDistance = this.p5.dist(this.edges.left, this.edges.top, window.innerWidth / 2, window.innerHeight / 2);
@@ -47,6 +45,7 @@ export default class World {
     // Collision system
     this.system = new Collisions();
     this.bodies = [];
+
   }
 
 
@@ -124,7 +123,7 @@ export default class World {
     }
 
     // Draw a square around the active area, if set
-    if (this.settings.UseFrame) {
+    if (this.useFrame) {
       this.drawFrame();
     }
   }
@@ -150,6 +149,12 @@ export default class World {
     }
   }
 
+  resetEdges() {
+    this.edges.left = this.useFrame ? this.frame.left : 0;
+    this.edges.right = this.useFrame ? this.frame.right : window.innerWidth;
+    this.edges.top = this.useFrame ? this.frame.top : 0;
+    this.edges.bottom = this.useFrame ? this.frame.bottom : window.innerHeight;
+  }
 
   //======================
   //  Move all walkers
@@ -488,7 +493,7 @@ export default class World {
 
     createHorizontalClusterWall(edge) {
       let coords = [],
-          width = this.settings.UseFrame ? 900 : window.innerWidth;
+          width = this.useFrame ? 900 : window.innerWidth;
 
       for(let i = 0; i <= width/this.settings.CircleDiameter; i++) {
         coords.push({
@@ -503,7 +508,7 @@ export default class World {
 
     createVerticalClusterWall(edge) {
       let coords = [],
-          height = this.settings.UseFrame ? 900 : window.innerHeight;
+          height = this.useFrame ? 900 : window.innerHeight;
 
       for(let i = 0; i <= height/this.settings.CircleDiameter; i++) {
         coords.push({
@@ -552,6 +557,11 @@ export default class World {
 
   toggleShowClusters() {
     this.showClusters = !this.showClusters;
+  }
+
+  toggleUseFrame() {
+    this.useFrame = !this.useFrame;
+    this.resetEdges();
   }
 
 

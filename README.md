@@ -24,6 +24,7 @@ To achieve vector-based results from the DLA process one must move away from pix
 | `w`     | Show/hide walkers             |
 | `c`     | Show/hide clustered particles |
 | `r`     | Restart simulation            |
+| `f`     | Toggle frame                  |
 | `Space` | Pause/unpause simulation      |
 
 ## Packages used

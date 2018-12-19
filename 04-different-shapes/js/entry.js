@@ -99,6 +99,11 @@ const sketch = function (p5) {
         resetWorld();
         break;
 
+      case 'f':
+        world.toggleUseFrame();
+        resetWorld();
+        break;
+
       case '1':
         currentWalkerShape = 'Triangle';
         resetWorld();

@@ -49,6 +49,11 @@ const sketch = function (p5) {
       case 'r':
         resetWorld();
         break;
+   
+      case 'f':
+        world.toggleUseFrame();
+        resetWorld();
+        break;
 
       // Use numbers to change bias direction
       case '1':

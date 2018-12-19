@@ -48,6 +48,11 @@ const sketch = function (p5) {
       case 'r':
         resetWorld();
         break;
+
+      case 'f':
+        world.toggleUseFrame();
+        resetWorld();
+        break;
     }
   }
 }
