@@ -27,6 +27,23 @@ To achieve vector-based results from the DLA process one must move away from pix
 | `f`     | Toggle frame                  |
 | `Space` | Pause/unpause simulation      |
 
+## Parameters
+
+| Parameter                   | Value       | Default       | Description |
+|---                          |---          |---            |--- |
+| `DefaultCircleDiameter`     | `Number`  | `5` | Default size of walkers, if none is provided through local Settings. |
+| `DefaultInitialClusterType` | `Point`, `Ring`, `Random`, or `Wall` | `Point` | Default initial cluster pattern, if none is provided through local Settings. |
+| `ShowClusters`              | `Boolean` | `true` | Visibility of clustered particles on load. |
+| `ShowWalkers`               | `Boolean` | `true` | Visibility of walkers on load. |
+| `MaxWalkers`                | `Number` | `20000` | Maximum number of walkers - lower numbers mean better performance, but fewer hits. |
+| `WalkerSource`              | `Edges`, `Circle`, `Random`, `Random-Circle`, or `Center` | `Center` | Where new walkers are spawned. |
+| `ReplenishWalkers`          | `Boolean` | `false` | Add new walkers whenever they become stuck to clusters. |
+| `Stickiness`                | `Number` between 0 and 1 | `.9` | Probability that a collision will make a walker stick to cluster. | 
+| `BiasTowards`               | `Top`, `Bottom`, `Left`, `Right`, `Edges`, `Center`, `Equator`, or `Meridian` | `Center` | Direction to move all walkers each iteration. |
+| `BiasForce`                 | `Number` | `1` | Magnitude of force to move walkers towards their bias direction. |
+| `UseFrame`                  | `Boolean` | `true` | Constrain sketch to a box centered on the screen. |
+| `FrameSize`                 | `Number` or `[width, height]` | `900` | Size of frame. |
+
 ## Packages used
 * [p5.js](https://www.npmjs.com/package/p5) for canvas drawing and miscellaneous helper functions (like `lerp` and `map`).
 * [Webpack](https://webpack.js.org/) for modern JS (ES6) syntax, code modularization, and local bundling and serving.
@@ -57,3 +74,4 @@ To statically _build_ the code in this repo, run `npm run build` in the `./build
 ![Directional bias](02-directional-bias/images/social-media-preview.png)
 ![Different sizes](03-different-sizes/images/social-media-preview.png)
 ![Different shapes](04-different-shapes/images/social-media-preview.png)
+![SVG input](05-svg-input/images/social-media-preview.png)
