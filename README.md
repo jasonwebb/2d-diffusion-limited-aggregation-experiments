@@ -46,8 +46,9 @@ To achieve vector-based results from the DLA process one must move away from pix
 
 ## Packages used
 * [p5.js](https://www.npmjs.com/package/p5) for canvas drawing and miscellaneous helper functions (like `lerp` and `map`).
-* [Webpack](https://webpack.js.org/) for modern JS (ES6) syntax, code modularization, and local bundling and serving.
+* [Webpack](https://webpack.js.org/) for modern JS (ES6) syntax, code modularization, bundling, and serving locally.
 * [collisions](https://www.npmjs.com/package/collisions) for robust, lightweight collision detection without the use of a full physics package.
+* [svg-pathdata](https://www.npmjs.com/package/svg-pathdata) for parsing path information from SVG files in order to create custom shapes.
 
 ## Running locally
 
