@@ -8,6 +8,14 @@ module.exports = {
     differentSizes: path.resolve('../03-different-sizes/js/entry.js'),
     differentShapes: path.resolve('../04-different-shapes/js/entry.js')
   },
+  module: {
+    rules: [
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
+      }
+    ]
+  },
   devtool: 'inline-source-map',
   devServer: {
     host: '127.0.0.1',

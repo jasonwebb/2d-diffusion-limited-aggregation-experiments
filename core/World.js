@@ -21,6 +21,8 @@ export default class World {
     // Number of active walkers
     this.numWalkers = 0;
 
+    this.edgeMargin = this.settings.hasOwnProperty('EdgeMargin') ? this.settings.EdgeMargin : 0;
+
     // Outer edges of active sketch area (screen or confined "frame")
     this.edges = {};
     this.frame = {};
@@ -45,7 +47,7 @@ export default class World {
     // Collision system
     this.system = new Collisions();
     this.bodies = [];
-
+    this.shapes = [];
   }
 
 
@@ -60,7 +62,7 @@ export default class World {
 
     // Replenish any walkers that stuck to the cluster(s) in the last iteration
     if (this.settings.ReplenishWalkers && this.numWalkers < this.settings.MaxWalkers) {
-      this.createWalkers(this.settings.MaxWalkers - this.numWalkers);
+      this.createDefaultWalkers(this.settings.MaxWalkers - this.numWalkers, this.settings.ReplenishmentSource);
     }
 
     // Move all the walkers
@@ -80,19 +82,46 @@ export default class World {
   draw() {
     this.p5.background(255);
 
+    // Draw all custom shapes
+    for (let shape of this.shapes) {
+      this.p5.noFill();
+      this.p5.stroke(100);
+
+      this.p5.beginShape();
+
+        for (let i = 0; i < shape._coords.length; i += 2) {
+          this.p5.vertex(shape._coords[i], shape._coords[i + 1]);
+        }
+
+      this.p5.endShape();
+    }
+
+    // Draw all walkers and clustered particles
     for (let body of this.bodies) {
       // Points
-      if(body._point) {
+      if (body._point) {
+        this.p5.noFill();
 
-        // TODO: implement drawing of points
+        if (body.stuck && this.showClusters) {
+          this.p5.noStroke();
+          this.p5.fill(200);
+          this.p5.ellipse(body.x, body.y, 5);
+          this.p5.stroke(0);
+        } else if (!body.stuck && this.showWalkers) {
+          this.p5.stroke(0);
+        } else {
+          this.p5.noStroke();
+        }
+
+        this.p5.point(body.x, body.y);
 
       // Circles
-      } else if(body._circle) {
+      } else if (body._circle) {
         this.p5.noStroke();
 
-        if(body.stuck && this.showClusters) {
+        if (body.stuck && this.showClusters) {
           this.p5.fill(120);
-        } else if(!body.stuck && this.showWalkers) {
+        } else if (!body.stuck && this.showWalkers) {
           this.p5.fill(230);
         } else {
           this.p5.noFill();
@@ -101,12 +130,12 @@ export default class World {
         this.p5.ellipse(body.x, body.y, body.radius * 2);
 
       // Polygons
-      } else if(body._polygon) {
+      } else if (body._polygon) {
         this.p5.noStroke();
 
-        if(body.stuck && this.showClusters) {
+        if (body.stuck && this.showClusters) {
           this.p5.fill(120);
-        } else if(!body.stuck && this.showWalkers) {
+        } else if (!body.stuck && this.showWalkers) {
           this.p5.fill(230);
         } else {
           this.p5.noFill();
@@ -114,9 +143,9 @@ export default class World {
 
         this.p5.beginShape();
 
-          for(let i = 0; i < body._coords.length - 1; i += 2) {
-            this.p5.vertex(body._coords[i], body._coords[i + 1]);
-          }
+        for (let i = 0; i < body._coords.length - 1; i += 2) {
+          this.p5.vertex(body._coords[i], body._coords[i + 1]);
+        }
 
         this.p5.endShape();
       }
@@ -202,7 +231,7 @@ export default class World {
               break;
 
             case 'Equator':
-              if(body.y < window.innerHeight / 2) {
+              if (body.y < window.innerHeight / 2) {
                 deltaY += this.settings.BiasForce;
               } else {
                 deltaY -= this.settings.BiasForce;
@@ -211,18 +240,18 @@ export default class World {
               break;
 
             case 'Meridian':
-              if(body.x < window.innerWidth / 2) {
+              if (body.x < window.innerWidth / 2) {
                 deltaX += this.settings.BiasForce;
               } else {
                 deltaX -= this.settings.BiasForce;
               }
 
               break;
-              
+
           }
 
           // Ensure only whole numbers for single-pixel particles so they are always "on lattice"
-          if(body._point) {
+          if (body._point) {
             deltaX = Math.round(deltaX);
             deltaY = Math.round(deltaY);
           }
@@ -245,7 +274,7 @@ export default class World {
 
   getDeltasTowards(bodyX, bodyY, targetX, targetY) {
     let angle = Math.atan2(targetY - bodyY, targetX - bodyX);
-    
+
     return {
       x: Math.cos(angle) * this.settings.BiasForce,
       y: Math.sin(angle) * this.settings.BiasForce
@@ -257,8 +286,21 @@ export default class World {
   //  Look for collisions between walkers and clusters
   //=====================================================
 
-  // TODO: flip the logic so that we only check _clustered particles_ against potential collisions, not _all particles_ for potentials
+  // TODO: flip the logic so that we only check _clustered particles_ against potential collisions, not _all particles_ for potentials?
   handleCollisions() {
+    // Look for collisions between walkers and custom shapes
+    for (let shape of this.shapes) {
+      const potentials = shape.potentials();
+
+      for (let secondBody of potentials) {
+        if (shape.collides(secondBody)) {
+          secondBody.stuck = true;
+          this.numWalkers--;
+        }
+      }
+    }
+
+    // Look for collisions between walkers and clustered particles
     for (let body of this.bodies) {
       // Cut down on duplicate computations by only looking for collisions on walkers
       if (body.stuck) {
@@ -269,11 +311,12 @@ export default class World {
       const potentials = body.potentials();
 
       for (let secondBody of potentials) {
+
         // Points should be checked for adjacency to a stuck particle 
         if (body._point) {
           if (secondBody.stuck) {
             body.stuck = true;
-            this.walkers--;
+            this.numWalkers--;
           }
 
           // Circles and polygons should be checked for collision (overlap) with potentials
@@ -294,20 +337,21 @@ export default class World {
   //  Create methods
   //====================
   createParticle(params) {
-    if(typeof params == 'undefined' || typeof params != 'object') {
+    if (typeof params == 'undefined' || typeof params != 'object') {
       return;
     }
 
     let body;
 
-    if(params.hasOwnProperty('type')) {
-      switch(params.type) {
+    if (params.hasOwnProperty('type')) {
+      switch (params.type) {
         case 'Point':
-          body = this.system.createPoint(params.x, params.y);
+          body = this.system.createPoint(Math.round(params.x), Math.round(params.y));
           body._point = true;
           break;
 
         case 'Circle':
+        default:
           body = this.system.createCircle(params.x, params.y, params.diameter / 2);
           body._circle = true;
           break;
@@ -335,11 +379,11 @@ export default class World {
     this.numWalkers++;
   }
 
-  createDefaultWalkers(count = this.settings.MaxWalkers) {
+  createDefaultWalkers(count = this.settings.MaxWalkers, source = this.settings.WalkerSource) {
     for (let i = 0; i < count; i++) {
       let params = {};
 
-      switch (this.settings.WalkerSource) {
+      switch (source) {
         // Edges = spawn walkers at screen edges
         case 'Edges':
           let edge = Math.round(this.p5.random(1, 4));
@@ -347,22 +391,22 @@ export default class World {
           switch (edge) {
             case 1: // top
               params.x = this.p5.random(this.edges.left, this.edges.right);
-              params.y = this.edges.top;
-              break;
-
-            case 2: // right
-              params.x = this.edges.right;
-              params.y = this.p5.random(this.edges.top, this.edges.bottom);
+              params.y = this.p5.random(this.edges.top, this.edges.top + this.edgeMargin);
               break;
 
             case 3: // bottom
               params.x = this.p5.random(this.edges.left, this.edges.right);
-              params.y = this.edges.bottom;
+              params.y = this.p5.random(this.edges.bottom - this.edgeMargin, this.edges.bottom);
               break;
 
             case 4: // left
-              params.x = this.edges.left;
-              params.y = this.p5.random(this.edges.top, this.edges.bottom);
+              params.x = this.p5.random(this.edges.left, this.edges.left + this.edgeMargin);
+              params.y = this.p5.random(this.edges.top + this.edgeMargin, this.edges.bottom - this.edgeMargin);
+              break;
+
+            case 2: // right
+              params.x = this.p5.random(this.edges.right - this.edgeMargin, this.edges.right);
+              params.y = this.p5.random(this.edges.top + this.edgeMargin, this.edges.bottom - this.edgeMargin);
               break;
           }
 
@@ -385,7 +429,7 @@ export default class World {
 
         case 'Random-Circle':
           let a = this.p5.random(360),
-              r = this.p5.random(5, 900/2 - 20);
+            r = this.p5.random(5, 900 / 2 - 20);
 
           params.x = window.innerWidth / 2 + r * Math.cos(a * Math.PI / 180);
           params.y = window.innerHeight / 2 + r * Math.sin(a * Math.PI / 180);
@@ -399,7 +443,7 @@ export default class World {
       }
 
       // Vary diameter based on distance, if enabled
-      if(this.settings.VaryDiameterByDistance) {
+      if (this.settings.VaryDiameterByDistance) {
         let dist = this.p5.dist(params.x, params.y, window.innerWidth / 2, window.innerHeight / 2);
         params.diameter = this.p5.map(dist, 0, this.maxDistance, this.settings.CircleDiameterRange[0], this.settings.CircleDiameterRange[1]);
       }
@@ -452,7 +496,7 @@ export default class World {
 
       // Line of particles along an edge of the screen or frame
       case 'Wall':
-        switch(this.settings.BiasTowards) {
+        switch (this.settings.BiasTowards) {
           case 'Top':
             paramsList = this.createHorizontalClusterWall(this.edges.top);
             break;
@@ -475,13 +519,13 @@ export default class World {
             paramsList = paramsList.concat(this.createVerticalClusterWall(this.edges.left));
             paramsList = paramsList.concat(this.createVerticalClusterWall(this.edges.right));
             break;
-          
+
           case 'Equator':
             paramsList = paramsList.concat(this.createHorizontalClusterWall(window.innerHeight / 2));
             break;
 
           case 'Meridian':
-            paramsList = paramsList.concat(this.createVerticalClusterWall(window.innerWidth /2 ));
+            paramsList = paramsList.concat(this.createVerticalClusterWall(window.innerWidth / 2));
             break;
         }
 
@@ -491,41 +535,67 @@ export default class World {
     this.createClusterFromParams(paramsList);
   }
 
-    createHorizontalClusterWall(edge) {
-      let coords = [],
-          width = this.useFrame ? 900 : window.innerWidth;
+  createHorizontalClusterWall(edge) {
+    let coords = [],
+      width = this.useFrame ? 900 : window.innerWidth;
 
-      for(let i = 0; i <= width/this.settings.CircleDiameter; i++) {
-        coords.push({
-          x: this.edges.left + i*this.settings.CircleDiameter,
-          y: edge,
-          diameter: this.settings.CircleDiameter
-        });
-      }
-
-      return coords;
+    for (let i = 0; i <= width / this.settings.CircleDiameter; i++) {
+      coords.push({
+        x: this.edges.left + i * this.settings.CircleDiameter,
+        y: edge,
+        diameter: this.settings.CircleDiameter
+      });
     }
 
-    createVerticalClusterWall(edge) {
-      let coords = [],
-          height = this.useFrame ? 900 : window.innerHeight;
+    return coords;
+  }
 
-      for(let i = 0; i <= height/this.settings.CircleDiameter; i++) {
-        coords.push({
-          x: edge,
-          y: this.edges.top + i*this.settings.CircleDiameter,
-          diameter: this.settings.CircleDiameter
-        });
-      }
+  createVerticalClusterWall(edge) {
+    let coords = [],
+      height = this.useFrame ? 900 : window.innerHeight;
 
-      return coords;
+    for (let i = 0; i <= height / this.settings.CircleDiameter; i++) {
+      coords.push({
+        x: edge,
+        y: this.edges.top + i * this.settings.CircleDiameter,
+        diameter: this.settings.CircleDiameter
+      });
     }
+
+    return coords;
+  }
 
   createClusterFromParams(paramsList) {
     if (paramsList.length > 0) {
       for (let params of paramsList) {
         params.stuck = true;
         this.createParticle(params);
+      }
+    }
+  }
+
+  createShapesFromPaths(paths) {
+    if (!paths.hasOwnProperty('points') && paths.length == 0) {
+      console.error('Unable to create shapes. Paths must have an array of points [[x,y],...]');
+      return;
+    }
+
+    for (let path of paths) {
+      // Create a single polygon if the shape is marked as "solid"
+      if (path.solid) {
+        let shape = this.system.createPolygon(path.x, path.y, path.points);
+        shape.solid = path.solid;
+        shape.closed = path.closed;
+        this.shapes.push(shape);
+
+      // Create a series of separate line segments if shape is not "solid", per https://github.com/Sinova/Collisions#anchor-lines
+      } else {
+        for (let i = 1; i < path.points.length; i++) {
+          let line = this.system.createPolygon(path.x, path.y, [[path.points[i - 1][0], path.points[i - 1][1]], [path.points[i][0], path.points[i][1]]]);
+          line.solid = false;
+          line.closed = false;
+          this.shapes.push(line);
+        }
       }
     }
   }
@@ -539,7 +609,12 @@ export default class World {
       this.system.remove(body);
     }
 
+    for (let shape of this.shapes) {
+      this.system.remove(shape);
+    }
+
     this.bodies = [];
+    this.shapes = [];
     this.numWalkers = 0;
   }
 

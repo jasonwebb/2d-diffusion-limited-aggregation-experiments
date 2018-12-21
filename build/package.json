@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "path": "^0.12.7",
+    "svg-inline-loader": "^0.8.0",
     "webpack": "^4.26.0",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
