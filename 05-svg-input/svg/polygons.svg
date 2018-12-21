@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg832"
+   version="1.1"
+   viewBox="0 0 900 900"
+   height="900"
+   width="900"
+   sodipodi:docname="polygons.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <path
+     id="path1377"
+     style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 637.95718,464.22103 584.33571,382.14098 530.71423,300.06092 486.44216,387.53824 465.30384,429.30364 437.48882,430.45616 403.17529,384.77031 427.64471,365.18499 414.35188,278.03524 332.23363,245.97365 263.40556,301.05921 276.69889,388.20739 358.81822,420.27107 362.71416,417.15172 354.63937,446.02414 264.54156,476.88822 343.8441,529.62956 345.35592,624.85561 420.02002,565.73219 511.05425,593.72124 477.89678,504.44013 500.8419,471.77963 540.06207,469.61781 637.95718,464.22103"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cccccccccccccccccccccccc" />
+</svg>

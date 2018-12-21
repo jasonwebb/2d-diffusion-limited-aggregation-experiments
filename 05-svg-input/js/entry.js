@@ -3,10 +3,12 @@ import World from '../../core/World';
 import SVGLoader from '../../core/SVGLoader';
 
 let svgFiles = {
-  dla: require("../svg/dla.svg")
+  dla: require("../svg/dla.svg"),
+  polygons: require('../svg/polygons.svg')
 }
 
-let world;
+let world,
+    currentSVGFile = svgFiles.polygons;
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -20,7 +22,7 @@ const sketch = function (p5) {
     world.createDefaultWalkers();
 
     // Load shapes from SVG file
-    createCustomShapesFromSVG(svgFiles.dla);
+    createCustomShapesFromSVG(currentSVGFile);
   }
 
   // Draw ----------------------------------------------------------------
@@ -31,7 +33,7 @@ const sketch = function (p5) {
 
   function resetWorld() {
     world.removeAll();
-    createCustomShapesFromSVG(svgFiles.dla);
+    createCustomShapesFromSVG(currentSVGFile);
     world.createDefaultWalkers();
   }
 
@@ -41,7 +43,7 @@ const sketch = function (p5) {
     for(let path of paths) {
       path.stuck = true;
       path.solid = false;
-      path.x += window.innerWidth / 2 - 900 / 2 + 50;
+      path.x += window.innerWidth / 2 - 900 / 2;
       path.y += window.innerHeight / 2 - 900 / 2;
     }
 
@@ -69,6 +71,16 @@ const sketch = function (p5) {
 
       case 'f':
         world.toggleUseFrame();
+        resetWorld();
+        break;
+
+      case '1':
+        currentSVGFile = svgFiles.dla;
+        resetWorld();
+        break;
+
+      case '2':
+        currentSVGFile = svgFiles.polygons;
         resetWorld();
         break;
     }
