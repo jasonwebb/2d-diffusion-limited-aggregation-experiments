@@ -15,7 +15,7 @@ const sketch = function (p5) {
 
     // Use default walkers and clusters
     world.createDefaultWalkers();
-    world.createDefaultClusters();
+    world.createDefaultClusters(Settings.InitialClusterType);
   }
 
   // Draw ----------------------------------------------------------------
@@ -27,7 +27,7 @@ const sketch = function (p5) {
   function resetWorld() {
     world.removeAll();
     world.createDefaultWalkers();
-    world.createDefaultClusters();
+    world.createDefaultClusters(Settings.InitialClusterType);
   }
 
   // Key handler ---------------------------------------------------------
