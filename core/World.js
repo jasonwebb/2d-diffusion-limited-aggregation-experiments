@@ -390,23 +390,23 @@ export default class World {
 
           switch (edge) {
             case 1: // top
-              params.x = this.p5.random(this.edges.left, this.edges.right);
+              params.x = this.p5.random(this.edges.left + this.edgeMargin, this.edges.right - this.edgeMargin);
               params.y = this.p5.random(this.edges.top, this.edges.top + this.edgeMargin);
               break;
 
             case 3: // bottom
-              params.x = this.p5.random(this.edges.left, this.edges.right);
+              params.x = this.p5.random(this.edges.left + this.edgeMargin, this.edges.right - this.edgeMargin);
               params.y = this.p5.random(this.edges.bottom - this.edgeMargin, this.edges.bottom);
               break;
 
             case 4: // left
               params.x = this.p5.random(this.edges.left, this.edges.left + this.edgeMargin);
-              params.y = this.p5.random(this.edges.top + this.edgeMargin, this.edges.bottom - this.edgeMargin);
+              params.y = this.p5.random(this.edges.top, this.edges.bottom);
               break;
 
             case 2: // right
               params.x = this.p5.random(this.edges.right - this.edgeMargin, this.edges.right);
-              params.y = this.p5.random(this.edges.top + this.edgeMargin, this.edges.bottom - this.edgeMargin);
+              params.y = this.p5.random(this.edges.top, this.edges.bottom);
               break;
           }
 
