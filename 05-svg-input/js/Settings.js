@@ -1,11 +1,10 @@
 export default {
-  CircleDiameter: 5,
+  CircleDiameter: 4,
 
   // Limit number of walkers and rely on bias to increase collision rate
   MaxWalkers: 10000,
 
-  // Confine sketch to frame (900x900px by default)
-  UseFrame: false,
+  ShowWalkers: false,
 
   // Move all walkers towards center to increase collision rate
   BiasTowards: 'Center',
@@ -16,7 +15,5 @@ export default {
 
   ReplenishWalkers: false,
 
-  ReplenishmentSource: 'Edges',
-
-  UseFrame: false
+  ReplenishmentSource: 'Edges'
 };
