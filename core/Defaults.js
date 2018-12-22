@@ -43,5 +43,45 @@ export default {
   CaptureLines: true,
 
   // Drawing method. Can be Shapes or Lines.
-  RenderMode: 'Shapes'
+  RenderMode: 'Shapes',
+
+  UseColors: false,
+
+  UseStroke: false,
+
+  BackgroundColor: {
+    h: 200,
+    s: 30,
+    b: 48
+  },
+
+  WalkerColor: {
+    h: 200,
+    s: 30,
+    b: 44
+  },
+  
+  ClusterColor: {
+    h: 30,
+    s: 70,
+    b: 80  
+  },
+
+  ShapeColor: {
+    h: 100,
+    s: 50,
+    b: 80
+  },
+
+  LineColor: {
+    h: 100,
+    s: 50,
+    b: 100
+  },
+
+  FrameColor: {
+    h: 0,
+    s: 100,
+    b: 100
+  }
 };

@@ -83,14 +83,23 @@ export default class World {
   //  Drawing methods
   //======================
   draw() {
-    this.p5.background(255);
+    if(this.settings.UseColors) {
+      this.p5.background(this.getColorStringFromObject(this.settings.BackgroundColor));
+    } else {
+      this.p5.background(255);
+    }
 
     // Draw all custom shapes
     if(this.showShapes) {
       for (let shape of this.shapes) {
-        this.p5.noFill();
-        this.p5.stroke(100);
-
+        if(this.settings.UseColors) {
+          this.p5.fill(this.getColorStringFromObject(this.settings.ShapeColor));
+          this.p5.stroke(this.getColorStringFromObject(this.settings.ShapeColor));  
+        } else {
+          this.p5.noFill();
+          this.p5.stroke(100);
+        }
+        
         this.p5.beginShape();
 
           for (let i = 0; i < shape._coords.length; i += 2) {
@@ -103,7 +112,11 @@ export default class World {
 
     // Draw all walkers and clustered particles
     if(this.renderMode == 'Lines') {
-      this.p5.stroke(75);
+      if(this.settings.UseColors) {
+        this.p5.stroke(this.getColorStringFromObject(this.settings.LineColor));
+      } else {
+        this.p5.stroke(75);
+      }
 
       if(this.lines.length > 0) {
         for(let line of this.lines) {
@@ -118,11 +131,21 @@ export default class World {
 
           if (body.stuck && this.showClusters) {
             this.p5.noStroke();
-            this.p5.fill(200);
+
+            if(this.settings.UseColors) {
+              this.p5.fill(this.getColorStringFromObject(this.settings.ClusterColor));
+            } else {
+              this.p5.fill(200);
+            }
+
             this.p5.ellipse(body.x, body.y, 5);
-            this.p5.stroke(0);
+
           } else if (!body.stuck && this.showWalkers) {
-            this.p5.stroke(0);
+            if(this.settings.UseColors) {
+              this.p5.stroke(this.getColorStringFromObject(this.settings.WalkerColor));
+            } else {
+              this.p5.stroke(0)
+            }
           } else {
             this.p5.noStroke();
           }
@@ -131,12 +154,28 @@ export default class World {
 
         // Circles
         } else if (body._circle) {
-          this.p5.noStroke();
+          if(this.settings.UseStroke) {
+            if(this.settings.UseColors) {
+              this.p5.stroke(this.getColorStringFromObject(this.settings.BackgroundColor));
+            } else {
+              this.p5.stroke(255);
+            }
+          } else {
+            this.p5.noStroke();
+          }
 
           if (body.stuck && this.showClusters) {
-            this.p5.fill(120);
+            if(this.settings.UseColors) {
+              this.p5.fill(this.getColorStringFromObject(this.settings.ClusterColor));
+            } else {
+              this.p5.fill(120);
+            }
           } else if (!body.stuck && this.showWalkers) {
-            this.p5.fill(230);
+            if(this.settings.UseColors) {
+              this.p5.fill(this.getColorStringFromObject(this.settings.WalkerColor));
+            } else {
+              this.p5.fill(230);
+            }
           } else {
             this.p5.noFill();
           }
@@ -145,21 +184,37 @@ export default class World {
 
         // Polygons
         } else if (body._polygon) {
-          this.p5.noStroke();
+          if(this.settings.UseStroke) {
+            if(this.settings.UseColors) {
+              this.p5.stroke(this.getColorStringFromObject(this.settings.BackgroundColor));
+            } else {
+              this.p5.stroke(255);
+            }
+          } else {
+            this.p5.noStroke();
+          }
 
           if (body.stuck && this.showClusters) {
-            this.p5.fill(120);
+            if(this.settings.UseColors) {
+              this.p5.fill(this.getColorStringFromObject(this.settings.ClusterColor));
+            } else {
+              this.p5.fill(120);
+            }
           } else if (!body.stuck && this.showWalkers) {
-            this.p5.fill(230);
+            if(this.settings.UseColors) {
+              this.p5.fill(this.getColorStringFromObject(this.settings.WalkerColor));
+            } else {
+              this.p5.fill(230);
+            }
           } else {
             this.p5.noFill();
           }
 
           this.p5.beginShape();
 
-          for (let i = 0; i < body._coords.length - 1; i += 2) {
-            this.p5.vertex(body._coords[i], body._coords[i + 1]);
-          }
+            for (let i = 0; i < body._coords.length - 1; i += 2) {
+              this.p5.vertex(body._coords[i], body._coords[i + 1]);
+            }
 
           this.p5.endShape();
         }
@@ -174,7 +229,12 @@ export default class World {
 
   drawFrame() {
     this.p5.noFill();
-    this.p5.stroke(0);
+
+    if(this.settings.UseColors) {
+      this.p5.stroke(this.getColorStringFromObject(this.settings.FrameColor));
+    } else {
+      this.p5.stroke(0);
+    }
 
     if (typeof this.settings.FrameSize == 'number') {
       this.p5.rect(
@@ -504,7 +564,7 @@ export default class World {
 
       // Individual particles randomly distributed across entire screen
       case 'Random':
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 40; i++) {
           paramsList.push({
             x: this.p5.random(this.edges.left, this.edges.right),
             y: this.p5.random(this.edges.top, this.edges.bottom),
@@ -686,6 +746,17 @@ export default class World {
 
   unpause() {
     this.paused = false;
+  }
+
+
+  //======================
+  //  Utility functions
+  //======================
+  getColorStringFromObject(colorObject) {
+    return 'hsl(' +
+      colorObject.h + ', ' +
+      colorObject.s + '%, ' +
+      colorObject.b + '%)';
   }
 
 }
