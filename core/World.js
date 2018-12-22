@@ -16,7 +16,9 @@ export default class World {
     this.paused = false;
     this.showWalkers = this.settings.ShowWalkers;
     this.showClusters = this.settings.ShowClusters;
+    this.showShapes = this.settings.ShowShapes;
     this.useFrame = this.settings.UseFrame;
+    this.renderMode = this.settings.RenderMode;
 
     // Number of active walkers
     this.numWalkers = 0;
@@ -48,6 +50,7 @@ export default class World {
     this.system = new Collisions();
     this.bodies = [];
     this.shapes = [];
+    this.lines = [];
   }
 
 
@@ -83,71 +86,83 @@ export default class World {
     this.p5.background(255);
 
     // Draw all custom shapes
-    for (let shape of this.shapes) {
-      this.p5.noFill();
-      this.p5.stroke(100);
-
-      this.p5.beginShape();
-
-        for (let i = 0; i < shape._coords.length; i += 2) {
-          this.p5.vertex(shape._coords[i], shape._coords[i + 1]);
-        }
-
-      this.p5.endShape();
-    }
-
-    // Draw all walkers and clustered particles
-    for (let body of this.bodies) {
-      // Points
-      if (body._point) {
+    if(this.showShapes) {
+      for (let shape of this.shapes) {
         this.p5.noFill();
-
-        if (body.stuck && this.showClusters) {
-          this.p5.noStroke();
-          this.p5.fill(200);
-          this.p5.ellipse(body.x, body.y, 5);
-          this.p5.stroke(0);
-        } else if (!body.stuck && this.showWalkers) {
-          this.p5.stroke(0);
-        } else {
-          this.p5.noStroke();
-        }
-
-        this.p5.point(body.x, body.y);
-
-      // Circles
-      } else if (body._circle) {
-        this.p5.noStroke();
-
-        if (body.stuck && this.showClusters) {
-          this.p5.fill(120);
-        } else if (!body.stuck && this.showWalkers) {
-          this.p5.fill(230);
-        } else {
-          this.p5.noFill();
-        }
-
-        this.p5.ellipse(body.x, body.y, body.radius * 2);
-
-      // Polygons
-      } else if (body._polygon) {
-        this.p5.noStroke();
-
-        if (body.stuck && this.showClusters) {
-          this.p5.fill(120);
-        } else if (!body.stuck && this.showWalkers) {
-          this.p5.fill(230);
-        } else {
-          this.p5.noFill();
-        }
+        this.p5.stroke(100);
 
         this.p5.beginShape();
 
-        for (let i = 0; i < body._coords.length - 1; i += 2) {
-          this.p5.vertex(body._coords[i], body._coords[i + 1]);
-        }
+          for (let i = 0; i < shape._coords.length; i += 2) {
+            this.p5.vertex(shape._coords[i], shape._coords[i + 1]);
+          }
 
         this.p5.endShape();
+      }
+    }
+
+    // Draw all walkers and clustered particles
+    if(this.renderMode == 'Lines') {
+      this.p5.stroke(75);
+
+      if(this.lines.length > 0) {
+        for(let line of this.lines) {
+          this.p5.line(line.p1.x, line.p1.y, line.p2.x, line.p2.y);
+        }
+      }
+    } else {
+      for (let body of this.bodies) {
+        // Points
+        if (body._point) {
+          this.p5.noFill();
+
+          if (body.stuck && this.showClusters) {
+            this.p5.noStroke();
+            this.p5.fill(200);
+            this.p5.ellipse(body.x, body.y, 5);
+            this.p5.stroke(0);
+          } else if (!body.stuck && this.showWalkers) {
+            this.p5.stroke(0);
+          } else {
+            this.p5.noStroke();
+          }
+
+          this.p5.point(body.x, body.y);
+
+        // Circles
+        } else if (body._circle) {
+          this.p5.noStroke();
+
+          if (body.stuck && this.showClusters) {
+            this.p5.fill(120);
+          } else if (!body.stuck && this.showWalkers) {
+            this.p5.fill(230);
+          } else {
+            this.p5.noFill();
+          }
+
+          this.p5.ellipse(body.x, body.y, body.radius * 2);
+
+        // Polygons
+        } else if (body._polygon) {
+          this.p5.noStroke();
+
+          if (body.stuck && this.showClusters) {
+            this.p5.fill(120);
+          } else if (!body.stuck && this.showWalkers) {
+            this.p5.fill(230);
+          } else {
+            this.p5.noFill();
+          }
+
+          this.p5.beginShape();
+
+          for (let i = 0; i < body._coords.length - 1; i += 2) {
+            this.p5.vertex(body._coords[i], body._coords[i + 1]);
+          }
+
+          this.p5.endShape();
+        }
       }
     }
 
@@ -319,13 +334,18 @@ export default class World {
             this.numWalkers--;
           }
 
-          // Circles and polygons should be checked for collision (overlap) with potentials
+        // Circles and polygons should be checked for collision (overlap) with potentials
         } else {
           if (secondBody.stuck && body.collides(secondBody)) {
             body.stuck = true;
             this.numWalkers--;
 
-            // TODO: create a line between the two bodies for line rendering mode
+            if(this.settings.CaptureLines) {
+              this.lines.push({
+                p1: { x: body.x, y: body.y },
+                p2: { x: secondBody.x, y: secondBody.y }
+              });
+            }
           }
         }
       }
@@ -615,6 +635,7 @@ export default class World {
 
     this.bodies = [];
     this.shapes = [];
+    this.lines = [];
     this.numWalkers = 0;
   }
 
@@ -634,9 +655,25 @@ export default class World {
     this.showClusters = !this.showClusters;
   }
 
+  toggleShowShapes() {
+    this.showShapes = !this.showShapes;
+  }
+
   toggleUseFrame() {
     this.useFrame = !this.useFrame;
     this.resetEdges();
+  }
+
+  toggleLineRenderingMode() {
+    if(this.renderMode != 'Lines') {
+      if(this.settings.CaptureLines) {
+        this.renderMode = 'Lines';
+      } else {
+        console.error('Line rendering mode only allowed when CaptureLines is set.');
+      }
+    } else {
+      this.renderMode = 'Shapes';
+    }
   }
 
 

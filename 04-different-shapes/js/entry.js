@@ -104,6 +104,10 @@ const sketch = function (p5) {
         resetWorld();
         break;
 
+      case 'l':
+        world.toggleLineRenderingMode();
+        break;
+
       case '1':
         currentWalkerShape = 'Triangle';
         resetWorld();

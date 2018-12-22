@@ -74,6 +74,15 @@ const sketch = function (p5) {
         resetWorld();
         break;
 
+      case 's':
+        world.toggleShowShapes();
+        restartWorld();
+        break;
+
+      case 'l':
+        world.toggleLineRenderingMode();
+        break;
+
       case '1':
         currentSVGFile = svgFiles.dla;
         resetWorld();

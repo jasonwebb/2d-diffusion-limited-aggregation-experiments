@@ -1,8 +1,8 @@
 export default {
   // Default size of walkers, if none is provided through local Settings
-  DefaultCircleDiameter: 10,
+  DefaultCircleDiameter: 2,
 
-  // Default cluster pattern, if none is provided through local Settings
+  // Default initial cluster pattern, if none is provided through local Settings
   DefaultInitialClusterType: 'Random',
 
   // Visibility of clustered particles
@@ -11,7 +11,10 @@ export default {
   // Visibility of walkers
   ShowWalkers: true,
 
-  // Maximum number of nodes - lower numbers mean better performance, but fewer hits
+  // Visibility of imported shapes
+  ShowShapes: true,
+
+  // Maximum number of walkers - lower numbers mean better performance, but fewer hits
   MaxWalkers: 20000,
 
   // Where new walkers are spawned. Can be Edges, Circle, Center, or Random
@@ -34,5 +37,11 @@ export default {
   UseFrame: true,
 
   // Size of frame. Can be a single number, or an array of two numbers for width and height
-  FrameSize: 900
+  FrameSize: 900,
+
+  // Enable the generation of lines between newly-clustered particles. Required for "Lines" render mode
+  CaptureLines: true,
+
+  // Drawing method. Can be Shapes or Lines.
+  RenderMode: 'Shapes'
 };

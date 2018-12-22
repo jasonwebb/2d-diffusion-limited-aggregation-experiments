@@ -53,6 +53,10 @@ const sketch = function (p5) {
         world.toggleUseFrame();
         resetWorld();
         break;
+
+      case 'l':
+        world.toggleLineRenderingMode();
+        break;
     }
   }
 }
