@@ -65,6 +65,7 @@ To statically _build_ the code in this repo, run `npm run build` in the `./build
 * [DLA - Diffusion Limited Aggregation](http://paulbourke.net/fractals/dla/) by Paul Bourke
 * [Diffusion-limited aggregation](https://en.wikipedia.org/wiki/Diffusion-limited_aggregation) on Wikipedia
 * [Coding Challenge #34: Diffusion-Limited Aggregation](https://www.youtube.com/watch?v=Cl_Gjj80gPE) by Dan Shiffman ([Github repo](https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_034_DLA/P5))
+* [Coding Challenge #127: Brownian Tree Snowflake](https://www.youtube.com/watch?v=XUA8UREROYE) by Dan Shiffman ([Github repo](https://github.com/CodingTrain/website/tree/master/CodingChallenges/CC_127_Snowflake_Brownian))
 * [simutils-0001: Diffusion limited aggregation](http://toxiclibs.org/2010/02/new-package-simutils/) by Karsten Schmidt (toxiclibs)
 * [Diffusion Limited Aggregation](https://www.astro.rug.nl/~offringa/Diffusion%20Limited%20Aggregation.pdf) (PDF) by André Offringa
 * [Simulate: Diffusion-Limited Aggregation](http://formandcode.com/code-examples/simulate-dla) from FORM+CODE book examples
@@ -79,3 +80,5 @@ To statically _build_ the code in this repo, run `npm run build` in the `./build
 ![Different sizes](03-different-sizes/images/social-media-preview.png)
 ![Different shapes](04-different-shapes/images/social-media-preview.png)
 ![SVG input](05-svg-input/images/social-media-preview.png)
+![Basic DLA with color](01-basic-dla/images/basic-dla-with-color.png)
+![Line rendering effect](01-basic-dla/images/line-rendering-mode.png)
