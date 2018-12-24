@@ -19,13 +19,16 @@ To achieve vector-based results from the DLA process one must move away from pix
 
 ## Keyboard commands
 
-| Key     | Result                        |
-|---      |---                            |
-| `w`     | Show/hide walkers             |
-| `c`     | Show/hide clustered particles |
-| `r`     | Restart simulation            |
-| `f`     | Toggle frame                  |
-| `Space` | Pause/unpause simulation      |
+| Key     | Result                                                      |
+|---      |---                                                          |
+| `w`     | Toggle visibility of walkers                                |
+| `c`     | Toggle visibility of clustered particles                    |
+| `s`     | Toggle visibility of custom SVG shapes                      |
+| `r`     | Restart simulation                                          |
+| `f`     | Toggle frame                                                |
+| `l`     | Toggle line rendering effect                                |
+| `e`     | Export and initiate download of current drawing as SVG file |
+| `Space` | Pause/unpause simulation                                    |
 
 ## Parameters
 

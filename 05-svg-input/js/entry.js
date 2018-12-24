@@ -82,6 +82,10 @@ const sketch = function (p5) {
       case 'l':
         world.toggleLineRenderingMode();
         break;
+        
+      case 'e':
+        world.export();
+        break;
 
       case '1':
         currentSVGFile = svgFiles.dla;

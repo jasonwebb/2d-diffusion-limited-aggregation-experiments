@@ -59,6 +59,10 @@ const sketch = function (p5) {
         world.toggleLineRenderingMode();
         break;
 
+      case 'e':
+        world.export();
+        break;
+
       // Use numbers to change bias direction
       case '1':
         world.pause();

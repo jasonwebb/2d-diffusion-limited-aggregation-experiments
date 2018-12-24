@@ -1,5 +1,7 @@
 import Defaults from './Defaults';
 import Collisions from 'collisions';
+import { toPath } from 'svg-points';
+import { saveAs } from 'file-saver';
 
 /*
 =============================================================================
@@ -757,6 +759,123 @@ export default class World {
       colorObject.h + ', ' +
       colorObject.s + '%, ' +
       colorObject.b + '%)';
+  }
+
+
+  //============
+  //  Export
+  //============
+  export() {
+    // Set up <svg> element
+    let svg = document.createElement('svg');
+    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svg.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+    svg.setAttribute('width', window.innerWidth);
+    svg.setAttribute('height', window.innerHeight);
+    svg.setAttribute('viewBox', '0 0 ' + window.innerWidth + ' ' + window.innerHeight);
+
+    // Export all bodies based on the current rendering mode
+    switch(this.renderMode) {
+      case 'Shapes':
+      default:
+        for(let body of this.bodies) {
+          if(!body.stuck && !this.showWalkers) {
+            continue;
+          }
+
+          if(body._circle) {
+            svg.appendChild( this.createCircleElFromBody(body) );
+          } else {  
+            svg.appendChild( this.createPathElFromPoints( this.getPointsFromCoords(body._coords) ) );
+          }
+        }
+
+        break;
+
+      case 'Lines':
+        if(this.lines.length > 0) {
+          for(let line of this.lines) {
+            let points = [];
+            
+            points.push({
+              x: line.p1.x, 
+              y: line.p1.y
+            });
+
+            points.push({
+              x: line.p2.x,
+              y: line.p2.y
+            });
+
+            svg.appendChild( this.createPathElFromPoints(points) );
+          }
+        }
+
+        break;
+    }
+
+    // Export all custom imported shapes as paths
+    if(this.shapes.length > 0) {
+      for(let shape of this.shapes) {
+        svg.appendChild( this.createPathElFromPoints( this.getPointsFromCoords(shape._coords) ) );
+      }
+    }
+    
+    // Force download of .svg file based on https://jsfiddle.net/ch77e7yh/1
+    let svgDocType = document.implementation.createDocumentType('svg', "-//W3C//DTD SVG 1.1//EN", "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd");
+    let svgDoc = document.implementation.createDocument('http://www.w3.org/2000/svg', 'svg', svgDocType);
+    svgDoc.replaceChild(svg, svgDoc.documentElement);
+    let svgData = (new XMLSerializer()).serializeToString(svgDoc);
+
+    let blob = new Blob([svgData.replace(/></g, '>\n\r<')]);
+    saveAs(blob, 'dla-' + Date.now() + '.svg');
+  }
+
+  // Convert a flat array of coords ([x1, y1, x2, y2, ...]), used internally by collisions package into an array of objects for easier traversing
+  getPointsFromCoords(coords) {
+    let points = [];
+
+    for (let i = 0; i < coords.length - 1; i += 2) {
+      points.push({
+        x: coords[i], 
+        y: coords[i + 1]
+      });
+    }
+
+    return points;
+  }
+
+  // Return a <path> element with a `d` attribute containing provided points
+  createPathElFromPoints(points) {
+    let pointsString = '';
+
+    for(let [index, point] of points.entries()) {
+      pointsString += point.x + ',' + point.y;
+
+      if(index < points.length - 1) {
+        pointsString += ' ';
+      }
+    }
+
+    let d = toPath({
+      type: 'polyline',
+      points: pointsString
+    });
+
+    let pathEl = document.createElement('path');
+    pathEl.setAttribute('d', d);
+    pathEl.setAttribute('style', 'fill: none; stroke: black; stroke-width: 1');
+
+    return pathEl;
+  }
+
+  // Return a <circle> element with attributes `cx`, `cy`, and `r` extracted from provided body
+  createCircleElFromBody(body) {
+    let circleEl = document.createElement('circle');
+    circleEl.setAttribute('cx', body.x);
+    circleEl.setAttribute('cy', body.y);
+    circleEl.setAttribute('r', body.radius);
+    return circleEl;
   }
 
 }
