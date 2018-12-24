@@ -77,3 +77,5 @@ To statically _build_ the code in this repo, run `npm run build` in the `./build
 ![Different sizes](03-different-sizes/images/social-media-preview.png)
 ![Different shapes](04-different-shapes/images/social-media-preview.png)
 ![SVG input](05-svg-input/images/social-media-preview.png)
+![Basic DLA with color](01-basic-dla/images/basic-dla-with-color.png)
+![Line rendering effect](01-basic-dla/images/line-rendering-mode.png)
