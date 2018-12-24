@@ -7,7 +7,8 @@ module.exports = {
     directionalBias: path.resolve('../02-directional-bias/js/entry.js'),
     differentSizes: path.resolve('../03-different-sizes/js/entry.js'),
     differentShapes: path.resolve('../04-different-shapes/js/entry.js'),
-    svgInput: path.resolve('../05-svg-input/js/entry.js')
+    svgInput: path.resolve('../05-svg-input/js/entry.js'),
+    interactivity: path.resolve('../06-interactivity/js/entry.js')
   },
   module: {
     rules: [
