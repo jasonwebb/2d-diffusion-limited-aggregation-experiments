@@ -38,6 +38,7 @@ To achieve vector-based results from the DLA process one must move away from pix
 | `DefaultInitialClusterType` | `Point`, `Ring`, `Random`, or `Wall` | `Point` | Default initial cluster pattern, if none is provided through local Settings. |
 | `ShowClusters`              | `Boolean` | `true` | Visibility of clustered particles on load. |
 | `ShowWalkers`               | `Boolean` | `true` | Visibility of walkers on load. |
+| `ShowShapes`                | `Boolean` | `true` | Visibility of custom SVG shapes on load. |
 | `MaxWalkers`                | `Number` | `20000` | Maximum number of walkers - lower numbers mean better performance, but fewer hits. |
 | `WalkerSource`              | `Edges`, `Circle`, `Random`, `Random-Circle`, or `Center` | `Center` | Where new walkers are spawned. |
 | `ReplenishWalkers`          | `Boolean` | `false` | Add new walkers whenever they become stuck to clusters. |
@@ -46,6 +47,16 @@ To achieve vector-based results from the DLA process one must move away from pix
 | `BiasForce`                 | `Number` | `1` | Magnitude of force to move walkers towards their bias direction. |
 | `UseFrame`                  | `Boolean` | `true` | Constrain sketch to a box centered on the screen. |
 | `FrameSize`                 | `Number` or `[width, height]` | `900` | Size of frame. |
+| `CaptureLines`              | `Boolean` | `true` | Enable building of an internal buffer of line segments between all connected particles. Can be disabled if it impacts performance at large scales. |
+| `RenderMode`                | `Shapes` or `Lines` | `Shapes` | Method of drawing particles. Can draw the shapes as they exist (`Shapes`), or only draw lines between connected particles (`Lines`). |
+| `UseColors`                 | `Boolean` | `false` | Enable the use of colors defined by objects below. |
+| `UseStroke`                 | `Boolean` | `false` | Draws all circles/polygons with a 1px stroke matching the background color. |
+| `BackgroundColor`           | `Object` with `h`, `s`, `b` properties | | Color of canvas background in HSB format. |
+| `WalkerColor`               | `Object` with `h`, `s`, `b` properties | | Color of walkers in HSB format. |
+| `ClusterColor`              | `Object` with `h`, `s`, `b` properties | | Color of clustered particles in HSB format. |
+| `ShapeColor`                | `Object` with `h`, `s`, `b` properties | | Color of custom SVG shapes in HSB format. |
+| `LineColor`                 | `Object` with `h`, `s`, `b` properties | | Color of lines when using `Lines` for `RenderMode`. |
+| `FrameColor`                | `Object` with `h`, `s`, `b` properties | | Color of frame, if enabled with `UseFrame`. |
 
 ## Packages used
 * [p5.js](https://www.npmjs.com/package/p5) for canvas drawing and miscellaneous helper functions (like `lerp` and `map`).
