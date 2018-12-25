@@ -28,6 +28,12 @@ export default {
   // Spawn new walkers when old ones are converted into clustered particles or pruned
   ReplenishWalkers: false,
 
+  // Remove walkers that have strayed too far from their original positions
+  PruneDistantWalkers: false,
+
+  // Maximum distance before a walker is removed, if `PruneDistantWalkers` is enabled
+  MaxWanderDistance: 20,
+
 
   //=====================================================================
   //  VISIBILITY OF OBJECTS

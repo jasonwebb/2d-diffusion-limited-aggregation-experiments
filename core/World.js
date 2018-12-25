@@ -419,9 +419,15 @@ export default class World {
 
   pruneWalkers() {
     // Remove any walkers that have been wandering around for too long
-    if(this.settings.PruneOldWalkers) {
+    if(this.settings.PruneOldWalkers || this.settings.PruneDistantWalkers) {
       for(let [index, body] of this.bodies.entries()) {
-        if(!body.stuck && body.age > this.settings.MaxAge) {
+        if(
+          !body.stuck && 
+          (
+            (this.settings.PruneOldWalkers && body.age > this.settings.MaxAge) ||
+            (this.settings.PruneDistantWalkers && this.p5.dist(body.x, body.y, body.originalX, body.originalY) > this.settings.MaxWanderDistance)
+          )
+        ) {
           body.remove();
           this.bodies.splice(index, 1);
           this.numWalkers--;
@@ -467,6 +473,9 @@ export default class World {
 
     body.stuck = params.hasOwnProperty('stuck') ? params.stuck : false;
     body.age = 0;
+
+    body.originalX = body.x;
+    body.originalY = body.y;
 
     this.bodies.push(body);
   }
