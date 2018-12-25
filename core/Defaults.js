@@ -13,11 +13,25 @@ export default {
 
   // Distance to edges to spawn new walkers within when using 'Edges' for WalkerSource
   EdgeMargin: 0,
+
+
+  //=====================================================================
+  //  PRUNING BEHAVIORS
+  //=====================================================================
+
+  // Remove walkers that have been wandering around too much
+  PruneOldWalkers: false,
+
+  // Maximum walker age before it is removed, if `PruneOldWalkers` is `true`, in numbers of iterations
+  MaxAge: 30,
   
+  // Spawn new walkers when old ones are converted into clustered particles or pruned
+  ReplenishWalkers: false,
+
 
   //=====================================================================
   //  VISIBILITY OF OBJECTS
-  //=====================================================================  
+  //=====================================================================
 
   // Visibility of clustered particles
   ShowClusters: true,

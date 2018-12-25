@@ -78,6 +78,9 @@ export default class World {
 
     // Check for collisions and convert walkers to cluster particles as needed
     this.handleCollisions();
+
+    // Remove any walkers that have been walking around for too long
+    this.pruneWalkers();
   }
 
 
@@ -409,6 +412,19 @@ export default class World {
               });
             }
           }
+        }
+      }
+    }
+  }
+
+  pruneWalkers() {
+    // Remove any walkers that have been wandering around for too long
+    if(this.settings.PruneOldWalkers) {
+      for(let [index, body] of this.bodies.entries()) {
+        if(!body.stuck && body.age > this.settings.MaxAge) {
+          body.remove();
+          this.bodies.splice(index, 1);
+          this.numWalkers--;
         }
       }
     }
