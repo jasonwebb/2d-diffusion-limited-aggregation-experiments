@@ -34,15 +34,14 @@ To achieve vector-based results from the DLA process one must move away from pix
 
 | Parameter                   | Value       | Default       | Description |
 |---                          |---          |---            |--- |
-| `DefaultCircleDiameter`     | `Number`  | `5` | Default size of walkers, if none is provided through local Settings. |
-| `DefaultInitialClusterType` | `Point`, `Ring`, `Random`, or `Wall` | `Point` | Default initial cluster pattern, if none is provided through local Settings. |
+| `CircleDiameter`            | `Number`  | `5` | Default size of walkers, if none is provided through local Settings. |
+| `InitialClusterType`        | `Point`, `Ring`, `Random`, or `Wall` | `Point` | Default initial cluster pattern, if none is provided through local Settings. |
 | `ShowClusters`              | `Boolean` | `true` | Visibility of clustered particles on load. |
 | `ShowWalkers`               | `Boolean` | `true` | Visibility of walkers on load. |
 | `ShowShapes`                | `Boolean` | `true` | Visibility of custom SVG shapes on load. |
 | `MaxWalkers`                | `Number` | `20000` | Maximum number of walkers - lower numbers mean better performance, but fewer hits. |
 | `WalkerSource`              | `Edges`, `Circle`, `Random`, `Random-Circle`, or `Center` | `Center` | Where new walkers are spawned. |
 | `ReplenishWalkers`          | `Boolean` | `false` | Add new walkers whenever they become stuck to clusters. |
-| `Stickiness`                | `Number` between 0 and 1 | `.9` | Probability that a collision will make a walker stick to cluster. | 
 | `BiasTowards`               | `Top`, `Bottom`, `Left`, `Right`, `Edges`, `Center`, `Equator`, or `Meridian` | `Center` | Direction to move all walkers each iteration. |
 | `BiasForce`                 | `Number` | `1` | Magnitude of force to move walkers towards their bias direction. |
 | `UseFrame`                  | `Boolean` | `true` | Constrain sketch to a box centered on the screen. |

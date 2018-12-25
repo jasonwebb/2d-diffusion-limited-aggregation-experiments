@@ -25,7 +25,7 @@ export default class World {
     // Number of active walkers
     this.numWalkers = 0;
 
-    this.edgeMargin = this.settings.hasOwnProperty('EdgeMargin') ? this.settings.EdgeMargin : 0;
+    this.edgeMargin = this.settings.EdgeMargin;
 
     // Outer edges of active sketch area (screen or confined "frame")
     this.edges = {};
@@ -444,8 +444,7 @@ export default class World {
           break;
       }
     } else {
-      const defaultDiameter = this.settings.hasOwnProperty('CircleDiameter') ? this.settings.CircleDiameter : this.settings.DefaultCircleDiameter;
-      const diameter = params.hasOwnProperty('diameter') ? params.diameter : defaultDiameter;
+      const diameter = params.hasOwnProperty('diameter') ? params.diameter : this.settings.CircleDiameter;
       body = this.system.createCircle(params.x, params.y, diameter / 2);
       body._circle = true;
     }
@@ -535,7 +534,7 @@ export default class World {
     }
   }
 
-  createDefaultClusters(clusterType = this.settings.DefaultInitialClusterType) {
+  createDefaultClusters(clusterType = this.settings.InitialClusterType) {
     let paramsList = [];
 
     switch (clusterType) {
@@ -544,7 +543,7 @@ export default class World {
         paramsList.push({
           x: window.innerWidth / 2,
           y: window.innerHeight / 2,
-          diameter: this.settings.DefaultCircleDiameter
+          diameter: this.settings.CircleDiameter
         });
 
         break;
@@ -558,7 +557,7 @@ export default class World {
           paramsList.push({
             x: window.innerWidth / 2 + radius * Math.cos((360 / numParticles) * i * Math.PI / 180),
             y: window.innerHeight / 2 + radius * Math.sin((360 / numParticles) * i * Math.PI / 180),
-            diameter: this.settings.DefaultCircleDiameter
+            diameter: this.settings.CircleDiameter
           });
         }
 
@@ -570,7 +569,7 @@ export default class World {
           paramsList.push({
             x: this.p5.random(this.edges.left, this.edges.right),
             y: this.p5.random(this.edges.top, this.edges.bottom),
-            diameter: this.settings.DefaultCircleDiameter
+            diameter: this.settings.CircleDiameter
           });
         }
 
