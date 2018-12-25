@@ -60,6 +60,9 @@ export default {
   // Magnitude of walker bias force. Higher values mean faster movement
   BiasForce: 1,
 
+  // Enable each walker to have it's own bias towards a point
+  UsePerWalkerBias: false,
+
 
   //=====================================================================
   //  FRAME

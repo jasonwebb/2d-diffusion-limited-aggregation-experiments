@@ -25,9 +25,8 @@ export default class World {
     // Number of active walkers
     this.numWalkers = 0;
 
-    this.edgeMargin = this.settings.EdgeMargin;
-
     // Outer edges of active sketch area (screen or confined "frame")
+    this.edgeMargin = this.settings.EdgeMargin;
     this.edges = {};
     this.frame = {};
 
@@ -271,63 +270,70 @@ export default class World {
   moveWalkers() {
     if (this.bodies.length > 0) {
       for (let body of this.bodies) {
-
-        // TODO: prune walkers (remove walkers that have gotten too 'old')
-
         if (!body.stuck) {
           // Start with a randomized movement (Brownian motion)
           let deltaX = this.p5.random(-1, 1),
             deltaY = this.p5.random(-1, 1),
             deltas;
 
-          // Add in a bias towards a specific direction, if set
-          switch (this.settings.BiasTowards) {
-            case 'Top':
-              deltaY -= this.settings.BiasForce;
-              break;
+          // Add in per-walker bias, if enabled
+          if(this.settings.UsePerWalkerBias && body.hasOwnProperty('BiasTowards')) {
+            deltas = this.getDeltasTowards(body.x, body.y, body.BiasTowards.x, body.BiasTowards.y);
+            deltaX += deltas.x;
+            deltaY += deltas.y;
 
-            case 'Bottom':
-              deltaY += this.settings.BiasForce;
-              break;
+          // Otherwise add in uniform bias to all walkers
+          } else {
 
-            case 'Left':
-              deltaX -= this.settings.BiasForce;
-              break;
-
-            case 'Right':
-              deltaX += this.settings.BiasForce;
-              break;
-
-            case 'Center':
-              deltas = this.getDeltasTowards(body.x, body.y, window.innerWidth / 2, window.innerHeight / 2);
-              deltaX += deltas.x;
-              deltaY += deltas.y;
-              break;
-
-            case 'Edges':
-              deltas = this.getDeltasTowards(body.x, body.y, window.innerWidth / 2, window.innerHeight / 2);
-              deltaX -= deltas.x;
-              deltaY -= deltas.y;
-              break;
-
-            case 'Equator':
-              if (body.y < window.innerHeight / 2) {
-                deltaY += this.settings.BiasForce;
-              } else {
+            // Add in a bias towards a specific direction, if set
+            switch (this.settings.BiasTowards) {
+              case 'Top':
                 deltaY -= this.settings.BiasForce;
-              }
+                break;
 
-              break;
+              case 'Bottom':
+                deltaY += this.settings.BiasForce;
+                break;
 
-            case 'Meridian':
-              if (body.x < window.innerWidth / 2) {
-                deltaX += this.settings.BiasForce;
-              } else {
+              case 'Left':
                 deltaX -= this.settings.BiasForce;
-              }
+                break;
 
-              break;
+              case 'Right':
+                deltaX += this.settings.BiasForce;
+                break;
 
+              case 'Center':
+                deltas = this.getDeltasTowards(body.x, body.y, window.innerWidth / 2, window.innerHeight / 2);
+                deltaX += deltas.x;
+                deltaY += deltas.y;
+                break;
+
+              case 'Edges':
+                deltas = this.getDeltasTowards(body.x, body.y, window.innerWidth / 2, window.innerHeight / 2);
+                deltaX -= deltas.x;
+                deltaY -= deltas.y;
+                break;
+
+              case 'Equator':
+                if (body.y < window.innerHeight / 2) {
+                  deltaY += this.settings.BiasForce;
+                } else {
+                  deltaY -= this.settings.BiasForce;
+                }
+
+                break;
+
+              case 'Meridian':
+                if (body.x < window.innerWidth / 2) {
+                  deltaX += this.settings.BiasForce;
+                } else {
+                  deltaX -= this.settings.BiasForce;
+                }
+
+                break;
+
+            }
           }
 
           // Ensure only whole numbers for single-pixel particles so they are always "on lattice"
