@@ -62,6 +62,8 @@ To achieve vector-based results from the DLA process one must move away from pix
 * [Webpack](https://webpack.js.org/) for modern JS (ES6) syntax, code modularization, bundling, and serving locally.
 * [collisions](https://www.npmjs.com/package/collisions) for robust, lightweight collision detection without the use of a full physics package.
 * [svg-pathdata](https://www.npmjs.com/package/svg-pathdata) for parsing path information from SVG files in order to create custom shapes.
+* [svg-points](https://www.npmjs.com/package/svg-points) for generating the `d` attribute of SVG `<path>` elements for export feature.
+* [file-saver](https://www.npmjs.com/package/file-saver) for initiating a download of exported SVG fles to the user's machine.
 
 ## Running locally
 
