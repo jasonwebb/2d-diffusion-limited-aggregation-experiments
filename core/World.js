@@ -526,7 +526,7 @@ export default class World {
 
         // Circle = spawn walkers in a circle around the center of the screen
         case 'Circle':
-          let radius = 50,
+          let radius = this.p5.random(5, 900 / 2 - 20),
             angle = this.p5.random(360);
 
           params.x = window.innerWidth / 2 + radius * Math.cos(angle * Math.PI / 180);
@@ -539,18 +539,24 @@ export default class World {
           params.y = this.p5.random(this.edges.top, this.edges.bottom);
           break;
 
-        case 'Random-Circle':
-          let a = this.p5.random(360),
-            r = this.p5.random(5, 900 / 2 - 20);
-
-          params.x = window.innerWidth / 2 + r * Math.cos(a * Math.PI / 180);
-          params.y = window.innerHeight / 2 + r * Math.sin(a * Math.PI / 180);
-          break;
-
         // Center = spawn all walkers at screen center
         case 'Center':
           params.x = window.innerWidth / 2;
           params.y = window.innerHeight / 2;
+          break;
+
+        // Offscreen = spawn all walkers outside of the screen edges
+        case 'Offscreen':
+          params.x = this.p5.random(this.edges.left - this.edgeMargin, this.edges.right + this.edgeMargin);
+          params.y = this.p5.random(this.edges.top - this.edgeMargin, this.edges.bottom + this.edgeMargin);
+
+          if(
+            (params.x > this.edges.left && params.x < this.edges.right) &&
+            (params.y > this.edges.top && params.y < this.edges.bottom)
+          ) {
+            continue;
+          }
+          
           break;
       }
 
