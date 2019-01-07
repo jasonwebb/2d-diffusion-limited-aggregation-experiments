@@ -1,5 +1,7 @@
 # 03 - different sizes
 
-# Samples
+Basic DLA setup with varying sizes for the particles. 
+
+## Samples
 
 ![Different sizes](images/social-media-preview.png)

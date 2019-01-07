@@ -1,6 +1,10 @@
 # 02 - directional bias
 
-# Keyboard commands
+Similar setup as experiment 01, but with every walker given a "bias" force that continually pushes it in a particular direction. Depending on the direction of this force, an initial "wall" of initial cluster particles are set up to "catch" walkers as they move.
+
+## Keyboard commands
+
+In addition to the global keyboard commands listed in the main README, the following commands are available for this experiment:
 
 | Key | Result                                                               |
 |---  |---                                                                   |
@@ -13,6 +17,6 @@
 | `7` | Bias away from center with cluster walls on all edges.               |
 | `8` | Bias towards center with centered cluster seed.                      |
 
-# Samples
+## Samples
 
 ![Directional bias](images/social-media-preview.png)

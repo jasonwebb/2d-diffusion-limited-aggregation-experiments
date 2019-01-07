@@ -1,5 +1,7 @@
 # 01 - basic DLA
 
+The simplest possible configuration - some randomly-distributed walkers and cluster points with no movement bias or any other fancy features.
+
 # Samples
 
 ![Basic DLA](images/social-media-preview.png)
