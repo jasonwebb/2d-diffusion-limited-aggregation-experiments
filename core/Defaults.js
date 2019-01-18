@@ -109,7 +109,7 @@ export default {
    * Enable each walker to have it's own bias towards a point
    * @type {boolean}
    */
-  UsePerWalkerBias: false,
+  UsePerWalkerBias: true,
 
 
   //=====================================================================

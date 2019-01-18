@@ -483,6 +483,10 @@ export default class World {
     body.stuck = params.hasOwnProperty('stuck') ? params.stuck : false;
     body.age = 0;
 
+    if(params.hasOwnProperty('BiasTowards')) {
+      body.BiasTowards = params.BiasTowards;
+    }
+
     body.originalX = body.x;
     body.originalY = body.y;
 
@@ -538,11 +542,12 @@ export default class World {
 
         // Circle = spawn walkers in a circle around the center of the screen
         case 'Circle':
-          let radius = this.p5.random(5, 900 / 2 - 20),
-            angle = this.p5.random(360);
+          let radius = this.p5.random(5, 4000 / 2 - 20),
+            angle = this.p5.random(360),
+            center = this.settings.hasOwnProperty('CircleCenter') ? this.settings.CircleCenter : {x: window.innerWidth / 2, y: window.innerHeight / 2};
 
-          params.x = window.innerWidth / 2 + radius * Math.cos(angle * Math.PI / 180);
-          params.y = window.innerHeight / 2 + radius * Math.sin(angle * Math.PI / 180);
+          params.x = center.x + radius * Math.cos(angle * Math.PI / 180);
+          params.y = center.y + radius * Math.sin(angle * Math.PI / 180);
           break;
 
         // Random = spawn walkers randomly throughout the entire screen
@@ -559,8 +564,8 @@ export default class World {
 
         // Offscreen = spawn all walkers outside of the screen edges
         case 'Offscreen':
-          params.x = this.p5.random(this.edges.left - this.edgeMargin, this.edges.right + this.edgeMargin);
-          params.y = this.p5.random(this.edges.top - this.edgeMargin, this.edges.bottom + this.edgeMargin);
+          params.x = this.p5.random(this.edges.left - 200, this.edges.right + 200);
+          params.y = this.p5.random(this.edges.top - 200, this.edges.bottom + 200);
 
           if(
             (params.x > this.edges.left && params.x < this.edges.right) &&
@@ -681,7 +686,7 @@ export default class World {
     for (let i = 0; i <= width / this.settings.CircleDiameter; i++) {
       coords.push({
         x: this.edges.left + i * this.settings.CircleDiameter,
-        y: y,
+        y: yPos,
         diameter: this.settings.CircleDiameter
       });
     }
