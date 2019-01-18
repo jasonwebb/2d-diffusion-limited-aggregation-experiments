@@ -6,11 +6,14 @@
   "private": true,
   "scripts": {
     "build": "webpack",
-    "serve": "webpack-dev-server"
+    "serve": "webpack-dev-server",
+    "jsdoc": "jsdoc ../core -d ../docs -t node_modules/docdash"
   },
   "author": "Jason Webb",
   "license": "ISC",
   "devDependencies": {
+    "docdash": "^1.0.2",
+    "jsdoc": "^3.5.5",
     "path": "^0.12.7",
     "svg-inline-loader": "^0.8.0",
     "webpack": "^4.26.0",

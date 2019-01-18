@@ -1,22 +1,27 @@
+/** @module SVGLoader */
+
 import {SVGPathData} from 'svg-pathdata';
   
-/*
-=============================================================================
-  SVGLoader class
-
-  Utility class to load an external SVG file and produce Path(s) 
-=============================================================================
-*/
-
+/** Utility class to load an external SVG file and extract discrete paths as simple arrays of point coordinates */
 export default class SVGLoader {
   constructor() {}
 
+  /**
+   * Kick of parsing of an SVG file that has been imported via `require()` as a flat string
+   * @param {string} contents Entire contents of an SVG file as a flat string
+   * @returns {array} Array of paths produced via `load()`
+   */
   static loadFromFileContents(contents) {
     let parser = new DOMParser();
     let doc = parser.parseFromString(contents, 'image/svg+xml');
     return this.load(doc);
   }
 
+  /**
+   * Extract an array of simplified paths from an SVG DOM node
+   * @param {node} svgNode - SVG DOM node containing the document to parse
+   * @returns {array} Array of simple objects containing the starting X and Y coordinates and an array of subsequent points that define the path
+   */
   static load(svgNode) {
     let inputPaths = svgNode.querySelectorAll('path'),
         currentPath = {},

@@ -1,4 +1,47 @@
-/** @module World */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>World.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-SVGLoader.html">SVGLoader</a><ul class='methods'><li data-type='method'><a href="module-SVGLoader.html#.load">load</a></li><li data-type='method'><a href="module-SVGLoader.html#.loadFromFileContents">loadFromFileContents</a></li></ul></li><li><a href="module-World.html">World</a><ul class='methods'><li data-type='method'><a href="module-World.html#createCircleElFromBody">createCircleElFromBody</a></li><li data-type='method'><a href="module-World.html#createClusterFromParams">createClusterFromParams</a></li><li data-type='method'><a href="module-World.html#createDefaultClusters">createDefaultClusters</a></li><li data-type='method'><a href="module-World.html#createDefaultWalkers">createDefaultWalkers</a></li><li data-type='method'><a href="module-World.html#createHorizontalClusterWall">createHorizontalClusterWall</a></li><li data-type='method'><a href="module-World.html#createParticle">createParticle</a></li><li data-type='method'><a href="module-World.html#createPathElFromPoints">createPathElFromPoints</a></li><li data-type='method'><a href="module-World.html#createShapesFromPaths">createShapesFromPaths</a></li><li data-type='method'><a href="module-World.html#createVerticalClusterWall">createVerticalClusterWall</a></li><li data-type='method'><a href="module-World.html#createWalker">createWalker</a></li><li data-type='method'><a href="module-World.html#draw">draw</a></li><li data-type='method'><a href="module-World.html#drawFrame">drawFrame</a></li><li data-type='method'><a href="module-World.html#export">export</a></li><li data-type='method'><a href="module-World.html#getColorStringFromObject">getColorStringFromObject</a></li><li data-type='method'><a href="module-World.html#getDeltasTowards">getDeltasTowards</a></li><li data-type='method'><a href="module-World.html#getPointsFromCoords">getPointsFromCoords</a></li><li data-type='method'><a href="module-World.html#handleCollisions">handleCollisions</a></li><li data-type='method'><a href="module-World.html#iterate">iterate</a></li><li data-type='method'><a href="module-World.html#moveWalkers">moveWalkers</a></li><li data-type='method'><a href="module-World.html#pause">pause</a></li><li data-type='method'><a href="module-World.html#pruneWalkers">pruneWalkers</a></li><li data-type='method'><a href="module-World.html#removeAll">removeAll</a></li><li data-type='method'><a href="module-World.html#resetEdges">resetEdges</a></li><li data-type='method'><a href="module-World.html#toggleLineRenderingMode">toggleLineRenderingMode</a></li><li data-type='method'><a href="module-World.html#togglePause">togglePause</a></li><li data-type='method'><a href="module-World.html#toggleShowClusters">toggleShowClusters</a></li><li data-type='method'><a href="module-World.html#toggleShowShapes">toggleShowShapes</a></li><li data-type='method'><a href="module-World.html#toggleShowWalkers">toggleShowWalkers</a></li><li data-type='method'><a href="module-World.html#toggleUseFrame">toggleUseFrame</a></li><li data-type='method'><a href="module-World.html#unpause">unpause</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-Defaults.html">Defaults</a></li><li><a href="module-SVGLoader.html">SVGLoader</a><ul class='methods'><li data-type='method'><a href="module-SVGLoader.html#.load">load</a></li><li data-type='method'><a href="module-SVGLoader.html#.loadFromFileContents">loadFromFileContents</a></li></ul></li><li><a href="module-World.html">World</a><ul class='methods'><li data-type='method'><a href="module-World.html#createCircleElFromBody">createCircleElFromBody</a></li><li data-type='method'><a href="module-World.html#createClusterFromParams">createClusterFromParams</a></li><li data-type='method'><a href="module-World.html#createDefaultClusters">createDefaultClusters</a></li><li data-type='method'><a href="module-World.html#createDefaultWalkers">createDefaultWalkers</a></li><li data-type='method'><a href="module-World.html#createHorizontalClusterWall">createHorizontalClusterWall</a></li><li data-type='method'><a href="module-World.html#createParticle">createParticle</a></li><li data-type='method'><a href="module-World.html#createPathElFromPoints">createPathElFromPoints</a></li><li data-type='method'><a href="module-World.html#createShapesFromPaths">createShapesFromPaths</a></li><li data-type='method'><a href="module-World.html#createVerticalClusterWall">createVerticalClusterWall</a></li><li data-type='method'><a href="module-World.html#createWalker">createWalker</a></li><li data-type='method'><a href="module-World.html#draw">draw</a></li><li data-type='method'><a href="module-World.html#drawFrame">drawFrame</a></li><li data-type='method'><a href="module-World.html#export">export</a></li><li data-type='method'><a href="module-World.html#getColorStringFromObject">getColorStringFromObject</a></li><li data-type='method'><a href="module-World.html#getDeltasTowards">getDeltasTowards</a></li><li data-type='method'><a href="module-World.html#getPointsFromCoords">getPointsFromCoords</a></li><li data-type='method'><a href="module-World.html#handleCollisions">handleCollisions</a></li><li data-type='method'><a href="module-World.html#iterate">iterate</a></li><li data-type='method'><a href="module-World.html#moveWalkers">moveWalkers</a></li><li data-type='method'><a href="module-World.html#pause">pause</a></li><li data-type='method'><a href="module-World.html#pruneWalkers">pruneWalkers</a></li><li data-type='method'><a href="module-World.html#removeAll">removeAll</a></li><li data-type='method'><a href="module-World.html#resetEdges">resetEdges</a></li><li data-type='method'><a href="module-World.html#toggleLineRenderingMode">toggleLineRenderingMode</a></li><li data-type='method'><a href="module-World.html#togglePause">togglePause</a></li><li data-type='method'><a href="module-World.html#toggleShowClusters">toggleShowClusters</a></li><li data-type='method'><a href="module-World.html#toggleShowShapes">toggleShowShapes</a></li><li data-type='method'><a href="module-World.html#toggleShowWalkers">toggleShowWalkers</a></li><li data-type='method'><a href="module-World.html#toggleUseFrame">toggleUseFrame</a></li><li data-type='method'><a href="module-World.html#unpause">unpause</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">World.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module World */
 
 import Defaults from './Defaults';
 import Collisions from 'collisions';
@@ -64,7 +107,7 @@ export default class World {
     }
 
     // Replenish any walkers that stuck to the cluster(s) in the last iteration
-    if (this.settings.ReplenishWalkers && this.numWalkers < this.settings.MaxWalkers) {
+    if (this.settings.ReplenishWalkers &amp;&amp; this.numWalkers &lt; this.settings.MaxWalkers) {
       this.createDefaultWalkers(this.settings.MaxWalkers - this.numWalkers, this.settings.ReplenishmentSource);
     }
 
@@ -103,7 +146,7 @@ export default class World {
         
         this.p5.beginShape();
 
-          for (let i = 0; i < shape._coords.length; i += 2) {
+          for (let i = 0; i &lt; shape._coords.length; i += 2) {
             this.p5.vertex(shape._coords[i], shape._coords[i + 1]);
           }
 
@@ -130,7 +173,7 @@ export default class World {
         if (body._point) {
           this.p5.noFill();
 
-          if (body.stuck && this.showClusters) {
+          if (body.stuck &amp;&amp; this.showClusters) {
             this.p5.noStroke();
 
             if(this.settings.UseColors) {
@@ -141,7 +184,7 @@ export default class World {
 
             this.p5.ellipse(body.x, body.y, 5);
 
-          } else if (!body.stuck && this.showWalkers) {
+          } else if (!body.stuck &amp;&amp; this.showWalkers) {
             if(this.settings.UseColors) {
               this.p5.stroke(this.getColorStringFromObject(this.settings.WalkerColor));
             } else {
@@ -165,13 +208,13 @@ export default class World {
             this.p5.noStroke();
           }
 
-          if (body.stuck && this.showClusters) {
+          if (body.stuck &amp;&amp; this.showClusters) {
             if(this.settings.UseColors) {
               this.p5.fill(this.getColorStringFromObject(this.settings.ClusterColor));
             } else {
               this.p5.fill(120);
             }
-          } else if (!body.stuck && this.showWalkers) {
+          } else if (!body.stuck &amp;&amp; this.showWalkers) {
             if(this.settings.UseColors) {
               this.p5.fill(this.getColorStringFromObject(this.settings.WalkerColor));
             } else {
@@ -195,13 +238,13 @@ export default class World {
             this.p5.noStroke();
           }
 
-          if (body.stuck && this.showClusters) {
+          if (body.stuck &amp;&amp; this.showClusters) {
             if(this.settings.UseColors) {
               this.p5.fill(this.getColorStringFromObject(this.settings.ClusterColor));
             } else {
               this.p5.fill(120);
             }
-          } else if (!body.stuck && this.showWalkers) {
+          } else if (!body.stuck &amp;&amp; this.showWalkers) {
             if(this.settings.UseColors) {
               this.p5.fill(this.getColorStringFromObject(this.settings.WalkerColor));
             } else {
@@ -213,7 +256,7 @@ export default class World {
 
           this.p5.beginShape();
 
-            for (let i = 0; i < body._coords.length - 1; i += 2) {
+            for (let i = 0; i &lt; body._coords.length - 1; i += 2) {
               this.p5.vertex(body._coords[i], body._coords[i + 1]);
             }
 
@@ -275,7 +318,7 @@ export default class World {
             deltas;
 
           // Add in per-walker bias, if enabled
-          if(this.settings.UsePerWalkerBias && body.hasOwnProperty('BiasTowards')) {
+          if(this.settings.UsePerWalkerBias &amp;&amp; body.hasOwnProperty('BiasTowards')) {
             deltas = this.getDeltasTowards(body.x, body.y, body.BiasTowards.x, body.BiasTowards.y);
             deltaX += deltas.x;
             deltaY += deltas.y;
@@ -314,7 +357,7 @@ export default class World {
                 break;
 
               case 'Equator':
-                if (body.y < window.innerHeight / 2) {
+                if (body.y &lt; window.innerHeight / 2) {
                   deltaY += this.settings.BiasForce;
                 } else {
                   deltaY -= this.settings.BiasForce;
@@ -323,7 +366,7 @@ export default class World {
                 break;
 
               case 'Meridian':
-                if (body.x < window.innerWidth / 2) {
+                if (body.x &lt; window.innerWidth / 2) {
                   deltaX += this.settings.BiasForce;
                 } else {
                   deltaX -= this.settings.BiasForce;
@@ -341,11 +384,11 @@ export default class World {
           }
 
           // Apply deltas unless doing so would move the walker outside the sketch bounds
-          if (body.x + deltaX > this.edges.left && body.x + deltaX < this.edges.right) {
+          if (body.x + deltaX > this.edges.left &amp;&amp; body.x + deltaX &lt; this.edges.right) {
             body.x += deltaX;
           }
 
-          if (body.y + deltaY > this.edges.top && body.y + deltaY < this.edges.bottom) {
+          if (body.y + deltaY > this.edges.top &amp;&amp; body.y + deltaY &lt; this.edges.bottom) {
             body.y += deltaY;
           }
 
@@ -408,7 +451,7 @@ export default class World {
 
         // Circles and polygons should be checked for collision (overlap) with potentials
         } else {
-          if (secondBody.stuck && body.collides(secondBody)) {
+          if (secondBody.stuck &amp;&amp; body.collides(secondBody)) {
             body.stuck = true;
             this.numWalkers--;
 
@@ -430,10 +473,10 @@ export default class World {
     if(this.settings.PruneOldWalkers || this.settings.PruneDistantWalkers) {
       for(let [index, body] of this.bodies.entries()) {
         if(
-          !body.stuck && 
+          !body.stuck &amp;&amp; 
           (
-            (this.settings.PruneOldWalkers && body.age > this.settings.MaxAge) ||
-            (this.settings.PruneDistantWalkers && this.p5.dist(body.x, body.y, body.originalX, body.originalY) > this.settings.MaxWanderDistance)
+            (this.settings.PruneOldWalkers &amp;&amp; body.age > this.settings.MaxAge) ||
+            (this.settings.PruneDistantWalkers &amp;&amp; this.p5.dist(body.x, body.y, body.originalX, body.originalY) > this.settings.MaxWanderDistance)
           )
         ) {
           body.remove();
@@ -504,7 +547,7 @@ export default class World {
    * @param {string} source - Location where walkers should be created.
    */
   createDefaultWalkers(count = this.settings.MaxWalkers, source = this.settings.WalkerSource) {
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i &lt; count; i++) {
       let params = {};
 
       switch (source) {
@@ -563,8 +606,8 @@ export default class World {
           params.y = this.p5.random(this.edges.top - this.edgeMargin, this.edges.bottom + this.edgeMargin);
 
           if(
-            (params.x > this.edges.left && params.x < this.edges.right) &&
-            (params.y > this.edges.top && params.y < this.edges.bottom)
+            (params.x > this.edges.left &amp;&amp; params.x &lt; this.edges.right) &amp;&amp;
+            (params.y > this.edges.top &amp;&amp; params.y &lt; this.edges.bottom)
           ) {
             continue;
           }
@@ -606,7 +649,7 @@ export default class World {
         let radius = 100,
           numParticles = 20;
 
-        for (let i = 0; i < numParticles; i++) {
+        for (let i = 0; i &lt; numParticles; i++) {
           paramsList.push({
             x: window.innerWidth / 2 + radius * Math.cos((360 / numParticles) * i * Math.PI / 180),
             y: window.innerHeight / 2 + radius * Math.sin((360 / numParticles) * i * Math.PI / 180),
@@ -618,7 +661,7 @@ export default class World {
 
       // Individual particles randomly distributed across entire screen
       case 'Random':
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i &lt; 40; i++) {
           paramsList.push({
             x: this.p5.random(this.edges.left, this.edges.right),
             y: this.p5.random(this.edges.top, this.edges.bottom),
@@ -678,7 +721,7 @@ export default class World {
     let coords = [],
       width = this.useFrame ? 900 : window.innerWidth;
 
-    for (let i = 0; i <= width / this.settings.CircleDiameter; i++) {
+    for (let i = 0; i &lt;= width / this.settings.CircleDiameter; i++) {
       coords.push({
         x: this.edges.left + i * this.settings.CircleDiameter,
         y: y,
@@ -698,7 +741,7 @@ export default class World {
     let coords = [],
       height = this.useFrame ? 900 : window.innerHeight;
 
-    for (let i = 0; i <= height / this.settings.CircleDiameter; i++) {
+    for (let i = 0; i &lt;= height / this.settings.CircleDiameter; i++) {
       coords.push({
         x: xPos,
         y: this.edges.top + i * this.settings.CircleDiameter,
@@ -727,7 +770,7 @@ export default class World {
    * @param {Array} paths - Array of objects defining polygons (technically polylines) with starting X and Y coordinates and a list of points
    */
   createShapesFromPaths(paths) {
-    if (!paths.hasOwnProperty('points') && paths.length == 0) {
+    if (!paths.hasOwnProperty('points') &amp;&amp; paths.length == 0) {
       console.error('Unable to create shapes. Paths must have an array of points [[x,y],...]');
       return;
     }
@@ -742,7 +785,7 @@ export default class World {
 
       // Create a series of separate line segments if shape is not "solid", per https://github.com/Sinova/Collisions#anchor-lines
       } else {
-        for (let i = 1; i < path.points.length; i++) {
+        for (let i = 1; i &lt; path.points.length; i++) {
           let line = this.system.createPolygon(path.x, path.y, [[path.points[i - 1][0], path.points[i - 1][1]], [path.points[i][0], path.points[i][1]]]);
           line.solid = false;
           line.closed = false;
@@ -851,7 +894,7 @@ export default class World {
   //============
   /** Constructs an SVG node with paths based on current rendering mode of the World, then initiates a download on the user's machine of the generated file */
   export() {
-    // Set up <svg> element
+    // Set up &lt;svg> element
     let svg = document.createElement('svg');
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
     svg.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
@@ -864,7 +907,7 @@ export default class World {
       case 'Shapes':
       default:
         for(let body of this.bodies) {
-          if(!body.stuck && !this.showWalkers) {
+          if(!body.stuck &amp;&amp; !this.showWalkers) {
             continue;
           }
 
@@ -912,7 +955,7 @@ export default class World {
     svgDoc.replaceChild(svg, svgDoc.documentElement);
     let svgData = (new XMLSerializer()).serializeToString(svgDoc);
 
-    let blob = new Blob([svgData.replace(/></g, '>\n\r<')]);
+    let blob = new Blob([svgData.replace(/>&lt;/g, '>\n\r&lt;')]);
     saveAs(blob, 'dla-' + Date.now() + '.svg');
   }
 
@@ -923,7 +966,7 @@ export default class World {
   getPointsFromCoords(coords) {
     let points = [];
 
-    for (let i = 0; i < coords.length - 1; i += 2) {
+    for (let i = 0; i &lt; coords.length - 1; i += 2) {
       points.push({
         x: coords[i], 
         y: coords[i + 1]
@@ -934,9 +977,9 @@ export default class World {
   }
 
   /**
-   * Create a <path> element with a "d" attribute containing provided points
+   * Create a &lt;path> element with a "d" attribute containing provided points
    * @param {array} points 
-   * @returns {node} SVG <path> element with "d" attribute containing provided points
+   * @returns {node} SVG &lt;path> element with "d" attribute containing provided points
    */
   createPathElFromPoints(points) {
     let pointsString = '';
@@ -944,7 +987,7 @@ export default class World {
     for(let [index, point] of points.entries()) {
       pointsString += point.x + ',' + point.y;
 
-      if(index < points.length - 1) {
+      if(index &lt; points.length - 1) {
         pointsString += ' ';
       }
     }
@@ -962,9 +1005,9 @@ export default class World {
   }
 
   /**
-   * Create an SVG <circle> element with attributes `cx`, `cy`, and `r` extracted from provided body
+   * Create an SVG &lt;circle> element with attributes `cx`, `cy`, and `r` extracted from provided body
    * @param {object} body 
-   * @returns {node} SVG <circle> element with `cx`, `cy`, and `r` attributes from body
+   * @returns {node} SVG &lt;circle> element with `cx`, `cy`, and `r` attributes from body
    */
   createCircleElFromBody(body) {
     let circleEl = document.createElement('circle');
@@ -974,4 +1017,26 @@ export default class World {
     return circleEl;
   }
 
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jan 12 2019 16:29:27 GMT-0600 (Central Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>

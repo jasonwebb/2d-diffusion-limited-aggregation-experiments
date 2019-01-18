@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Defaults - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-SVGLoader.html">SVGLoader</a><ul class='methods'><li data-type='method'><a href="module-SVGLoader.html#.load">load</a></li><li data-type='method'><a href="module-SVGLoader.html#.loadFromFileContents">loadFromFileContents</a></li></ul></li><li><a href="module-World.html">World</a><ul class='methods'><li data-type='method'><a href="module-World.html#createCircleElFromBody">createCircleElFromBody</a></li><li data-type='method'><a href="module-World.html#createClusterFromParams">createClusterFromParams</a></li><li data-type='method'><a href="module-World.html#createDefaultClusters">createDefaultClusters</a></li><li data-type='method'><a href="module-World.html#createDefaultWalkers">createDefaultWalkers</a></li><li data-type='method'><a href="module-World.html#createHorizontalClusterWall">createHorizontalClusterWall</a></li><li data-type='method'><a href="module-World.html#createParticle">createParticle</a></li><li data-type='method'><a href="module-World.html#createPathElFromPoints">createPathElFromPoints</a></li><li data-type='method'><a href="module-World.html#createShapesFromPaths">createShapesFromPaths</a></li><li data-type='method'><a href="module-World.html#createVerticalClusterWall">createVerticalClusterWall</a></li><li data-type='method'><a href="module-World.html#createWalker">createWalker</a></li><li data-type='method'><a href="module-World.html#draw">draw</a></li><li data-type='method'><a href="module-World.html#drawFrame">drawFrame</a></li><li data-type='method'><a href="module-World.html#export">export</a></li><li data-type='method'><a href="module-World.html#getColorStringFromObject">getColorStringFromObject</a></li><li data-type='method'><a href="module-World.html#getDeltasTowards">getDeltasTowards</a></li><li data-type='method'><a href="module-World.html#getPointsFromCoords">getPointsFromCoords</a></li><li data-type='method'><a href="module-World.html#handleCollisions">handleCollisions</a></li><li data-type='method'><a href="module-World.html#iterate">iterate</a></li><li data-type='method'><a href="module-World.html#moveWalkers">moveWalkers</a></li><li data-type='method'><a href="module-World.html#pause">pause</a></li><li data-type='method'><a href="module-World.html#pruneWalkers">pruneWalkers</a></li><li data-type='method'><a href="module-World.html#removeAll">removeAll</a></li><li data-type='method'><a href="module-World.html#resetEdges">resetEdges</a></li><li data-type='method'><a href="module-World.html#toggleLineRenderingMode">toggleLineRenderingMode</a></li><li data-type='method'><a href="module-World.html#togglePause">togglePause</a></li><li data-type='method'><a href="module-World.html#toggleShowClusters">toggleShowClusters</a></li><li data-type='method'><a href="module-World.html#toggleShowShapes">toggleShowShapes</a></li><li data-type='method'><a href="module-World.html#toggleShowWalkers">toggleShowWalkers</a></li><li data-type='method'><a href="module-World.html#toggleUseFrame">toggleUseFrame</a></li><li data-type='method'><a href="module-World.html#unpause">unpause</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-Defaults.html">Defaults</a></li><li><a href="module-SVGLoader.html">SVGLoader</a><ul class='methods'><li data-type='method'><a href="module-SVGLoader.html#.load">load</a></li><li data-type='method'><a href="module-SVGLoader.html#.loadFromFileContents">loadFromFileContents</a></li></ul></li><li><a href="module-World.html">World</a><ul class='methods'><li data-type='method'><a href="module-World.html#createCircleElFromBody">createCircleElFromBody</a></li><li data-type='method'><a href="module-World.html#createClusterFromParams">createClusterFromParams</a></li><li data-type='method'><a href="module-World.html#createDefaultClusters">createDefaultClusters</a></li><li data-type='method'><a href="module-World.html#createDefaultWalkers">createDefaultWalkers</a></li><li data-type='method'><a href="module-World.html#createHorizontalClusterWall">createHorizontalClusterWall</a></li><li data-type='method'><a href="module-World.html#createParticle">createParticle</a></li><li data-type='method'><a href="module-World.html#createPathElFromPoints">createPathElFromPoints</a></li><li data-type='method'><a href="module-World.html#createShapesFromPaths">createShapesFromPaths</a></li><li data-type='method'><a href="module-World.html#createVerticalClusterWall">createVerticalClusterWall</a></li><li data-type='method'><a href="module-World.html#createWalker">createWalker</a></li><li data-type='method'><a href="module-World.html#draw">draw</a></li><li data-type='method'><a href="module-World.html#drawFrame">drawFrame</a></li><li data-type='method'><a href="module-World.html#export">export</a></li><li data-type='method'><a href="module-World.html#getColorStringFromObject">getColorStringFromObject</a></li><li data-type='method'><a href="module-World.html#getDeltasTowards">getDeltasTowards</a></li><li data-type='method'><a href="module-World.html#getPointsFromCoords">getPointsFromCoords</a></li><li data-type='method'><a href="module-World.html#handleCollisions">handleCollisions</a></li><li data-type='method'><a href="module-World.html#iterate">iterate</a></li><li data-type='method'><a href="module-World.html#moveWalkers">moveWalkers</a></li><li data-type='method'><a href="module-World.html#pause">pause</a></li><li data-type='method'><a href="module-World.html#pruneWalkers">pruneWalkers</a></li><li data-type='method'><a href="module-World.html#removeAll">removeAll</a></li><li data-type='method'><a href="module-World.html#resetEdges">resetEdges</a></li><li data-type='method'><a href="module-World.html#toggleLineRenderingMode">toggleLineRenderingMode</a></li><li data-type='method'><a href="module-World.html#togglePause">togglePause</a></li><li data-type='method'><a href="module-World.html#toggleShowClusters">toggleShowClusters</a></li><li data-type='method'><a href="module-World.html#toggleShowShapes">toggleShowShapes</a></li><li data-type='method'><a href="module-World.html#toggleShowWalkers">toggleShowWalkers</a></li><li data-type='method'><a href="module-World.html#toggleUseFrame">toggleUseFrame</a></li><li data-type='method'><a href="module-World.html#unpause">unpause</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Defaults</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+            
+                
+
+    
+
+    <h4 class="name" id="module:Defaults"><span class="type-signature"></span>module:Defaults<span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line3">line 3</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    {{h: number, s: number, b: number}} colorObj
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".BackgroundColor"><span class="type-signature">(static) </span>BackgroundColor<span class="type-signature"> :colorObj</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line170">line 170</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Canvas background color
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">colorObj</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".BiasForce"><span class="type-signature">(static) </span>BiasForce<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line107">line 107</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Magnitude of walker bias force. Higher values mean faster movement.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".BiasTowards"><span class="type-signature">(static) </span>BiasTowards<span class="type-signature"> :string</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line101">line 101</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Direction to move all walkers each iteration. Can be Top, Bottom, Left, Right, Center, Edges, Equator, or Meridian. All other values, including nothing, disable bias
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".CaptureLines"><span class="type-signature">(static) </span>CaptureLines<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line141">line 141</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Enable the generation of lines between newly-clustered particles. Required for "Lines" render mode. Can be disabled for performance if needed.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".CircleDiameter"><span class="type-signature">(static) </span>CircleDiameter<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line8">line 8</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Diameter of all particles
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".ClusterColor"><span class="type-signature">(static) </span>ClusterColor<span class="type-signature"> :object</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line190">line 190</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Color of clustered particles, when visible
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".EdgeMargin"><span class="type-signature">(static) </span>EdgeMargin<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line32">line 32</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Distance to edges to spawn new walkers within when using 'Edges' for WalkerSource
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".FrameColor"><span class="type-signature">(static) </span>FrameColor<span class="type-signature"> :object</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line220">line 220</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Color of bounding frame, when enabled
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".FrameSize"><span class="type-signature">(static) </span>FrameSize<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line130">line 130</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Size of frame. Can be a single number, or an array of two numbers for width and height
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".InitialClusterType"><span class="type-signature">(static) </span>InitialClusterType<span class="type-signature"> :string</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Initial cluster pattern, if none is provided through local Settings
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".LineColor"><span class="type-signature">(static) </span>LineColor<span class="type-signature"> :object</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line210">line 210</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Color of lines when RenderMode is set to 'Lines'
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".MaxAge"><span class="type-signature">(static) </span>MaxAge<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line49">line 49</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Maximum walker age before it is removed, if `PruneOldWalkers` is `true`, in numbers of iterations
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".MaxWalkers"><span class="type-signature">(static) </span>MaxWalkers<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Number of walkers allowed in each iteration
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".MaxWanderDistance"><span class="type-signature">(static) </span>MaxWanderDistance<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Maximum distance before a walker is removed, if `PruneDistantWalkers` is enabled
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".PruneDistantWalkers"><span class="type-signature">(static) </span>PruneDistantWalkers<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line61">line 61</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Remove walkers that have strayed too far from their original positions
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".PruneOldWalkers"><span class="type-signature">(static) </span>PruneOldWalkers<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line43">line 43</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Remove walkers that have been wandering around too much
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".RenderMode"><span class="type-signature">(static) </span>RenderMode<span class="type-signature"> :string</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line147">line 147</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Drawing method. Can be `Shapes` or `Lines`.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".ReplenishWalkers"><span class="type-signature">(static) </span>ReplenishWalkers<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line55">line 55</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Spawn new walkers when old ones are converted into clustered particles or pruned
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".ShapeColor"><span class="type-signature">(static) </span>ShapeColor<span class="type-signature"> :object</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line200">line 200</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Color of custom imported SVG shapes, when visible
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".ShowClusters"><span class="type-signature">(static) </span>ShowClusters<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Visibility of clustered particles
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".ShowShapes"><span class="type-signature">(static) </span>ShowShapes<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line90">line 90</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Visibility of imported shapes
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".ShowWalkers"><span class="type-signature">(static) </span>ShowWalkers<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line84">line 84</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Visibility of walkers
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".UseColors"><span class="type-signature">(static) </span>UseColors<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line164">line 164</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Apply the colors defined below. `false` means black and white only.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".UseFrame"><span class="type-signature">(static) </span>UseFrame<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line124">line 124</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Constrain sketch to a box centered on the screen
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".UsePerWalkerBias"><span class="type-signature">(static) </span>UsePerWalkerBias<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line113">line 113</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Enable each walker to have it's own bias towards a point
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".UseStroke"><span class="type-signature">(static) </span>UseStroke<span class="type-signature"> :boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line153">line 153</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Draw stroke around circles/polygons
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".WalkerColor"><span class="type-signature">(static) </span>WalkerColor<span class="type-signature"> :object</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line180">line 180</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Color of randomly-moving particles (walkers), when visible
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".WalkerSource"><span class="type-signature">(static) </span>WalkerSource<span class="type-signature"> :string</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Defaults.js.html">Defaults.js</a>, <a href="Defaults.js.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Location of new walkers
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jan 12 2019 16:29:27 GMT-0600 (Central Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Defaults.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-SVGLoader.html">SVGLoader</a><ul class='methods'><li data-type='method'><a href="module-SVGLoader.html#.load">load</a></li><li data-type='method'><a href="module-SVGLoader.html#.loadFromFileContents">loadFromFileContents</a></li></ul></li><li><a href="module-World.html">World</a><ul class='methods'><li data-type='method'><a href="module-World.html#createCircleElFromBody">createCircleElFromBody</a></li><li data-type='method'><a href="module-World.html#createClusterFromParams">createClusterFromParams</a></li><li data-type='method'><a href="module-World.html#createDefaultClusters">createDefaultClusters</a></li><li data-type='method'><a href="module-World.html#createDefaultWalkers">createDefaultWalkers</a></li><li data-type='method'><a href="module-World.html#createHorizontalClusterWall">createHorizontalClusterWall</a></li><li data-type='method'><a href="module-World.html#createParticle">createParticle</a></li><li data-type='method'><a href="module-World.html#createPathElFromPoints">createPathElFromPoints</a></li><li data-type='method'><a href="module-World.html#createShapesFromPaths">createShapesFromPaths</a></li><li data-type='method'><a href="module-World.html#createVerticalClusterWall">createVerticalClusterWall</a></li><li data-type='method'><a href="module-World.html#createWalker">createWalker</a></li><li data-type='method'><a href="module-World.html#draw">draw</a></li><li data-type='method'><a href="module-World.html#drawFrame">drawFrame</a></li><li data-type='method'><a href="module-World.html#export">export</a></li><li data-type='method'><a href="module-World.html#getColorStringFromObject">getColorStringFromObject</a></li><li data-type='method'><a href="module-World.html#getDeltasTowards">getDeltasTowards</a></li><li data-type='method'><a href="module-World.html#getPointsFromCoords">getPointsFromCoords</a></li><li data-type='method'><a href="module-World.html#handleCollisions">handleCollisions</a></li><li data-type='method'><a href="module-World.html#iterate">iterate</a></li><li data-type='method'><a href="module-World.html#moveWalkers">moveWalkers</a></li><li data-type='method'><a href="module-World.html#pause">pause</a></li><li data-type='method'><a href="module-World.html#pruneWalkers">pruneWalkers</a></li><li data-type='method'><a href="module-World.html#removeAll">removeAll</a></li><li data-type='method'><a href="module-World.html#resetEdges">resetEdges</a></li><li data-type='method'><a href="module-World.html#toggleLineRenderingMode">toggleLineRenderingMode</a></li><li data-type='method'><a href="module-World.html#togglePause">togglePause</a></li><li data-type='method'><a href="module-World.html#toggleShowClusters">toggleShowClusters</a></li><li data-type='method'><a href="module-World.html#toggleShowShapes">toggleShowShapes</a></li><li data-type='method'><a href="module-World.html#toggleShowWalkers">toggleShowWalkers</a></li><li data-type='method'><a href="module-World.html#toggleUseFrame">toggleUseFrame</a></li><li data-type='method'><a href="module-World.html#unpause">unpause</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-Defaults.html">Defaults</a></li><li><a href="module-SVGLoader.html">SVGLoader</a><ul class='methods'><li data-type='method'><a href="module-SVGLoader.html#.load">load</a></li><li data-type='method'><a href="module-SVGLoader.html#.loadFromFileContents">loadFromFileContents</a></li></ul></li><li><a href="module-World.html">World</a><ul class='methods'><li data-type='method'><a href="module-World.html#createCircleElFromBody">createCircleElFromBody</a></li><li data-type='method'><a href="module-World.html#createClusterFromParams">createClusterFromParams</a></li><li data-type='method'><a href="module-World.html#createDefaultClusters">createDefaultClusters</a></li><li data-type='method'><a href="module-World.html#createDefaultWalkers">createDefaultWalkers</a></li><li data-type='method'><a href="module-World.html#createHorizontalClusterWall">createHorizontalClusterWall</a></li><li data-type='method'><a href="module-World.html#createParticle">createParticle</a></li><li data-type='method'><a href="module-World.html#createPathElFromPoints">createPathElFromPoints</a></li><li data-type='method'><a href="module-World.html#createShapesFromPaths">createShapesFromPaths</a></li><li data-type='method'><a href="module-World.html#createVerticalClusterWall">createVerticalClusterWall</a></li><li data-type='method'><a href="module-World.html#createWalker">createWalker</a></li><li data-type='method'><a href="module-World.html#draw">draw</a></li><li data-type='method'><a href="module-World.html#drawFrame">drawFrame</a></li><li data-type='method'><a href="module-World.html#export">export</a></li><li data-type='method'><a href="module-World.html#getColorStringFromObject">getColorStringFromObject</a></li><li data-type='method'><a href="module-World.html#getDeltasTowards">getDeltasTowards</a></li><li data-type='method'><a href="module-World.html#getPointsFromCoords">getPointsFromCoords</a></li><li data-type='method'><a href="module-World.html#handleCollisions">handleCollisions</a></li><li data-type='method'><a href="module-World.html#iterate">iterate</a></li><li data-type='method'><a href="module-World.html#moveWalkers">moveWalkers</a></li><li data-type='method'><a href="module-World.html#pause">pause</a></li><li data-type='method'><a href="module-World.html#pruneWalkers">pruneWalkers</a></li><li data-type='method'><a href="module-World.html#removeAll">removeAll</a></li><li data-type='method'><a href="module-World.html#resetEdges">resetEdges</a></li><li data-type='method'><a href="module-World.html#toggleLineRenderingMode">toggleLineRenderingMode</a></li><li data-type='method'><a href="module-World.html#togglePause">togglePause</a></li><li data-type='method'><a href="module-World.html#toggleShowClusters">toggleShowClusters</a></li><li data-type='method'><a href="module-World.html#toggleShowShapes">toggleShowShapes</a></li><li data-type='method'><a href="module-World.html#toggleShowWalkers">toggleShowWalkers</a></li><li data-type='method'><a href="module-World.html#toggleUseFrame">toggleUseFrame</a></li><li data-type='method'><a href="module-World.html#unpause">unpause</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Defaults.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module Defaults */
+/** {{h: number, s: number, b: number}} colorObj */
+export default {
+  /** 
+   * Diameter of all particles 
+   * @type {number}
+   */ 
+  CircleDiameter: 5,
+
+  /**
+   * Initial cluster pattern, if none is provided through local Settings
+   * @type {string},
+   */
+  InitialClusterType: 'Random',
+
+  /**
+   * Location of new walkers
+   * @type {string}
+   */
+  WalkerSource: 'Random',
+
+  /**
+   * Number of walkers allowed in each iteration
+   * @type {number}
+   */
+  MaxWalkers: 5000,
+
+  /**
+   * Distance to edges to spawn new walkers within when using 'Edges' for WalkerSource
+   * @type {number}
+   */
+  EdgeMargin: 0,
+
+
+  //=====================================================================
+  //  PRUNING BEHAVIORS
+  //=====================================================================
+
+  /**
+   * Remove walkers that have been wandering around too much
+   * @type {boolean}
+   */
+  PruneOldWalkers: false,
+
+  /**
+   * Maximum walker age before it is removed, if `PruneOldWalkers` is `true`, in numbers of iterations
+   * @type {number}
+   */
+  MaxAge: 30,
+  
+  /**
+   * Spawn new walkers when old ones are converted into clustered particles or pruned
+   * @type {boolean}
+   */
+  ReplenishWalkers: false,
+
+  /**
+   * Remove walkers that have strayed too far from their original positions
+   * @type {boolean}
+   */
+  PruneDistantWalkers: false,
+
+  /**
+   * Maximum distance before a walker is removed, if `PruneDistantWalkers` is enabled
+   * @type {number}
+   */
+  MaxWanderDistance: 20,
+
+
+  //=====================================================================
+  //  VISIBILITY OF OBJECTS
+  //=====================================================================
+
+  /**
+   * Visibility of clustered particles
+   * @type {boolean}
+   */
+  ShowClusters: true,
+  
+  /**
+   * Visibility of walkers
+   * @type {boolean}
+   */
+  ShowWalkers: true,
+
+  /**
+   * Visibility of imported shapes
+   * @type {boolean}
+   */
+  ShowShapes: true,
+
+
+  //=====================================================================
+  //  BIAS EFFECT
+  //===================================================================== 
+
+  /**
+   * Direction to move all walkers each iteration. Can be Top, Bottom, Left, Right, Center, Edges, Equator, or Meridian. All other values, including nothing, disable bias
+   * @type {string}
+   */
+  BiasTowards: 'Center',
+
+  /**
+   * Magnitude of walker bias force. Higher values mean faster movement.
+   * @type {number}
+   */
+  BiasForce: 1,
+
+  /**
+   * Enable each walker to have it's own bias towards a point
+   * @type {boolean}
+   */
+  UsePerWalkerBias: false,
+
+
+  //=====================================================================
+  //  FRAME
+  //===================================================================== 
+
+  /**
+   * Constrain sketch to a box centered on the screen
+   * @type {boolean}
+   */
+  UseFrame: true,
+
+  /**
+   * Size of frame. Can be a single number, or an array of two numbers for width and height
+   * @type {number}
+   */
+  FrameSize: 900,
+
+
+  //=====================================================================
+  //  RENDERING EFFECTS
+  //===================================================================== 
+
+  /**
+   * Enable the generation of lines between newly-clustered particles. Required for "Lines" render mode. Can be disabled for performance if needed.
+   * @type {boolean}
+   */
+  CaptureLines: true,
+
+  /**
+   * Drawing method. Can be `Shapes` or `Lines`.
+   * @type {string}
+   */
+  RenderMode: 'Shapes',
+
+  /**
+   * Draw stroke around circles/polygons
+   * @type {boolean}
+   */
+  UseStroke: false,
+
+
+  //=====================================================================
+  //  COLORS
+  //=====================================================================
+
+  /**
+   * Apply the colors defined below. `false` means black and white only.
+   * @type {boolean}
+   */
+  UseColors: false,
+
+  /**
+   * Canvas background color
+   * @type {colorObj}
+   */
+  BackgroundColor: {
+    h: 230,
+    s: 20,
+    b: 40
+  },
+
+  /**
+   * Color of randomly-moving particles (walkers), when visible
+   * @type {object}
+   */
+  WalkerColor: {
+    h: 200,
+    s: 30,
+    b: 44
+  },
+  
+  /**
+   * Color of clustered particles, when visible
+   * @type {object}
+   */
+  ClusterColor: {
+    h: 30,
+    s: 70,
+    b: 80  
+  },
+
+  /**
+   * Color of custom imported SVG shapes, when visible
+   * @type {object}
+   */
+  ShapeColor: {
+    h: 100,
+    s: 50,
+    b: 80
+  },
+
+  /**
+   * Color of lines when RenderMode is set to 'Lines'
+   * @type {object}
+   */
+  LineColor: {
+    h: 10,
+    s: 70,
+    b: 100
+  },
+
+  /**
+   * Color of bounding frame, when enabled
+   * @type {object}
+   */
+  FrameColor: {
+    h: 0,
+    s: 100,
+    b: 100
+  }
+  
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jan 12 2019 16:29:27 GMT-0600 (Central Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>
