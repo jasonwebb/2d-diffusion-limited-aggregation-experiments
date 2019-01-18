@@ -6,11 +6,12 @@ import SVGLoader from '../../core/SVGLoader';
 let world, player;
 
 const TRAIL = 0,
-      FREE = 1,
-      RADIAL = 2;
-let currentEffectMode = TRAIL;
+      GRAVITY =  1,
+      ASTEROIDS = 2,
+      RADIAL = 3;
+let currentEffectMode = ASTEROIDS;
 
-let particleRadius = 20;
+let particleSpreadRadius = 20;
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -21,52 +22,87 @@ const sketch = function (p5) {
 
     // Set up the simulation environment
     world = new World(p5, Settings);
-    // world.createDefaultClusters(Settings.InitialClusterType);
-    createCustomShapesFromSVG(require('../svg/dla.svg'));
+    resetWorld();
 
+    // Set up the interactive player object for ASTEROIDS and RADIAL modes
     player = new Player(p5, window.innerWidth/2, window.innerHeight/2);
   }
 
   // Draw ----------------------------------------------------------------
   p5.draw = function () {
-    // In trail mode, spawn walkers around the cursor when left mouse button is held
-    if(currentEffectMode == TRAIL && p5.mouseIsPressed && p5.mouseButton === p5.LEFT && 
-       p5.mouseX >= world.edges.left + particleRadius && 
-       p5.mouseX <= world.edges.right - particleRadius && 
-       p5.mouseY >= world.edges.top + particleRadius && 
-       p5.mouseY <= world.edges.bottom - particleRadius
-    ) {
-      world.createWalker({
-        x: p5.mouseX + p5.random(-particleRadius, particleRadius),
-        y: p5.mouseY + p5.random(-particleRadius, particleRadius)
-      });
-    } else if(currentEffectMode == FREE && p5.keyIsPressed) {
-      player.handleKey(p5.key);
+    switch(currentEffectMode) {
+      case TRAIL:
+        if(
+          p5.mouseIsPressed && p5.mouseButton === p5.LEFT && 
+          p5.mouseX >= world.edges.left + particleSpreadRadius && 
+          p5.mouseX <= world.edges.right - particleSpreadRadius && 
+          p5.mouseY >= world.edges.top + particleSpreadRadius && 
+          p5.mouseY <= world.edges.bottom - particleSpreadRadius
+        ) {
+          world.createWalker({
+            x: p5.mouseX + p5.random(-particleSpreadRadius, particleSpreadRadius),
+            y: p5.mouseY + p5.random(-particleSpreadRadius, particleSpreadRadius)
+          });
+        }
 
-      if(p5.key == ' ') {
-        world.createWalker({
-          x: player.x,
-          y: player.y
-        });
-      }
+        break;
+
+      case ASTEROIDS:
+      case RADIAL:
+        break;
+
+      case GRAVITY:
+        break;
     }
 
     world.iterate();
     world.draw();
 
-    if(currentEffectMode == FREE || currentEffectMode == RADIAL) {
+    if(currentEffectMode == ASTEROIDS || currentEffectMode == RADIAL) {
       player.move();
       player.draw();
+
+      if(player.isShooting && p5.frameCount % 5 == 0) {
+        world.createWalker({
+          x: player.x,
+          y: player.y,
+          BiasTowards: {
+            x: Math.cos(player.heading) * 5000,
+            y: Math.sin(player.heading) * 5000
+          }
+        });
+      }
+
+      if(player.x < world.edges.left) {
+        player.x = world.edges.right;
+      }
+
+      if(player.x > world.edges.right) {
+        player.x = world.edges.left;
+      }
+
+      if(player.y < world.edges.top) {
+        player.y = world.edges.bottom;
+      }
+
+      if(player.y > world.edges.bottom) {
+        player.y = world.edges.top;
+      }
     }
   }
 
   function resetWorld() {
     world.removeAll();
-    world.createDefaultClusters(Settings.InitialClusterType);
-    createCustomShapesFromSVG(require('../svg/dla.svg'));
+
+    if(currentEffectMode == TRAIL || currentEffectMode == ASTEROIDS || currentEffectMode == RADIAL) {
+      world.showWalkers = true;
+      // world.createDefaultClusters('Point');
+      createCustomShapesFromSVG(require('../svg/dla.svg'));
+    } else if(currentEffectMode == GRAVITY) {
+      world.showWalkers = false;
+    }
   }
 
-  
   function createCustomShapesFromSVG(file) {
     let paths = SVGLoader.loadFromFileContents(file);
     
@@ -79,19 +115,72 @@ const sketch = function (p5) {
 
     world.createShapesFromPaths(paths);
   }
+
+  // Key down handler -------------------------------------------------------
+  p5.keyPressed = function () {
+    switch(p5.key) {
+      case 'w':
+        player.isBoosting = true;
+        player.isBraking = false;
+        break;
+
+      case 's':
+        player.isBoosting = false;
+        player.isBraking = true;
+        break;
+      
+      case 'a':
+        player.isRotatingLeft = true;
+        player.isRotatingRight = false;
+        break;
+
+      case 'd':
+        player.isRotatingLeft = false;
+        player.isRotatingRight = true;
+        break;
+
+      case ' ':
+        player.isShooting = true;
+        break;
+    }
+  }
   
-  // Key handler ---------------------------------------------------------
+  // Key up handler ---------------------------------------------------------
   p5.keyReleased = function () {
+    if(currentEffectMode == ASTEROIDS) {
+      switch(p5.key) {
+        case 'w':
+          player.isBoosting = false;
+          break;
+
+        case 's':
+          player.isBraking = false;
+          break;
+
+        case 'a':
+          player.isRotatingLeft = false;
+          break;
+
+        case 'd':
+          player.isRotatingRight = false;
+          break;
+
+        case ' ':
+          player.isShooting = false;
+          break;
+      }
+    }
+
     switch (p5.key) {
       case ' ':
-        if(currentEffectMode == TRAIL) {
-          world.togglePause();
+        if(currentEffectMode != ASTEROIDS && currentEffectMode != RADIAL) {
+         world.togglePause();
         }
-        
+
         break;
 
       case 'w':
-        if(currentEffectMode == TRAIL) {
+        if(currentEffectMode != ASTEROIDS && currentEffectMode != RADIAL) {
           world.toggleShowWalkers();
         }
 
@@ -119,19 +208,56 @@ const sketch = function (p5) {
         break;
 
       case '1':
-        currentEffectMode = TRAIL;
+        currentEffectMode = GRAVITY;
         resetWorld();
         break;
 
       case '2':
-        currentEffectMode = FREE;
+        currentEffectMode = TRAIL;
         resetWorld();
         break;
 
       case '3':
+        currentEffectMode = ASTEROIDS;
+        resetWorld();
+        break;
+
+      case '4':
         currentEffectMode = RADIAL;
         resetWorld();
         break;
+    }
+  }
+
+  // Mouse down handler ----------------------------------------------------------
+  p5.mousePressed = function() {
+    if(currentEffectMode == GRAVITY) {
+      // Spawn walkers in randomly in a circle around the mouse
+      world.settings.CircleCenter = {x: p5.mouseX, y: p5.mouseY};
+      world.createDefaultWalkers(3000, 'Circle');
+
+      // Add a single clustered "seed" particle at the mouse position
+      world.createClusterFromParams([
+        {
+          x: p5.mouseX,
+          y: p5.mouseY
+        }
+      ]);
+
+      // Make all walkers move towards the mouse
+      for(let body of world.bodies) {
+        body.BiasTowards = {
+          x: p5.mouseX,
+          y: p5.mouseY
+        };
+      }
+    }
+  }
+
+  // Mouse up handler -----------------------------------------------------------
+  p5.mouseReleased = function() {
+    if(currentEffectMode == GRAVITY) {
+      resetWorld();
     }
   }
 }
