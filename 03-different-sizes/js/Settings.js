@@ -6,8 +6,11 @@ export default {
   MaxWalkers: 1500,
 
   // Generate walkers in a circular area around center
-  WalkerSource: 'Random-Circle',
+  WalkerSource: 'Circle',
 
   // Enable mapping between walker diameter and it's distance to the center
-  VaryDiameterByDistance: true
+  VaryDiameterByDistance: true,
+
+  // Move all walkers towards middle by default
+  BiasTowards: 'Center'
 };

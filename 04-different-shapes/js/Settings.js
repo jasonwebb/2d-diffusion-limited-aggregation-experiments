@@ -3,5 +3,8 @@ export default {
   WalkerShape: 'Triangle',
 
   // Limit number of walkers and rely on bias to increase collision rate
-  MaxWalkers: 2000
+  MaxWalkers: 2000,
+
+  // Move al walkers towards middle by default
+  BiasTowards: 'Center'
 };
