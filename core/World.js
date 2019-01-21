@@ -340,14 +340,9 @@ export default class World {
             deltaY = Math.round(deltaY);
           }
 
-          // Apply deltas unless doing so would move the walker outside the sketch bounds
-          if (body.x + deltaX > this.edges.left && body.x + deltaX < this.edges.right) {
-            body.x += deltaX;
-          }
-
-          if (body.y + deltaY > this.edges.top && body.y + deltaY < this.edges.bottom) {
-            body.y += deltaY;
-          }
+          // Apply deltas to walker
+          body.x += deltaX;
+          body.y += deltaY;
 
           // Increment age of the walker
           body.age++;
