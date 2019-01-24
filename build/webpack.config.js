@@ -8,7 +8,8 @@ module.exports = {
     differentSizes: path.resolve('../03-different-sizes/js/entry.js'),
     differentShapes: path.resolve('../04-different-shapes/js/entry.js'),
     svgInput: path.resolve('../05-svg-input/js/entry.js'),
-    interactivity: path.resolve('../06-interactivity/js/entry.js')
+    interactivity: path.resolve('../06-interactivity/js/entry.js'),
+    flowfields: path.resolve('../07-flowfields/js/entry.js')
   },
   module: {
     rules: [
