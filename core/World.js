@@ -27,6 +27,9 @@ export default class World {
     // Number of active walkers
     this.numWalkers = 0;
 
+    // Custom movement function for directed growth patterns
+    this.customMovementFunction = undefined;
+
     // Outer edges of active sketch area (screen or confined "frame")
     this.edgeMargin = this.settings.EdgeMargin;
     this.edges = {};
@@ -280,7 +283,7 @@ export default class World {
             deltaX += deltas.x;
             deltaY += deltas.y;
 
-          // Otherwise add in uniform bias to all walkers
+          // Otherwise add in uniform bias to all walkers (if defined)
           } else {
 
             // Add in a bias towards a specific direction, if set
@@ -332,6 +335,13 @@ export default class World {
                 break;
 
             }
+          }
+
+          // Apply custom movement function, if it has bee provided
+          if(typeof this.customMovementFunction != undefined && this.customMovementFunction instanceof Function) {
+            let deltas = this.customMovementFunction(body);
+            deltaX += deltas.dx;
+            deltaY += deltas.dy;
           }
 
           // Ensure only whole numbers for single-pixel particles so they are always "on lattice"
@@ -676,7 +686,7 @@ export default class World {
    */
   createHorizontalClusterWall(yPos) {
     let coords = [],
-      width = this.useFrame ? 900 : window.innerWidth;
+      width = this.useFrame ? this.edges.right - this.edges.left : window.innerWidth;
 
     for (let i = 0; i <= width / this.settings.CircleDiameter; i++) {
       coords.push({
@@ -696,7 +706,7 @@ export default class World {
    */
   createVerticalClusterWall(xPos) {
     let coords = [],
-      height = this.useFrame ? 900 : window.innerHeight;
+      height = this.useFrame ? this.edges.bottom - this.edges.top : window.innerHeight;
 
     for (let i = 0; i <= height / this.settings.CircleDiameter; i++) {
       coords.push({
@@ -839,10 +849,11 @@ export default class World {
    * @returns {string} - String in the format of hsl({h}, {s}, {b})
    */
   getColorStringFromObject(colorObject) {
-    return 'hsl(' +
+    return 'hsla(' +
       colorObject.h + ', ' +
       colorObject.s + '%, ' +
-      colorObject.b + '%)';
+      colorObject.b + '%, ' +
+      colorObject.a + ')';
   }
 
 
