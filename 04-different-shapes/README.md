@@ -13,4 +13,10 @@ Walkers don't have to just be circles - they can be any polygon! This sketch sho
 
 ## Samples
 
-![Different shapes](images/social-media-preview.png);
+![Different shapes](images/social-media-preview.png)
+
+![Triangles](images/triangles.gif)
+
+![Squares](images/squares.gif)
+
+![Pentagons](images/pentagons.gif)
