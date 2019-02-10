@@ -14,3 +14,7 @@ Using paths imported from simple SVG files as initial "seeds" for growth.
 ![Different shapes](images/social-media-preview.png)
 
 ![Compound polygons](images/complex-polygons.png)
+
+![DLA text](images/text.gif)
+
+![Compound polygons animated](images/compound-polygon.gif)
