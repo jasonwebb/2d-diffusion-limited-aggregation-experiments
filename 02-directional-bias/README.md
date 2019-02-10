@@ -20,3 +20,9 @@ In addition to the global keyboard commands listed in the main README, the follo
 ## Samples
 
 ![Directional bias](images/social-media-preview.png)
+
+![Equator](images/equator.gif)
+
+![Edges](images/edges.gif)
+
+![Center](images/center.gif)
