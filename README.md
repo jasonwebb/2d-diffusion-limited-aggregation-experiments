@@ -72,6 +72,13 @@ To achieve vector-based results from the DLA process one must move away from pix
 
 To statically _build_ the code in this repo, run `npm run build` in the `./build` folder.
 
+## Going further
+
+The code in this repo can be improved or optimized in a few ways to achieve faster performance and larger scales. Here are some ideas that come to mind:
+
+1. Rather than using brute-force movement and collision detection (which limit overall scale + speed), implement an algorithm like [Michael Fogleman's dlaf](https://twitter.com/FogleBird/status/1093678576208089088). This may mean that one would have to do away with variable particle shapes and sizes, but I imagine variable sizes could be accommodated with some tweaking.
+2. Port code over to a more performant language / library like openFrameworks or Cinder.
+
 ## References
 
 * [DLA - Diffusion Limited Aggregation](http://paulbourke.net/fractals/dla/) by Paul Bourke
