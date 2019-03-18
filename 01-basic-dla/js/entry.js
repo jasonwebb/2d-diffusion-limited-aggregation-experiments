@@ -1,7 +1,7 @@
 import Settings from './Settings';
-import World from '../../core/World';
+import DLA from '../../core/DLA';
 
-let world;
+let dla;
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -11,55 +11,55 @@ const sketch = function (p5) {
     p5.ellipseMode(p5.CENTER);
 
     // Set up the simulation environment
-    world = new World(p5, Settings);
+    dla = new DLA(p5, Settings);
 
     // Use default walkers and clusters
-    world.createDefaultWalkers();
-    world.createDefaultClusters(Settings.InitialClusterType);
+    dla.createDefaultWalkers();
+    dla.createDefaultClusters(Settings.InitialClusterType);
   }
 
   // Draw ----------------------------------------------------------------
   p5.draw = function () {
-    world.iterate();
-    world.draw();
+    dla.iterate();
+    dla.draw();
   }
 
-  function resetWorld() {
-    world.removeAll();
-    world.createDefaultWalkers();
-    world.createDefaultClusters(Settings.InitialClusterType);
+  function reset() {
+    dla.removeAll();
+    dla.createDefaultWalkers();
+    dla.createDefaultClusters(Settings.InitialClusterType);
   }
 
   // Key handler ---------------------------------------------------------
   p5.keyReleased = function () {
     switch (p5.key) {
       case ' ':
-        world.togglePause();
+        dla.togglePause();
         break;
 
       case 'w':
-        world.toggleShowWalkers();
+        dla.toggleShowWalkers();
         break;
 
       case 'c':
-        world.toggleShowClusters();
+        dla.toggleShowClusters();
         break;
 
       case 'r':
-        resetWorld();
+        reset();
         break;
 
       case 'f':
-        world.toggleUseFrame();
-        resetWorld();
+        dla.toggleUseFrame();
+        reset();
         break;
 
       case 'l':
-        world.toggleLineRenderingMode();
+        dla.toggleLineRenderingMode();
         break;
 
       case 'e':
-        world.export();
+        dla.export();
         break;
     }
   }

@@ -1,4 +1,4 @@
-/** @module World */
+/** @module DLA */
 
 import Defaults from './Defaults';
 import Collisions from 'collisions';
@@ -6,9 +6,9 @@ import { toPath } from 'svg-points';
 import { saveAs } from 'file-saver';
 
 /** Structure for managing state and properties of all walkers, clusters, shapes, and the collision system. */
-export default class World {
+export default class DLA {
   /**
-   * Create a new world object with reference to global P5 instance and any local sketch Settings
+   * Create a new DLA object with reference to global P5 instance and any local sketch Settings
    * @param {object} p5 - Global p5.js instance passed from main sketch
    * @param {object} settings  - Object containing any override values passed from sketch to be merged with global Defaults
    */
@@ -61,7 +61,7 @@ export default class World {
 
   /** Run one "tick" of the simulation */
   iterate() {
-    // Skip this iteration when the world is paused
+    // Skip this iteration when the simulation is paused
     if (this.paused) {
       return;
     }
@@ -547,7 +547,7 @@ export default class World {
 
         // Circle = spawn walkers in a circle around the center of the screen
         case 'Circle':
-          let radius = this.p5.random(5, 4000 / 2 - 20),
+          let radius = this.p5.random(5, 200 / 2 - 20),
             angle = this.p5.random(360),
             center = this.settings.hasOwnProperty('CircleCenter') ? this.settings.CircleCenter : {x: window.innerWidth / 2, y: window.innerHeight / 2};
 
@@ -860,7 +860,7 @@ export default class World {
   //============
   //  Export
   //============
-  /** Constructs an SVG node with paths based on current rendering mode of the World, then initiates a download on the user's machine of the generated file */
+  /** Constructs an SVG node with paths based on current rendering mode of the simulation, then initiates a download on the user's machine of the generated file */
   export() {
     // Set up <svg> element
     let svg = document.createElement('svg');

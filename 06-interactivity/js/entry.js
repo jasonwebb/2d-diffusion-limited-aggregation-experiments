@@ -1,9 +1,9 @@
 import Settings from './Settings';
-import World from '../../core/World';
+import DLA from '../../core/DLA';
 import Player from './Player';
 import SVGLoader from '../../core/SVGLoader';
 
-let world, player;
+let dla, player;
 
 const TRAIL = 0,
       GRAVITY =  1,
@@ -24,27 +24,27 @@ const sketch = function (p5) {
     player = new Player(p5, window.innerWidth/2, window.innerHeight/2);
 
     // Set up the simulation environment
-    world = new World(p5, Settings);
-    resetWorld();
+    dla = new DLA(p5, Settings);
+    reset();
   }
 
   // Draw ----------------------------------------------------------------
   p5.draw = function () {
     // Iterate and draw all walkers and clustered particles
-    world.iterate();
-    world.draw();
+    dla.iterate();
+    dla.draw();
 
     switch(currentEffectMode) {
       // In "trail" mode, spawn walkers continuously when the mouse is pressed
       case TRAIL:
         if(
           p5.mouseIsPressed && p5.mouseButton === p5.LEFT && 
-          p5.mouseX >= world.edges.left + particleSpreadRadius && 
-          p5.mouseX <= world.edges.right - particleSpreadRadius && 
-          p5.mouseY >= world.edges.top + particleSpreadRadius && 
-          p5.mouseY <= world.edges.bottom - particleSpreadRadius
+          p5.mouseX >= dla.edges.left + particleSpreadRadius && 
+          p5.mouseX <= dla.edges.right - particleSpreadRadius && 
+          p5.mouseY >= dla.edges.top + particleSpreadRadius && 
+          p5.mouseY <= dla.edges.bottom - particleSpreadRadius
         ) {
-          world.createWalker({
+          dla.createWalker({
             x: p5.mouseX + p5.random(-particleSpreadRadius, particleSpreadRadius),
             y: p5.mouseY + p5.random(-particleSpreadRadius, particleSpreadRadius)
           });
@@ -69,7 +69,7 @@ const sketch = function (p5) {
       player.draw();
 
       if(player.isShooting && p5.frameCount % 5 == 0) {
-        world.createWalker({
+        dla.createWalker({
           x: player.x,
           y: player.y,
           BiasTowards: {
@@ -84,38 +84,38 @@ const sketch = function (p5) {
       }
 
       // Wrap player when it leaves the screen's edge
-      if(player.x < world.edges.left) {
-        player.x = world.edges.right;
+      if(player.x < dla.edges.left) {
+        player.x = dla.edges.right;
       }
 
-      if(player.x > world.edges.right) {
-        player.x = world.edges.left;
+      if(player.x > dla.edges.right) {
+        player.x = dla.edges.left;
       }
 
-      if(player.y < world.edges.top) {
-        player.y = world.edges.bottom;
+      if(player.y < dla.edges.top) {
+        player.y = dla.edges.bottom;
       }
 
-      if(player.y > world.edges.bottom) {
-        player.y = world.edges.top;
+      if(player.y > dla.edges.bottom) {
+        player.y = dla.edges.top;
       }
     }
   }
 
-  function resetWorld() {
-    world.removeAll();
+  function reset() {
+    dla.removeAll();
 
     if(currentEffectMode == TRAIL || currentEffectMode == ASTEROIDS || currentEffectMode == RADIAL) {
-      world.showWalkers = true;
-      // world.createDefaultClusters('Point');
+      dla.showWalkers = true;
+      // dla.createDefaultClusters('Point');
       createCustomShapesFromSVG(require('../svg/dla.svg'));
     } else if(currentEffectMode == GRAVITY) {
-      world.showWalkers = false;
+      dla.showWalkers = false;
     }
 
     switch(currentEffectMode) {
       case TRAIL:
-        world.settings.BiasTowards = 'Center';
+        dla.settings.BiasTowards = 'Center';
         break;
 
       case ASTEROIDS:
@@ -142,7 +142,7 @@ const sketch = function (p5) {
       path.y += window.innerHeight / 2 - 900 / 2;
     }
 
-    world.createShapesFromPaths(paths);
+    dla.createShapesFromPaths(paths);
   }
 
   // Key down handler -------------------------------------------------------
@@ -237,57 +237,57 @@ const sketch = function (p5) {
     switch (p5.key) {
       case ' ':
         if(currentEffectMode != ASTEROIDS && currentEffectMode != RADIAL) {
-         world.togglePause();
+         dla.togglePause();
         }
 
         break;
 
       case 'w':
         if(currentEffectMode != ASTEROIDS && currentEffectMode != RADIAL) {
-          world.toggleShowWalkers();
+          dla.toggleShowWalkers();
         }
 
         break;
 
       case 'c':
-        world.toggleShowClusters();
+        dla.toggleShowClusters();
         break;
 
       case 'r':
-        resetWorld();
+        reset();
         break;
 
       case 'f':
-        world.toggleUseFrame();
-        resetWorld();
+        dla.toggleUseFrame();
+        reset();
         break;
 
       case 'l':
-        world.toggleLineRenderingMode();
+        dla.toggleLineRenderingMode();
         break;
         
       case 'e':
-        world.export();
+        dla.export();
         break;
 
       case '1':
         currentEffectMode = GRAVITY;
-        resetWorld();
+        reset();
         break;
 
       case '2':
         currentEffectMode = TRAIL;
-        resetWorld();
+        reset();
         break;
 
       case '3':
         currentEffectMode = ASTEROIDS;
-        resetWorld();
+        reset();
         break;
 
       case '4':
         currentEffectMode = RADIAL;
-        resetWorld();
+        reset();
         break;
     }
   }
@@ -297,11 +297,11 @@ const sketch = function (p5) {
     switch(currentEffectMode) {
       case GRAVITY:
         // Spawn walkers in randomly in a circle around the mouse
-        world.settings.CircleCenter = {x: p5.mouseX, y: p5.mouseY};
-        world.createDefaultWalkers(8000, 'Circle');
+        dla.settings.CircleCenter = {x: p5.mouseX, y: p5.mouseY};
+        dla.createDefaultWalkers(8000, 'Circle');
 
         // Add a single clustered "seed" particle at the mouse position
-        world.createClusterFromParams([
+        dla.createClusterFromParams([
           {
             x: p5.mouseX,
             y: p5.mouseY
@@ -309,7 +309,7 @@ const sketch = function (p5) {
         ]);
 
         // Make all walkers move towards the mouse
-        for(let body of world.bodies) {
+        for(let body of dla.bodies) {
           body.BiasTowards = {
             x: p5.mouseX,
             y: p5.mouseY
@@ -328,7 +328,7 @@ const sketch = function (p5) {
   p5.mouseReleased = function() {
     switch(currentEffectMode) {
       case GRAVITY:
-        resetWorld();
+        reset();
         break;
     }
   }

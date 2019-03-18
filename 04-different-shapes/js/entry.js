@@ -1,7 +1,7 @@
 import Settings from './Settings';
-import World from '../../core/World';
+import DLA from '../../core/DLA';
 
-let world,
+let dla,
     currentWalkerShape = Settings.WalkerShape;
 
 const sketch = function (p5) {
@@ -12,8 +12,8 @@ const sketch = function (p5) {
     p5.ellipseMode(p5.CENTER);
 
     // Set up the simulation environment
-    world = new World(p5, Settings);
-    world.createDefaultClusters('Point');
+    dla = new DLA(p5, Settings);
+    dla.createDefaultClusters('Point');
 
     // Use custom method to create particles with different shapes
     createCustomWalkers();
@@ -21,13 +21,13 @@ const sketch = function (p5) {
 
   // Draw ----------------------------------------------------------------
   p5.draw = function () {
-    world.iterate();
-    world.draw();
+    dla.iterate();
+    dla.draw();
   }
 
-  function resetWorld() {
-    world.removeAll();
-    world.createDefaultClusters('Point');
+  function reset() {
+    dla.removeAll();
+    dla.createDefaultClusters('Point');
     createCustomWalkers();
   }
 
@@ -45,8 +45,8 @@ const sketch = function (p5) {
     for(let i = 0; i < Settings.MaxWalkers; i++) {
       let params = {}, numPoints;
 
-      params.x = p5.random(world.edges.left, world.edges.right);
-      params.y = p5.random(world.edges.top, world.edges.bottom);
+      params.x = p5.random(dla.edges.left, dla.edges.right);
+      params.y = p5.random(dla.edges.top, dla.edges.bottom);
       params.type = 'Polygon';
       params.polygon = [];
  
@@ -76,7 +76,7 @@ const sketch = function (p5) {
         ]);
       }
 
-      world.createWalker(params);
+      dla.createWalker(params);
     }
   }
 
@@ -84,52 +84,52 @@ const sketch = function (p5) {
   p5.keyReleased = function () {
     switch (p5.key) {
       case ' ':
-        world.togglePause();
+        dla.togglePause();
         break;
 
       case 'w':
-        world.toggleShowWalkers();
+        dla.toggleShowWalkers();
         break;
 
       case 'c':
-        world.toggleShowClusters();
+        dla.toggleShowClusters();
         break;
 
       case 'r':
-        resetWorld();
+        reset();
         break;
 
       case 'f':
-        world.toggleUseFrame();
-        resetWorld();
+        dla.toggleUseFrame();
+        reset();
         break;
 
       case 'l':
-        world.toggleLineRenderingMode();
+        dla.toggleLineRenderingMode();
         break;
         
       case 'e':
-        world.export();
+        dla.export();
         break;
 
       case '1':
         currentWalkerShape = 'Triangle';
-        resetWorld();
+        reset();
         break;
 
       case '2':
         currentWalkerShape = 'Square';
-        resetWorld();
+        reset();
         break;
 
       case '3':
         currentWalkerShape = 'Pentagon';
-        resetWorld();
+        reset();
         break;
 
       case '4':
         currentWalkerShape = 'Hexagon';
-        resetWorld();
+        reset();
         break;
 
     }

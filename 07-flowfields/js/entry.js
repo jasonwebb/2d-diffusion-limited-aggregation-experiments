@@ -1,7 +1,7 @@
 import Settings from './Settings';
-import World from '../../core/World';
+import DLA from '../../core/DLA';
 
-let world;
+let dla;
 
 const PERLIN = 0,
   SWIRLS = 1,
@@ -22,28 +22,28 @@ const sketch = function (p5) {
     p5.ellipseMode(p5.CENTER);
 
     // Set up the simulation environment
-    world = new World(p5, Settings);
-    world.customMovementFunction = getForceAt;
-    resetWorld();
+    dla = new DLA(p5, Settings);
+    dla.customMovementFunction = getForceAt;
+    reset();
   }
 
   // Draw ----------------------------------------------------------------
   p5.draw = function () {
-    world.iterate();
-    world.draw();
+    dla.iterate();
+    dla.draw();
   }
 
-  function resetWorld() {
-    world.removeAll();
-    world.createDefaultWalkers();
+  function reset() {
+    dla.removeAll();
+    dla.createDefaultWalkers();
 
-    world.createClusterFromParams(world.createVerticalClusterWall(world.edges.left));
-    world.createClusterFromParams(world.createVerticalClusterWall(world.edges.right));
-    
-    world.createClusterFromParams(world.createHorizontalClusterWall(world.edges.top));
-    world.createClusterFromParams(world.createHorizontalClusterWall(world.edges.bottom));
+    dla.createClusterFromParams(dla.createVerticalClusterWall(dla.edges.left));
+    dla.createClusterFromParams(dla.createVerticalClusterWall(dla.edges.right));
+  
+    dla.createClusterFromParams(dla.createHorizontalClusterWall(dla.edges.top));
+    dla.createClusterFromParams(dla.createHorizontalClusterWall(dla.edges.bottom));
 
-    // world.createDefaultClusters('Random');
+    // dla.createDefaultClusters('Random');
   }
 
   function getForceAt(body) {
@@ -91,47 +91,47 @@ const sketch = function (p5) {
   p5.keyReleased = function () {
     switch (p5.key) {
       case ' ':
-        world.togglePause();
+        dla.togglePause();
         break;
 
       case 'w':
-        world.toggleShowWalkers();
+        dla.toggleShowWalkers();
         break;
 
       case 'c':
-        world.toggleShowClusters();
+        dla.toggleShowClusters();
         break;
 
       case 'r':
-        resetWorld();
+        reset();
         break;
 
       case 'f':
-        world.toggleUseFrame();
-        resetWorld();
+        dla.toggleUseFrame();
+        reset();
         break;
 
       case 'l':
-        world.toggleLineRenderingMode();
+        dla.toggleLineRenderingMode();
         break;
         
       case 'e':
-        world.export();
+        dla.export();
         break;
 
       case '1':
         currentMode = PERLIN;
-        resetWorld();
+        reset();
         break;
 
       case '2':
         currentMode = SWIRLS;
-        resetWorld();
+        reset();
         break;
 
       case '3':
         currentMode = CLIFFORD;
-        resetWorld();
+        reset();
         break;
     }
   }

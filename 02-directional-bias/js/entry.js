@@ -1,7 +1,7 @@
 import Settings from './Settings';
-import World from '../../core/World';
+import DLA from '../../core/DLA';
 
-let world,
+let dla,
     currentClusterType = 'Wall';
 
 const sketch = function (p5) {
@@ -12,120 +12,120 @@ const sketch = function (p5) {
     p5.ellipseMode(p5.CENTER);
 
     // Set up the simulation environment
-    world = new World(p5, Settings);
-    world.settings.BiasTowards = 'Bottom';
+    dla = new DLA(p5, Settings);
+    dla.settings.BiasTowards = 'Bottom';
 
-    world.createDefaultWalkers();
-    world.createDefaultClusters(currentClusterType);
+    dla.createDefaultWalkers();
+    dla.createDefaultClusters(currentClusterType);
   }
 
   // Draw ----------------------------------------------------------------
   p5.draw = function () {
-    world.iterate();
-    world.draw();
+    dla.iterate();
+    dla.draw();
   }
 
-  function resetWorld() {
-    world.removeAll();
-    world.createDefaultWalkers();
-    world.createDefaultClusters(currentClusterType);
+  function reset() {
+    dla.removeAll();
+    dla.createDefaultWalkers();
+    dla.createDefaultClusters(currentClusterType);
   }
 
   // Key handler ---------------------------------------------------------
   p5.keyReleased = function () {
     switch (p5.key) {
       case ' ':
-        world.togglePause();
+        dla.togglePause();
         break;
 
       case 'w':
-        world.toggleShowWalkers();
+        dla.toggleShowWalkers();
         break;
 
       case 'c':
-        world.toggleShowClusters();
+        dla.toggleShowClusters();
         break;
 
       case 'r':
-        resetWorld();
+        reset();
         break;
    
       case 'f':
-        world.toggleUseFrame();
-        resetWorld();
+        dla.toggleUseFrame();
+        reset();
         break;
 
       case 'l':
-        world.toggleLineRenderingMode();
+        dla.toggleLineRenderingMode();
         break;
 
       case 'e':
-        world.export();
+        dla.export();
         break;
 
       // Use numbers to change bias direction
       case '1':
-        world.pause();
+        dla.pause();
         currentClusterType = 'Wall';
-        world.settings.BiasTowards = 'Bottom';
-        resetWorld();
-        world.unpause();
+        dla.settings.BiasTowards = 'Bottom';
+        reset();
+        dla.unpause();
         break;
 
       case '2':
-        world.pause();
+        dla.pause();
         currentClusterType = 'Wall';
-        world.settings.BiasTowards = 'Top';
-        resetWorld();
-        world.unpause();
+        dla.settings.BiasTowards = 'Top';
+        reset();
+        dla.unpause();
         break;
 
       case '3':
-        world.pause();
+        dla.pause();
         currentClusterType = 'Wall';
-        world.settings.BiasTowards = 'Left';
-        resetWorld();
-        world.unpause();
+        dla.settings.BiasTowards = 'Left';
+        reset();
+        dla.unpause();
         break;
 
       case '4':
-        world.pause();
+        dla.pause();
         currentClusterType = 'Wall';
-        world.settings.BiasTowards = 'Right';
-        resetWorld();
-        world.unpause();
+        dla.settings.BiasTowards = 'Right';
+        reset();
+        dla.unpause();
         break;
 
       case '5':
-        world.pause();
+        dla.pause();
         currentClusterType = 'Wall';
-        world.settings.BiasTowards = 'Equator';
-        resetWorld();
-        world.unpause();
+        dla.settings.BiasTowards = 'Equator';
+        reset();
+        dla.unpause();
         break;
 
       case '6':
-        world.pause();
+        dla.pause();
         currentClusterType = 'Wall';
-        world.settings.BiasTowards = 'Meridian';
-        resetWorld();
-        world.unpause();
+        dla.settings.BiasTowards = 'Meridian';
+        reset();
+        dla.unpause();
         break;
 
       case '7':
-        world.pause();
+        dla.pause();
         currentClusterType = 'Wall';
-        world.settings.BiasTowards = 'Edges';
-        resetWorld();
-        world.unpause();
+        dla.settings.BiasTowards = 'Edges';
+        reset();
+        dla.unpause();
         break;
 
       case '8':
-        world.pause();
+        dla.pause();
         currentClusterType = 'Point';
-        world.settings.BiasTowards = 'Center';
-        resetWorld();
-        world.unpause();
+        dla.settings.BiasTowards = 'Center';
+        reset();
+        dla.unpause();
         break;
     }
   }

@@ -1,5 +1,5 @@
 import Settings from './Settings';
-import World from '../../core/World';
+import DLA from '../../core/DLA';
 import SVGLoader from '../../core/SVGLoader';
 
 let svgFiles = {
@@ -7,7 +7,7 @@ let svgFiles = {
   polygons: require('../svg/polygons.svg')
 }
 
-let world,
+let dla,
     currentSVGFile = svgFiles.polygons;
 
 const sketch = function (p5) {
@@ -18,8 +18,8 @@ const sketch = function (p5) {
     p5.ellipseMode(p5.CENTER);
 
     // Set up the simulation environment
-    world = new World(p5, Settings);
-    world.createDefaultWalkers();
+    dla = new DLA(p5, Settings);
+    dla.createDefaultWalkers();
 
     // Load shapes from SVG file
     createCustomShapesFromSVG(currentSVGFile);
@@ -27,14 +27,14 @@ const sketch = function (p5) {
 
   // Draw ----------------------------------------------------------------
   p5.draw = function () {
-    world.iterate();
-    world.draw();
+    dla.iterate();
+    dla.draw();
   }
 
-  function resetWorld() {
-    world.removeAll();
+  function reset() {
+    dla.removeAll();
     createCustomShapesFromSVG(currentSVGFile);
-    world.createDefaultWalkers();
+    dla.createDefaultWalkers();
   }
 
   function createCustomShapesFromSVG(file) {
@@ -47,54 +47,54 @@ const sketch = function (p5) {
       path.y += window.innerHeight / 2 - 900 / 2;
     }
 
-    world.createShapesFromPaths(paths);
+    dla.createShapesFromPaths(paths);
   }
   
   // Key handler ---------------------------------------------------------
   p5.keyReleased = function () {
     switch (p5.key) {
       case ' ':
-        world.togglePause();
+        dla.togglePause();
         break;
 
       case 'w':
-        world.toggleShowWalkers();
+        dla.toggleShowWalkers();
         break;
 
       case 'c':
-        world.toggleShowClusters();
+        dla.toggleShowClusters();
         break;
 
       case 'r':
-        resetWorld();
+        reset();
         break;
 
       case 'f':
-        world.toggleUseFrame();
-        resetWorld();
+        dla.toggleUseFrame();
+        reset();
         break;
 
       case 's':
-        world.toggleShowShapes();
+        dla.toggleShowShapes();
         restartWorld();
         break;
 
       case 'l':
-        world.toggleLineRenderingMode();
+        dla.toggleLineRenderingMode();
         break;
         
       case 'e':
-        world.export();
+        dla.export();
         break;
 
       case '1':
         currentSVGFile = svgFiles.dla;
-        resetWorld();
+        reset();
         break;
 
       case '2':
         currentSVGFile = svgFiles.polygons;
-        resetWorld();
+        reset();
         break;
     }
   }
