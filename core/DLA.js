@@ -547,7 +547,19 @@ export default class DLA {
 
         // Circle = spawn walkers in a circle around the center of the screen
         case 'Circle':
-          let radius = this.p5.random(5, 200 / 2 - 20),
+          // Find the largest radius that fits into the current FrameSize dimensions (smallest dimension)
+          let maxRadius;
+          switch(typeof this.settings.FrameSize) {
+            case 'number':
+              maxRadius = this.settings.FrameSize/2;
+              break;
+
+            case 'object':
+              maxRadius = this.settings.FrameSize[0] > this.settings.FrameSize[1] ? this.settings.FrameSize[1]/2 : this.settings.FrameSize[0]/2;
+              break;
+          }
+
+          let radius = this.p5.random(5, maxRadius),
             angle = this.p5.random(360),
             center = this.settings.hasOwnProperty('CircleCenter') ? this.settings.CircleCenter : {x: window.innerWidth / 2, y: window.innerHeight / 2};
 
@@ -628,7 +640,7 @@ export default class DLA {
 
       // Individual particles randomly distributed across entire screen
       case 'Random':
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 100; i++) {
           paramsList.push({
             x: this.p5.random(this.edges.left, this.edges.right),
             y: this.p5.random(this.edges.top, this.edges.bottom),
