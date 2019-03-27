@@ -1,4 +1,3 @@
-import Settings from './Settings';
 import DLA from '../../core/DLA';
 
 let dla;
@@ -11,11 +10,8 @@ const sketch = function (p5) {
     p5.ellipseMode(p5.CENTER);
 
     // Set up the simulation environment
-    dla = new DLA(p5, Settings);
-
-    // Use default walkers and clusters
-    dla.createDefaultWalkers();
-    dla.createDefaultClusters(Settings.InitialClusterType);
+    dla = new DLA(p5);
+    reset();
   }
 
   // Draw ----------------------------------------------------------------
@@ -24,10 +20,11 @@ const sketch = function (p5) {
     dla.draw();
   }
 
+  // Reset - remove all particle and generate new ones
   function reset() {
     dla.removeAll();
     dla.createDefaultWalkers();
-    dla.createDefaultClusters(Settings.InitialClusterType);
+    dla.createDefaultClusters();
   }
 
   // Key handler ---------------------------------------------------------
