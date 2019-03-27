@@ -594,10 +594,12 @@ export default class DLA {
           break;
       }
 
-      // Vary diameter based on distance, if enabled
+      // Vary diameter, if enabled
       if (this.settings.VaryDiameterByDistance) {
         let dist = this.p5.dist(params.x, params.y, window.innerWidth / 2, window.innerHeight / 2);
         params.diameter = this.p5.map(dist, 0, this.maxDistance, this.settings.CircleDiameterRange[0], this.settings.CircleDiameterRange[1]);
+      } else if (this.settings.VaryDiameterRandomly) {
+        params.diameter = this.p5.random(this.settings.CircleDiameterRange[0], this.settings.CircleDiameterRange[1]);
       }
 
       // Create a walker with the coordinates

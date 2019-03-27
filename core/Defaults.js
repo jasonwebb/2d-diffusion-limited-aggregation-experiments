@@ -65,6 +65,22 @@ export default {
    */
   MaxWanderDistance: 20,
 
+  
+  //=====================================================================
+  //  VARIABLE DIAMETER EFFECTS
+  //=====================================================================
+  /**
+   * Vary diameters by distance to center
+   * @type {boolean}
+   */
+  VaryDiameterByDistance: false,
+
+  /**
+   * Vary diameters randomly
+   * @type {boolean}
+   */
+  VaryDiameterRandomly: false,
+
 
   //=====================================================================
   //  VISIBILITY OF OBJECTS
