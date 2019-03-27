@@ -13,9 +13,8 @@ const sketch = function (p5) {
     // Set up the simulation environment
     dla = new DLA(p5, Settings);
 
-    // Use default walkers and clusters
-    dla.createDefaultWalkers();
-    dla.createDefaultClusters('Point');
+    // Spawn default walkers and clusters
+    reset();
   }
 
   // Draw ----------------------------------------------------------------
