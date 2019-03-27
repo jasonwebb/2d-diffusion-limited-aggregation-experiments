@@ -1,4 +1,3 @@
-import Settings from './Settings';
 import DLA from '../../core/DLA';
 
 let dla,
@@ -12,11 +11,13 @@ const sketch = function (p5) {
     p5.ellipseMode(p5.CENTER);
 
     // Set up the simulation environment
-    dla = new DLA(p5, Settings);
+    dla = new DLA(p5);
+
+    // Start with the walkers biased towards screen bottom
     dla.settings.BiasTowards = 'Bottom';
 
-    dla.createDefaultWalkers();
-    dla.createDefaultClusters(currentClusterType);
+    // Spawn walkers and clusters
+    reset();
   }
 
   // Draw ----------------------------------------------------------------
