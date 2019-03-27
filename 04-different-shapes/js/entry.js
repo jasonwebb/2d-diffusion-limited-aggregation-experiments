@@ -13,10 +13,9 @@ const sketch = function (p5) {
 
     // Set up the simulation environment
     dla = new DLA(p5, Settings);
-    dla.createDefaultClusters('Point');
 
-    // Use custom method to create particles with different shapes
-    createCustomWalkers();
+    // Spawn walkers and clusters
+    reset();
   }
 
   // Draw ----------------------------------------------------------------
@@ -33,13 +32,11 @@ const sketch = function (p5) {
 
   // Create walkers ------------------------------------------------------
   function createCustomWalkers() {
-    switch(currentWalkerShape) {
-      case 'Triangle':
-        Settings.MaxWalkers = 2000;
-        break;
-      default:
-        Settings.MaxWalkers = 1000;
-        break;
+    // Different shapes seem to aggregate better with different walker counts
+    if(currentWalkerShape == 'Triangle') {
+      Settings.MaxWalkers = 2000;
+    } else {
+      Settings.MaxWalkers = 1000;
     }
 
     for(let i = 0; i < Settings.MaxWalkers; i++) {
@@ -50,6 +47,7 @@ const sketch = function (p5) {
       params.type = 'Polygon';
       params.polygon = [];
  
+      // Convert shape string to number of vertices
       switch(currentWalkerShape) {
         case 'Triangle':
           numPoints = 3;
@@ -67,8 +65,10 @@ const sketch = function (p5) {
           break;
       }
 
+      // Use a random radius to make things interesting
       const radius = p5.random(5,11);
 
+      // Set up vertices for polygonal walker shape
       for(let j = 0; j < numPoints; j++) {
         params.polygon.push([
           radius * Math.cos( ((360 / numPoints) * j) * Math.PI/180 ),
@@ -76,6 +76,7 @@ const sketch = function (p5) {
         ]);
       }
 
+      // Create a walker with the set polygon shape
       dla.createWalker(params);
     }
   }
