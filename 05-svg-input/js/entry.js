@@ -19,10 +19,9 @@ const sketch = function (p5) {
 
     // Set up the simulation environment
     dla = new DLA(p5, Settings);
-    dla.createDefaultWalkers();
-
-    // Load shapes from SVG file
-    createCustomShapesFromSVG(currentSVGFile);
+    
+    // Spawn walkers and create cluster seed shape from SVG
+    reset();
   }
 
   // Draw ----------------------------------------------------------------
@@ -37,6 +36,7 @@ const sketch = function (p5) {
     dla.createDefaultWalkers();
   }
 
+  // Load paths from an SVG file (embedded in the index.html file) and use them to create shapes in the DLA simulation
   function createCustomShapesFromSVG(file) {
     let paths = SVGLoader.loadFromFileContents(file);
     
