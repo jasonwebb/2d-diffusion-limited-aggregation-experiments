@@ -106,9 +106,9 @@ const sketch = function (p5) {
   function reset() {
     dla.removeAll();
 
+    // Show walkers and load the DLA text SVG file for most modes
     if(currentEffectMode == TRAIL || currentEffectMode == ASTEROIDS || currentEffectMode == RADIAL) {
       dla.showWalkers = true;
-      // dla.createDefaultClusters('Point');
       createCustomShapesFromSVG(require('../svg/dla.svg'));
     } else if(currentEffectMode == GRAVITY) {
       dla.showWalkers = false;
@@ -297,9 +297,9 @@ const sketch = function (p5) {
   p5.mousePressed = function() {
     switch(currentEffectMode) {
       case GRAVITY:
-        // Spawn walkers in randomly in a circle around the mouse
+        // Spawn walkers randomly in a circle around the mouse
         dla.settings.CircleCenter = {x: p5.mouseX, y: p5.mouseY};
-        dla.createDefaultWalkers(8000, 'Circle');
+        dla.createDefaultWalkers(4000, 'Circle');
 
         // Add a single clustered "seed" particle at the mouse position
         dla.createClusterFromParams([
