@@ -39,6 +39,7 @@ export default class Player {
 
     this.p5.translate(this.x, this.y);
     this.p5.rotate(this.heading);
+
     this.p5.beginShape();
 
       this.p5.vertex(25/2, 0);

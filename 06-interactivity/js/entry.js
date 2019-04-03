@@ -1,4 +1,3 @@
-import Settings from './Settings';
 import DLA from '../../core/DLA';
 import Player from './Player';
 import SVGLoader from '../../core/SVGLoader';
@@ -24,7 +23,7 @@ const sketch = function (p5) {
     player = new Player(p5, window.innerWidth/2, window.innerHeight/2);
 
     // Set up the simulation environment
-    dla = new DLA(p5, Settings);
+    dla = new DLA(p5);
     reset();
   }
 
@@ -68,6 +67,7 @@ const sketch = function (p5) {
       player.move();
       player.draw();
 
+      // When shooting, fire a walker particle every 5 frames in the direction the player is pointed
       if(player.isShooting && p5.frameCount % 5 == 0) {
         dla.createWalker({
           x: player.x,
@@ -79,11 +79,12 @@ const sketch = function (p5) {
         });
       }
 
+      // Stop shooting when mouse is released
       if(!p5.mouseIsPressed) {
         player.isShooting = false;
       }
 
-      // Wrap player when it leaves the screen's edge
+      // Wrap player when it leaves the screen's edge. Has to be done here because the Player object doesn't know about the DLA object intrinsically
       if(player.x < dla.edges.left) {
         player.x = dla.edges.right;
       }
