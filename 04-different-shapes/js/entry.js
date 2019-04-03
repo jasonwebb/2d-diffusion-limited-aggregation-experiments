@@ -51,11 +51,9 @@ const sketch = function (p5) {
       switch(currentWalkerShape) {
         case 'Triangle':
           numPoints = 3;
-          params.rotation = 30;
           break;
         case 'Square':
           numPoints = 4;
-          params.rotation = 45;
           break;
         case 'Pentagon':
           numPoints = 5;
@@ -63,7 +61,13 @@ const sketch = function (p5) {
         case 'Hexagon':
           numPoints = 6;
           break;
+        case 'Random':
+          numPoints = parseInt(p5.random(3,6));
+          break;
       }
+
+      // Rotate the particle a random amount
+      params.rotation = p5.random(360);
 
       // Use a random radius to make things interesting
       const radius = p5.random(5,11);
@@ -133,6 +137,10 @@ const sketch = function (p5) {
         reset();
         break;
 
+      case '5':
+        currentWalkerShape = 'Random';
+        reset();
+        break;
     }
   }
 }
