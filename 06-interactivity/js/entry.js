@@ -35,10 +35,9 @@ const sketch = function (p5) {
     drawText();
 
     switch(currentEffectMode) {
-      // In "trail" mode, spawn walkers continuously when the mouse is pressed
+      // In "trail" mode, spawn walkers continuously around mouse position
       case TRAIL:
         if(
-          p5.mouseIsPressed && p5.mouseButton === p5.LEFT && 
           p5.mouseX >= dla.edges.left + particleSpreadRadius && 
           p5.mouseX <= dla.edges.right - particleSpreadRadius && 
           p5.mouseY >= dla.edges.top + particleSpreadRadius && 
