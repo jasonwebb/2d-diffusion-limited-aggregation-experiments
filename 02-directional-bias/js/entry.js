@@ -1,7 +1,8 @@
 import DLA from '../../core/DLA';
 
 let dla,
-    currentClusterType = 'Wall';
+    currentClusterType = 'Wall',
+    showText = true;
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -24,12 +25,40 @@ const sketch = function (p5) {
   p5.draw = function () {
     dla.iterate();
     dla.draw();
+    drawText();
   }
 
   function reset() {
     dla.removeAll();
     dla.createDefaultWalkers();
     dla.createDefaultClusters(currentClusterType);
+  }
+
+  // Draw helpful text
+  function drawText() {
+    if(showText) {
+      p5.fill(0);
+      p5.noStroke();
+
+      p5.textSize(20);
+      p5.textStyle(p5.BOLD);
+      p5.text('02 - directional bias', 20, 40);
+
+      p5.textStyle(p5.NORMAL);
+      p5.fill(150);
+      p5.text(`Making walkers move in particular directions
+
+Key commands:
+1 - downward bias
+2 - upward bias
+3 - left bias
+4 - right bias
+5 - towards center (Y only)
+6 - towards center (X only)
+7 - away from center
+8 - towards center
+      `, 20, 70);
+    }
   }
 
   // Key handler ---------------------------------------------------------
@@ -127,6 +156,10 @@ const sketch = function (p5) {
         dla.settings.BiasTowards = 'Center';
         reset();
         dla.unpause();
+        break;
+  
+      case 't':
+        showText = !showText;
         break;
     }
   }

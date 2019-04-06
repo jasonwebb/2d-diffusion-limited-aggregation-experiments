@@ -2,7 +2,8 @@ import Settings from './Settings';
 import DLA from '../../core/DLA';
 
 let dla,
-    currentWalkerShape = Settings.WalkerShape;
+    currentWalkerShape = Settings.WalkerShape,
+    showText = true;
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -22,12 +23,36 @@ const sketch = function (p5) {
   p5.draw = function () {
     dla.iterate();
     dla.draw();
+    drawText();
   }
 
   function reset() {
     dla.removeAll();
     dla.createDefaultClusters('Point');
     createCustomWalkers();
+  }
+
+  // Draw helpful text
+  function drawText() {
+    if(showText) {
+      p5.fill(0);
+      p5.noStroke();
+
+      p5.textSize(20);
+      p5.textStyle(p5.BOLD);
+      p5.text('04 - different shapes', 20, 40);
+
+      p5.textStyle(p5.NORMAL);
+      p5.fill(150);
+      p5.text(`Varying shapes of walker particles
+
+Key commands:
+1 - triangles
+2 - squares
+3 - pentagons
+4 - hexagons
+5 - random shapes`, 20, 70);
+    }
   }
 
   // Create walkers ------------------------------------------------------

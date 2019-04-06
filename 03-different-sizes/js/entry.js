@@ -1,7 +1,8 @@
 import Settings from './Settings';
 import DLA from '../../core/DLA';
 
-let dla;
+let dla,
+    showText = true;
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -21,12 +22,33 @@ const sketch = function (p5) {
   p5.draw = function () {
     dla.iterate();
     dla.draw();
+    drawText();
   }
 
   function reset() {
     dla.removeAll();
     dla.createDefaultWalkers();
     dla.createDefaultClusters('Point');
+  }
+
+  // Draw helpful text
+  function drawText() {
+    if(showText) {
+      p5.fill(0);
+      p5.noStroke();
+
+      p5.textSize(20);
+      p5.textStyle(p5.BOLD);
+      p5.text('03 - different sizes', 20, 40);
+
+      p5.textStyle(p5.NORMAL);
+      p5.fill(150);
+      p5.text(`Varying sizes of walker particles
+
+Key commands:
+1 - proportional to center
+2 - random sizes`, 20, 70);
+    }
   }
 
   // Key handler ---------------------------------------------------------

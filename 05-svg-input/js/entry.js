@@ -8,7 +8,8 @@ let svgFiles = {
 }
 
 let dla,
-    currentSVGFile = svgFiles.polygons;
+    currentSVGFile = svgFiles.polygons,
+    showText = true;
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -28,12 +29,33 @@ const sketch = function (p5) {
   p5.draw = function () {
     dla.iterate();
     dla.draw();
+    drawText();
   }
 
   function reset() {
     dla.removeAll();
     createCustomShapesFromSVG(currentSVGFile);
     dla.createDefaultWalkers();
+  }
+
+  // Draw helpful text
+  function drawText() {
+    if(showText) {
+      p5.fill(0);
+      p5.noStroke();
+
+      p5.textSize(20);
+      p5.textStyle(p5.BOLD);
+      p5.text('05 - SVG input', 20, 40);
+
+      p5.textStyle(p5.NORMAL);
+      p5.fill(150);
+      p5.text(`Growth using shapes from SVG files
+
+Key commands:
+1 - SVG text
+2 - compound polygon`, 20, 70);
+    }
   }
 
   // Load paths from an SVG file (embedded in the index.html file) and use them to create shapes in the DLA simulation

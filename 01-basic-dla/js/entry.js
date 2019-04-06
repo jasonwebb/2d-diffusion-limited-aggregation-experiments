@@ -1,6 +1,7 @@
 import DLA from '../../core/DLA';
 
-let dla;
+let dla,
+  showText = true;
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -18,6 +19,7 @@ const sketch = function (p5) {
   p5.draw = function () {
     dla.iterate();
     dla.draw();
+    drawText();
   }
 
   // Reset - remove all particle and generate new ones
@@ -25,6 +27,22 @@ const sketch = function (p5) {
     dla.removeAll();
     dla.createDefaultWalkers();
     dla.createDefaultClusters();
+  }
+
+  // Draw helpful text
+  function drawText() {
+    if(showText) {
+      p5.fill(0);
+      p5.noStroke();
+
+      p5.textSize(20);
+      p5.textStyle(p5.BOLD);
+      p5.text('01 - basic DLA', 20, 40);
+
+      p5.textStyle(p5.NORMAL);
+      p5.fill(150);
+      p5.text('Simplest possible configuration', 20, 70);
+    }
   }
 
   // Key handler ---------------------------------------------------------
@@ -57,6 +75,10 @@ const sketch = function (p5) {
 
       case 'e':
         dla.export();
+        break;
+
+      case 't':
+        showText = !showText;
         break;
     }
   }

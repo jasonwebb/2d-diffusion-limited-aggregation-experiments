@@ -2,7 +2,7 @@ import DLA from '../../core/DLA';
 import Player from './Player';
 import SVGLoader from '../../core/SVGLoader';
 
-let dla, player;
+let dla, player, showText = true;
 
 const TRAIL = 0,
       GRAVITY =  1,
@@ -32,6 +32,7 @@ const sketch = function (p5) {
     // Iterate and draw all walkers and clustered particles
     dla.iterate();
     dla.draw();
+    drawText();
 
     switch(currentEffectMode) {
       // In "trail" mode, spawn walkers continuously when the mouse is pressed
@@ -144,6 +145,49 @@ const sketch = function (p5) {
     }
 
     dla.createShapesFromPaths(paths);
+  }
+
+  // Draw helpful text
+  function drawText() {
+    if(showText) {
+      p5.fill(0);
+      p5.noStroke();
+
+      p5.textSize(20);
+      p5.textStyle(p5.BOLD);
+      p5.text('06 - interactivity', 20, 40);
+
+      p5.textStyle(p5.NORMAL);
+      p5.fill(150);
+      p5.text(`Different ways to interact with DLA
+
+Key commands:
+1 - click-to-grow mode
+2 - mouse trailer mode
+3 - Asteroids mode
+4 - radial Bust-a-Move mode`, 20, 70);
+
+      let additionalText = ``;
+      switch(currentEffectMode) {
+        case GRAVITY:
+          additionalText = `Click and hold to grow`;
+          break;
+
+        case TRAIL:
+          additionalText = `Click and hold to spawn walkers`;
+          break;
+
+        case ASTEROIDS:
+          additionalText = `Use WASD to move, hold Space to shoot`;
+          break;
+
+        case RADIAL:
+          additionalText = `Use A and D to move, click to shoot`;
+          break;
+      }
+
+      p5.text(additionalText, 20, 280);
+    }
   }
 
   // Key down handler -------------------------------------------------------

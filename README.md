@@ -28,6 +28,7 @@ To achieve vector-based results from the DLA process one must move away from pix
 | `f`     | Toggle frame                                                |
 | `l`     | Toggle line rendering effect                                |
 | `e`     | Export and initiate download of current drawing as SVG file |
+| `t`     | Toggle visibility of helpful text                           |
 | `Space` | Pause/unpause simulation                                    |
 
 ## Parameters

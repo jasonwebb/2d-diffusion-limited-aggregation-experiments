@@ -1,7 +1,7 @@
 import Settings from './Settings';
 import DLA from '../../core/DLA';
 
-let dla;
+let dla, showText = true;
 
 const PERLIN = 0,
   SWIRLS = 1,
@@ -31,6 +31,7 @@ const sketch = function (p5) {
   p5.draw = function () {
     dla.iterate();
     dla.draw();
+    drawText();
   }
 
   function reset() {
@@ -44,6 +45,27 @@ const sketch = function (p5) {
     dla.createClusterFromParams(dla.createHorizontalClusterWall(dla.edges.bottom));
 
     // dla.createDefaultClusters('Random');
+  }
+
+  // Draw helpful text
+  function drawText() {
+    if(showText) {
+      p5.fill(0);
+      p5.noStroke();
+
+      p5.textSize(20);
+      p5.textStyle(p5.BOLD);
+      p5.text('07 - flowfields', 20, 40);
+
+      p5.textStyle(p5.NORMAL);
+      p5.fill(150);
+      p5.text(`Movement influenced by flowfield equations
+
+Key commands:
+1 - Perlin noise
+2 - swirls
+3 - Clifford attractor`, 20, 70);
+    }
   }
 
   function getForceAt(body) {
