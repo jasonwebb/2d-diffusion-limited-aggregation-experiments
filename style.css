@@ -34,7 +34,13 @@ h1 {
 
   font-size: 36px;
   text-decoration: none;
+  color: rgba(0,0,0,.2);
+  transition: color .2s ease-in-out;
 }
+
+  .card .fab {
+    font-size: 150px;
+  }
 
   /* Desktops - set borders */
   @media screen and (min-width: 1281px) {
@@ -143,9 +149,6 @@ h1 {
     opacity: .8;
   }
 
-  .card.playground {}
-
-    .card.playground:hover {
-      background-color: rgba(0,0,0,.8);
-      color: white;
-    }
+  .card:hover {
+    color: rgba(0,0,0,.7);
+  }

@@ -27,6 +27,8 @@
   <meta name="twitter:description" content="">
   <meta name="twitter:image" content="">
 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
   <style>
     * {
       box-sizing: border-box;
@@ -41,10 +43,46 @@
       top: 0;
       left: 0;
     }
+    
+    .github-link {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 1;
+      color: rgba(0,0,0,.4);
+      text-decoration: none;
+      transition: all .2s ease-in-out;
+    }
+
+      .github-link .fab {
+        font-size: 38px; 
+        display: inline-block; 
+        vertical-align: middle;
+      }
+
+      .github-link .text { 
+        display: none;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18px;
+        margin-right: 10px;
+      }
+
+      .github-link:hover .text { 
+        display: inline-block; 
+      }
+
+      .github-link:hover .fab {
+        color: rgba(0,0,0,.9);
+      }
   </style>
 </head>
 
 <body>
+  <a href="https://github.com/jasonwebb/2d-diffusion-limited-aggregation-experiments/tree/master/07-flowfields" class="github-link" title="View source on Github">
+    <span class="text">View source</span>
+    <span class="fab fa-github"></span>
+  </a>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
   <script src="../dist/flowfields.bundle.js"></script>
 </body>
