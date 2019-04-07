@@ -4,11 +4,12 @@ import SVGLoader from '../../core/SVGLoader';
 
 let svgFiles = {
   dla: require("../svg/dla.svg"),
-  polygons: require('../svg/polygons.svg')
+  polygons: require('../svg/polygons.svg'),
+  supershape: require('../svg/supershape.svg')
 }
 
 let dla,
-    currentSVGFile = svgFiles.polygons,
+    currentSVGFile = svgFiles.supershape,
     showText = true;
 
 const sketch = function (p5) {
@@ -36,6 +37,7 @@ const sketch = function (p5) {
     dla.removeAll();
     createCustomShapesFromSVG(currentSVGFile);
     dla.createDefaultWalkers();
+    dla.createDefaultWalkers(undefined, 'Offscreen');
   }
 
   // Draw helpful text
@@ -54,7 +56,8 @@ const sketch = function (p5) {
 
 Key commands:
 1 - SVG text
-2 - compound polygon`, 20, 70);
+2 - compound polygon
+3 - supershape`, 20, 70);
     }
   }
 
@@ -116,6 +119,11 @@ Key commands:
 
       case '2':
         currentSVGFile = svgFiles.polygons;
+        reset();
+        break;
+
+      case '3':
+        currentSVGFile = svgFiles.supershape;
         reset();
         break;
     }
