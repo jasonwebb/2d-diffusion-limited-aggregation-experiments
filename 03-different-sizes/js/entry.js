@@ -82,6 +82,20 @@ Key commands:
       case 'e':
         dla.export();
         break;
+
+      case '1':
+        dla.settings.VaryDiameterByDistance = true;
+        dla.settings.VaryDiameterRandomly = false;
+        dla.settings.MaxWalkers = 1000;
+        reset();
+        break;
+
+      case '2':  
+        dla.settings.VaryDiameterByDistance = false;
+        dla.settings.VaryDiameterRandomly = true;
+        dla.settings.MaxWalkers = 700;
+        reset();
+        break;
     }
   }
 }
