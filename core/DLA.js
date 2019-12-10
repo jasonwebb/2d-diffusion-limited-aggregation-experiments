@@ -1005,5 +1005,5 @@ export default class DLA {
     circleEl.setAttribute('r', body.radius);
     return circleEl;
   }
-
+ 
 }
