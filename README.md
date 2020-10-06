@@ -72,10 +72,10 @@ To achieve vector-based results from the DLA process one must move away from pix
 
 ## Running locally
 
-1. Run `npm install` in both the `./build` and `./core` folders.
-2. Run `npm run serve` in the `./build` folder to start a local development server and launch it in a browser.
+1. Run `npm install` in both the root (`/`) and `./core` folders.
+2. Run `npm run serve` to start a local development server and launch it in a browser.
 
-To statically _build_ the code in this repo, run `npm run build` in the `./build` folder.
+To statically _build_ the code in this repo, run `npm run build` in the root folder.
 
 ## Going further
 
@@ -99,10 +99,10 @@ The code in this repo can be improved or optimized in a few ways to achieve fast
 
 ## Samples
 
-![Basic DLA](01-basic-dla/images/social-media-preview.png)
-![Directional bias](02-directional-bias/images/social-media-preview.png)
-![Different sizes](03-different-sizes/images/social-media-preview.png)
-![Different shapes](04-different-shapes/images/social-media-preview.png)
-![SVG input](05-svg-input/images/social-media-preview.png)
-![Basic DLA with color](01-basic-dla/images/basic-dla-with-color.png)
-![Line rendering effect](01-basic-dla/images/line-rendering-mode.png)
+![Basic DLA](experiments/01-basic-dla/images/social-media-preview.png)
+![Directional bias](experiments/02-directional-bias/images/social-media-preview.png)
+![Different sizes](experiments/03-different-sizes/images/social-media-preview.png)
+![Different shapes](experiments/04-different-shapes/images/social-media-preview.png)
+![SVG input](experiments/05-svg-input/images/social-media-preview.png)
+![Basic DLA with color](experiments/01-basic-dla/images/basic-dla-with-color.png)
+![Line rendering effect](experiments/01-basic-dla/images/line-rendering-mode.png)
