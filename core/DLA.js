@@ -863,11 +863,18 @@ export default class DLA {
    * @returns {string} - String in the format of hsl({h}, {s}, {b})
    */
   getColorStringFromObject(colorObject) {
-    return 'hsla(' +
+    let colorString = 'hsla(' +
       colorObject.h + ', ' +
       colorObject.s + '%, ' +
-      colorObject.b + '%, ' +
-      colorObject.a + ')';
+      colorObject.b + '%, ';
+
+    if(colorObject.hasOwnProperty('a')) {
+      colorString += colorObject.a + ')';
+    } else {
+      colorString += '1.0)';
+    }
+    
+    return colorString;
   }
 
 
