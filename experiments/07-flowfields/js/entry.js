@@ -1,5 +1,5 @@
 import Settings from './Settings';
-import DLA from '../../core/DLA';
+import DLA from '../../../core/DLA';
 
 let dla, showText = true;
 
@@ -40,7 +40,7 @@ const sketch = function (p5) {
 
     dla.createClusterFromParams(dla.createVerticalClusterWall(dla.edges.left));
     dla.createClusterFromParams(dla.createVerticalClusterWall(dla.edges.right));
-  
+
     dla.createClusterFromParams(dla.createHorizontalClusterWall(dla.edges.top));
     dla.createClusterFromParams(dla.createHorizontalClusterWall(dla.edges.bottom));
 
@@ -71,7 +71,7 @@ Key commands:
   function getForceAt(body) {
     let timeScale = .2,
       heading;
-    
+
     switch(currentMode) {
       case PERLIN:
         heading = getPerlinHeading(body);
@@ -85,7 +85,7 @@ Key commands:
         heading = getCliffordAttractorHeading(body);
         break;
     }
-    
+
     return {
       dx: Math.cos(heading) * timeScale,
       dy: Math.sin(heading) * timeScale
@@ -108,7 +108,7 @@ Key commands:
 
     return Math.atan2(y2 - y1, x2 - x1);
   }
-  
+
   // Key handler ---------------------------------------------------------
   p5.keyReleased = function () {
     switch (p5.key) {
@@ -136,7 +136,7 @@ Key commands:
       case 'l':
         dla.toggleLineRenderingMode();
         break;
-        
+
       case 'e':
         dla.export();
         break;

@@ -1,5 +1,5 @@
 import Settings from './Settings';
-import DLA from '../../core/DLA';
+import DLA from '../../../core/DLA';
 
 let dla,
     currentWalkerShape = Settings.WalkerShape,
@@ -71,7 +71,7 @@ Key commands:
       params.y = p5.random(dla.edges.top, dla.edges.bottom);
       params.type = 'Polygon';
       params.polygon = [];
- 
+
       // Convert shape string to number of vertices
       switch(currentWalkerShape) {
         case 'Triangle':
@@ -137,7 +137,7 @@ Key commands:
       case 'l':
         dla.toggleLineRenderingMode();
         break;
-        
+
       case 'e':
         dla.export();
         break;

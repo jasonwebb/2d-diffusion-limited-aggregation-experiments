@@ -1,6 +1,6 @@
-import DLA from '../../core/DLA';
+import DLA from '../../../core/DLA';
 import Player from './Player';
-import SVGLoader from '../../core/SVGLoader';
+import SVGLoader from '../../../core/SVGLoader';
 
 let dla, player, showText = true;
 
@@ -38,9 +38,9 @@ const sketch = function (p5) {
       // In "trail" mode, spawn walkers continuously around mouse position
       case TRAIL:
         if(
-          p5.mouseX >= dla.edges.left + particleSpreadRadius && 
-          p5.mouseX <= dla.edges.right - particleSpreadRadius && 
-          p5.mouseY >= dla.edges.top + particleSpreadRadius && 
+          p5.mouseX >= dla.edges.left + particleSpreadRadius &&
+          p5.mouseX <= dla.edges.right - particleSpreadRadius &&
+          p5.mouseY >= dla.edges.top + particleSpreadRadius &&
           p5.mouseY <= dla.edges.bottom - particleSpreadRadius
         ) {
           dla.createWalker({
@@ -135,7 +135,7 @@ const sketch = function (p5) {
 
   function createCustomShapesFromSVG(file) {
     let paths = SVGLoader.loadFromFileContents(file);
-    
+
     for(let path of paths) {
       path.stuck = true;
       path.solid = false;
@@ -207,7 +207,7 @@ Key commands:
         }
 
         break;
-      
+
       case 'a':
         if(currentEffectMode == ASTEROIDS) {
           player.isRotatingLeft = true;
@@ -235,7 +235,7 @@ Key commands:
         break;
     }
   }
-  
+
   // Key up handler ---------------------------------------------------------
   p5.keyReleased = function () {
     if(currentEffectMode == ASTEROIDS || currentEffectMode == RADIAL) {
@@ -309,7 +309,7 @@ Key commands:
       case 'l':
         dla.toggleLineRenderingMode();
         break;
-        
+
       case 'e':
         dla.export();
         break;

@@ -1,6 +1,6 @@
 import Settings from './Settings';
-import DLA from '../../core/DLA';
-import SVGLoader from '../../core/SVGLoader';
+import DLA from '../../../core/DLA';
+import SVGLoader from '../../../core/SVGLoader';
 
 let svgFiles = {
   dla: require("../svg/dla.svg"),
@@ -21,7 +21,7 @@ const sketch = function (p5) {
 
     // Set up the simulation environment
     dla = new DLA(p5, Settings);
-    
+
     // Spawn walkers and create cluster seed shape from SVG
     reset();
   }
@@ -64,7 +64,7 @@ Key commands:
   // Load paths from an SVG file (embedded in the index.html file) and use them to create shapes in the DLA simulation
   function createCustomShapesFromSVG(file) {
     let paths = SVGLoader.loadFromFileContents(file);
-    
+
     for(let path of paths) {
       path.stuck = true;
       path.solid = false;
@@ -74,7 +74,7 @@ Key commands:
 
     dla.createShapesFromPaths(paths);
   }
-  
+
   // Key handler ---------------------------------------------------------
   p5.keyReleased = function () {
     switch (p5.key) {
@@ -107,7 +107,7 @@ Key commands:
       case 'l':
         dla.toggleLineRenderingMode();
         break;
-        
+
       case 'e':
         dla.export();
         break;

@@ -1,8 +1,7 @@
-import Settings from './Settings';
-import DLA from '../../core/DLA';
+import DLA from '../../../core/DLA';
 
 let dla,
-    showText = true;
+  showText = true;
 
 const sketch = function (p5) {
   // Setup ---------------------------------------------------------------
@@ -12,9 +11,7 @@ const sketch = function (p5) {
     p5.ellipseMode(p5.CENTER);
 
     // Set up the simulation environment
-    dla = new DLA(p5, Settings);
-
-    // Spawn default walkers and clusters
+    dla = new DLA(p5);
     reset();
   }
 
@@ -25,10 +22,11 @@ const sketch = function (p5) {
     drawText();
   }
 
+  // Reset - remove all particle and generate new ones
   function reset() {
     dla.removeAll();
     dla.createDefaultWalkers();
-    dla.createDefaultClusters('Point');
+    dla.createDefaultClusters();
   }
 
   // Draw helpful text
@@ -39,15 +37,11 @@ const sketch = function (p5) {
 
       p5.textSize(20);
       p5.textStyle(p5.BOLD);
-      p5.text('03 - different sizes', 20, 40);
+      p5.text('01 - basic DLA', 20, 40);
 
       p5.textStyle(p5.NORMAL);
       p5.fill(150);
-      p5.text(`Varying sizes of walker particles
-
-Key commands:
-1 - proportional to center
-2 - random sizes`, 20, 70);
+      p5.text('Simplest possible configuration', 20, 70);
     }
   }
 
@@ -78,9 +72,13 @@ Key commands:
       case 'l':
         dla.toggleLineRenderingMode();
         break;
-        
+
       case 'e':
         dla.export();
+        break;
+
+      case 't':
+        showText = !showText;
         break;
     }
   }

@@ -1,4 +1,4 @@
-import DLA from '../../core/DLA';
+import DLA from '../../../core/DLA';
 
 let dla,
     currentClusterType = 'Wall',
@@ -79,7 +79,7 @@ Key commands:
       case 'r':
         reset();
         break;
-   
+
       case 'f':
         dla.toggleUseFrame();
         reset();
@@ -157,7 +157,7 @@ Key commands:
         reset();
         dla.unpause();
         break;
-  
+
       case 't':
         showText = !showText;
         break;
