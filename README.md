@@ -72,8 +72,11 @@ To achieve vector-based results from the DLA process one must move away from pix
 
 ## Running locally
 
+1. Ensure you're running Node v16.
+  * If you're on a Mac running NVM, run the command `nvm use` to run the version specified in `.nvmrc`.
+  * If you're on Windows, use NVM to install and switch to Node v16.17.0.
 1. Run `npm install` in both the root (`/`) and `./core` folders.
-2. Run `npm run serve` to start a local development server and launch it in a browser.
+2. Run `npm run serve` in the root folder to start a local development server and launch it in a browser.
 
 To statically _build_ the code in this repo, run `npm run build` in the root folder.
 
